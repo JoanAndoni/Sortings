@@ -28,15 +28,16 @@ struct Data
 
 struct ThreadParameters //parametros entre los threads
 {
-     vector<Data>* array;
+    vector<Data>* array;
     bool* windowStatus;
+		float * percentage;
 };
 
 //Functions//
 
 void userInput(ThreadParameters);
 sf::RectangleShape drawRectangle(int x,int y, int stat, float a);
-void BubbleSortASC( vector<Data>* array);
+void BubbleSortASC( vector<Data>* array, float * percentage);
 void swapt(Data *dat1, Data *dat2);
 
 
@@ -45,8 +46,9 @@ int main()
     //Variables//
     vector<Data> array;
     bool windowStatus=true;
+		float percentage=0;
 
-    ThreadParameters parameters = {&array,&windowStatus};
+    ThreadParameters parameters = {&array,&windowStatus,&percentage};
 
     // Create a thread for userInput function and runs it//
     sf::Thread thread(&userInput,parameters);
@@ -97,22 +99,24 @@ int main()
 	////////imprimir aqui///////////////
 	for(int i=0;i<array.size();i++)
 	{
-		float a =array[i].dat;
-	   /*stringstream ss (stringstream::in | stringstream::out);
-	  	ss << a;
-	   string s = ss.str();
+		float b = array[i].dat;
 
-		 //Ejemplo para agregar texto
-		sf::Text Weight(s,font,TEXT_SIZE);
-		Weight.setColor(sf::Color::Black);
-		Weight.setPosition(i*60+15, 35);
-		//window.draw(Weight);
-		*/
-
-		sf::RectangleShape rec = drawRectangle((WINDOW_WIDTH/2)+(i*10), 100, array[i].stat,a);
+		sf::RectangleShape rec = drawRectangle((WINDOW_WIDTH/2)+(i*10), 100, array[i].stat,b);
 		window.draw(rec);
 		texture.draw(rec);
 	}
+
+	float a = percentage;
+	stringstream ss (stringstream::in | stringstream::out);
+	ss << a;
+	string s = ss.str();
+
+	 //Ejemplo para agregar texto
+	sf::Text Weight(s,font,TEXT_SIZE);
+	Weight.setColor(sf::Color::Black);
+	Weight.setPosition(20, 35);
+	window.draw(Weight);
+
 
 	////////pantalla dinamica///////////
 	window.setView(view1);
@@ -160,7 +164,7 @@ void userInput(ThreadParameters parameters)
 				else if(selectedOption=="1.2")
 				{
 
-						BubbleSortASC(parameters.array);
+						BubbleSortASC(parameters.array,parameters.percentage);
 				}
         else if(selectedOption=="2")
             *parameters.windowStatus=false;
@@ -208,7 +212,7 @@ void swapt(Data *dat1, Data *dat2)
 
 }
 
-void BubbleSortASC( vector<Data>* array)
+void BubbleSortASC( vector<Data>* array, float * percentage)
 {
     int c, d;
     for (c = 0; c < (array->size() - 1); c++)
@@ -217,6 +221,8 @@ void BubbleSortASC( vector<Data>* array)
         {
             if (array->at(d).dat > array->at(d+1).dat)
             {
+							*percentage+=1;
+							cout<<*percentage<<endl;
 							swapt(&array->at(d),&array->at(d+1));
             }
         }

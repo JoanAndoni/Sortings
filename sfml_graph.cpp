@@ -6,6 +6,7 @@
 #include <math.h>
 #include <iostream>
 #include <sstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -49,7 +50,8 @@ void CocktailSortASC(vector<Data>* array, float * percentage);
 void CocktailSortDSC(vector<Data>* array, float * percentage);
 //ISERTION
 void InsertionSortASC(vector<Data>* array, float * percentage);
-
+//QUICK
+void quickSortASC(vector<Data>* array, float * percentage, Data *l, Data *h);
 void swapt(Data *dat1, Data *dat2);
 
 
@@ -67,7 +69,7 @@ int main()
     thread.launch();
 
     //Main thread//
-    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Visual Graph");
+    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Algoritmos de Ordenamiento");
 
 		//Render texture//
 		sf::RenderTexture texture;
@@ -149,6 +151,7 @@ void userInput(ThreadParameters parameters)
 
     while(*parameters.windowStatus)
     {
+
          cout<< endl<<"____________Visual Graph_____________"<< endl;
          cout<<"1. Agregar numero al arreglo"<< endl;
 				 cout<<"1.1. Agregar numero al arreglo"<< endl;
@@ -157,8 +160,9 @@ void userInput(ThreadParameters parameters)
 				 cout << "1.4 SelectionSortASC" << endl;
 				 cout << "1.5 SelectionSortDSC" << endl;
 				 cout << "1.6 CocktailSortASC" << endl;
-				  cout << "1.7 CocktailSortDSC" << endl;
-					cout << "1.8 InsertionSortASC" << endl;
+				 cout << "1.7 CocktailSortDSC" << endl;
+				 cout << "1.8 InsertionSortASC" << endl;
+				 cout << "1.9 QuickSortASC" << endl;
 
          cout<<"2. Quit"<< endl;
          cout<<"Your selection: ";
@@ -213,7 +217,11 @@ void userInput(ThreadParameters parameters)
 				else if(selectedOption=="1.8")
 				{
 
-						InsertionSortASC(parameters.array,parameters.percentage);
+						//InsertionSortASC(parameters.array,parameters.percentage);
+				}
+				else if(selectedOption=="1.9")
+				{
+						//quickSortASC(parameters.array,parameters.percentage);
 				}
 
         else if(selectedOption=="2")
@@ -264,22 +272,25 @@ void swapt(Data *dat1, Data *dat2)
 
 void BubbleSortASC( vector<Data>* array, float * percentage)
 {
-	int tam = array->size();
+	float tam = array->size();
 	cout << "Tamaño" << tam << endl;
-    int c, d;
-		double b;
+	float contador = (float)100/tam;
+
+    float c, d;
+		float b;
     for (c = 0; c < (array->size() - 1); c++)
     {
-			b = (c/tam);
-			//cout << b << "c/tam" << endl;
-			*percentage = (b)*100;
-			cout << *percentage << endl;
+			if(c == tam-1){
+				*percentage = 100;
+			}
+			else{
+				*percentage = (float)c/(float)tam * 100;
+			}
+			printf("porcentaje %f\n", *percentage);
         for (d = 0; d < array->size() - c - 1; d++)
         {
             if (array->at(d).dat > array->at(d+1).dat)
             {
-							/**percentage = ((c%tam)+(d-c)%((tam)-c))*100;
-							cout<<*percentage<<endl;*/
 							swapt(&array->at(d),&array->at(d+1));
             }
         }
@@ -291,18 +302,20 @@ void BubbleSortDSC( vector<Data>* array, float * percentage)
 	cout << "Tamaño" << tam << endl;
     int c, d;
 		double b;
-    for (c = 0; c < (array->size() - 1); c++)
+    for (c = 0; c <= (array->size() - 1); c++)
     {
-			b = (c/tam);
-			//cout << b << "c/tam" << endl;
-			*percentage = (b)*100;
-			cout << *percentage << endl;
+			if(c == tam-1){
+				*percentage = 100;
+			}
+			else{
+				*percentage = (float)c/(float)tam * 100;
+			}
+			printf("porcentaje %f\n", *percentage);
+
         for (d = 0; d < array->size() - c - 1; d++)
         {
             if (array->at(d).dat < array->at(d+1).dat)
             {
-							/**percentage = ((c%tam)+(d-c)%((tam)-c))*100;
-							cout<<*percentage<<endl;*/
 							swapt(&array->at(d),&array->at(d+1));
             }
         }
@@ -311,13 +324,22 @@ void BubbleSortDSC( vector<Data>* array, float * percentage)
 void SelectionSortASC(vector<Data>* array, float * percentage)
 {
     int c, d, min, loc, temp;
-    for (c = 0; c < (array->size() - 1); c++)
+		int tam = array->size();
+    for (c = 0; c <= (array->size() - 1); c++)
     {
+			if(c == tam-1){
+				*percentage = 100;
+			}
+			else{
+				*percentage = (float)c/(float)tam * 100;
+			}
+			printf("porcentaje %f\n", *percentage);
+
         min = array->at(c).dat;
         loc = c;
         for (d = c + 1; d < array->size(); d++)
         {
-            if (min > array->at(d).dat)
+        if (min > array->at(d).dat)
             {
                 min = array->at(d).dat;
                 loc = d;
@@ -329,8 +351,16 @@ void SelectionSortASC(vector<Data>* array, float * percentage)
 void SelectionSortDSC(vector<Data>* array, float * percentage)
 {
     int c, d, min, loc, temp;
-    for (c = 0; c < (array->size() - 1); c++)
+			int tam = array->size();
+    for (c = 0; c <= (array->size() - 1); c++)
     {
+			if(c == tam-1){
+				*percentage = 100;
+			}
+			else{
+				*percentage = (float)c/(float)tam * 100;
+			}
+			printf("porcentaje %f\n", *percentage);
         min = array->at(c).dat;
         loc = c;
         for (d = c + 1; d < array->size(); d++)
@@ -346,19 +376,21 @@ void SelectionSortDSC(vector<Data>* array, float * percentage)
 }
 void CocktailSortASC(vector<Data>* array, float * percentage)
 {
-    bool swapped = true;
-		int start = 0;
-		int end = (array->size() - 1);
+	float tam  =array->size()-1;
+	bool swapped = true;
+	int start = 0;
+	int end = (array->size() - 1);
+
     while (swapped)
     {
         swapped = false;
 
-
         for (int i = start; i < end; ++i)
         {
-            if ( array->at(i).dat > array->at(i + 1).dat)
+            if (array->at(i).dat > array->at(i+1).dat)
             {
-                swapt(&array->at(i),&array->at(i+1));
+                  swapt(&array->at(i),&array->at(i+1));
+                swapped = true;
             }
         }
 
@@ -371,7 +403,7 @@ void CocktailSortASC(vector<Data>* array, float * percentage)
 
         for (int i = end - 1; i >= start; --i)
         {
-            if (array->at(i).dat > array->at(i + 1).dat)
+            if (array->at(i).dat > array->at(i+1).dat)
             {
                 swapt(&array->at(i),&array->at(i+1));
                 swapped = true;
@@ -380,6 +412,7 @@ void CocktailSortASC(vector<Data>* array, float * percentage)
         ++start;
     }
 }
+
 void CocktailSortDSC(vector<Data>* array, float * percentage)
 {
 	bool swapped = true;

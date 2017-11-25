@@ -51,6 +51,9 @@ void CocktailSortDSC(vector<Data>* array, float * percentage);
 //ISERTION
 void InsertionSortASC(vector<Data>* array, float * percentage);
 void InsertionSortDSC(vector<Data>* array, float * percentage);
+//SHELL
+void ShellSortASC(vector<Data>* array, float * percentage);
+void ShellSortDSC(vector<Data>* array, float * percentage);
 //QUICK
 void quickSortASC(vector<Data>* array, float * percentage, Data *l, Data *h);
 void swapt(Data *dat1, Data *dat2);
@@ -164,7 +167,9 @@ void userInput(ThreadParameters parameters)
 				 cout << "1.7 CocktailSortDSC" << endl;
 				 cout << "1.8 InsertionSortASC" << endl;
 				 cout << "1.9 InsertionSortDSC" << endl;
-				 cout << "1.10 QuickSortASC" << endl;
+				 cout << "1.10 ShellSortASC" << endl;
+				 cout << "1.11 ShellSortASC" << endl;
+				 cout << "1.12 QuickSortASC" << endl;
 
          cout<<"2. Quit"<< endl;
          cout<<"Your selection: ";
@@ -224,6 +229,14 @@ void userInput(ThreadParameters parameters)
 				else if(selectedOption=="1.9")
 				{
 						InsertionSortDSC(parameters.array,parameters.percentage);
+				}
+				else if(selectedOption=="1.10")
+				{
+						ShellSortASC(parameters.array,parameters.percentage);
+				}
+				else if(selectedOption=="1.11")
+				{
+						ShellSortDSC(parameters.array,parameters.percentage);
 				}
 
         else if(selectedOption=="2")
@@ -460,11 +473,11 @@ void InsertionSortASC(vector<Data>* array, float * percentage)
 		 while ((j > 0) && (array->at(j).dat < array->at(j - 1).dat))
 		  {
 				swapt(&array->at(j),&array->at(j-1));
-				cout << array->at(j).dat << endl;
 			 j = j - 1;
 		 }
 	 }
  }
+
  void InsertionSortDSC(vector<Data>* array, float * percentage)
  {
  	 for (int i = 1; i < array->size(); i++)
@@ -473,8 +486,35 @@ void InsertionSortASC(vector<Data>* array, float * percentage)
  		 while ((j > 0) && (array->at(j).dat > array->at(j - 1).dat))
  		  {
  				swapt(&array->at(j),&array->at(j-1));
- 				cout << array->at(j).dat << endl;
  			 j = j - 1;
  		 }
  	 }
   }
+void ShellSortASC(vector<Data>* array, float * percentage)
+{
+
+    int c, i, j, temp;
+    for (c = (array->size())/2; c > 0; c /= 2)
+
+        for (i = c; i < array->size(); i++)
+
+            for (j=i-c; j>=0 && array->at(j).dat > array->at(j + c).dat; j-=c)
+						{
+							swapt(&array->at(j),&array->at(j+c));
+
+            }
+}
+void ShellSortDSC(vector<Data>* array, float * percentage)
+{
+
+    int c, i, j, temp;
+    for (c = (array->size())/2; c > 0; c /= 2)
+
+        for (i = c; i < array->size(); i++)
+
+            for (j=i-c; j>=0 && array->at(j).dat < array->at(j + c).dat; j-=c)
+						{
+							swapt(&array->at(j),&array->at(j+c));
+
+            }
+}

@@ -37,7 +37,19 @@ struct ThreadParameters //parametros entre los threads
 
 void userInput(ThreadParameters);
 sf::RectangleShape drawRectangle(int x,int y, int stat, float a);
+// --------SORTS--------
+//BUBBLE
 void BubbleSortASC( vector<Data>* array, float * percentage);
+void BubbleSortDSC( vector<Data>* array, float * percentage);
+//SELECTION
+void SelectionSortASC(vector<Data>* array, float * percentage);
+void SelectionSortDSC(vector<Data>* array, float * percentage);
+//COCKTAIL
+void CocktailSortASC(vector<Data>* array, float * percentage);
+void CocktailSortDSC(vector<Data>* array, float * percentage);
+//ISERTION
+void InsertionSortASC(vector<Data>* array, float * percentage);
+
 void swapt(Data *dat1, Data *dat2);
 
 
@@ -140,7 +152,14 @@ void userInput(ThreadParameters parameters)
          cout<< endl<<"____________Visual Graph_____________"<< endl;
          cout<<"1. Agregar numero al arreglo"<< endl;
 				 cout<<"1.1. Agregar numero al arreglo"<< endl;
-				 cout<<"1.2. BubbleSort"<< endl;
+				 cout<<"1.2. BubbleSort ASC"<< endl;
+				 cout <<"1.3 BubbleSort DSC" << endl;
+				 cout << "1.4 SelectionSortASC" << endl;
+				 cout << "1.5 SelectionSortDSC" << endl;
+				 cout << "1.6 CocktailSortASC" << endl;
+				  cout << "1.7 CocktailSortDSC" << endl;
+					cout << "1.8 InsertionSortASC" << endl;
+
          cout<<"2. Quit"<< endl;
          cout<<"Your selection: ";
          cin>>selectedOption;
@@ -166,6 +185,37 @@ void userInput(ThreadParameters parameters)
 
 						BubbleSortASC(parameters.array,parameters.percentage);
 				}
+				else if(selectedOption=="1.3")
+				{
+
+						BubbleSortDSC(parameters.array,parameters.percentage);
+				}
+				else if(selectedOption=="1.4")
+				{
+
+						SelectionSortASC(parameters.array,parameters.percentage);
+				}
+				else if(selectedOption=="1.5")
+				{
+
+						SelectionSortDSC(parameters.array,parameters.percentage);
+				}
+				else if(selectedOption=="1.6")
+				{
+
+						CocktailSortASC(parameters.array,parameters.percentage);
+				}
+				else if(selectedOption=="1.7")
+				{
+
+						CocktailSortDSC(parameters.array,parameters.percentage);
+				}
+				else if(selectedOption=="1.8")
+				{
+
+						InsertionSortASC(parameters.array,parameters.percentage);
+				}
+
         else if(selectedOption=="2")
             *parameters.windowStatus=false;
 
@@ -214,17 +264,156 @@ void swapt(Data *dat1, Data *dat2)
 
 void BubbleSortASC( vector<Data>* array, float * percentage)
 {
+	int tam = array->size();
+	cout << "Tamaño" << tam << endl;
     int c, d;
+		double b;
     for (c = 0; c < (array->size() - 1); c++)
     {
+			b = (c/tam);
+			//cout << b << "c/tam" << endl;
+			*percentage = (b)*100;
+			cout << *percentage << endl;
         for (d = 0; d < array->size() - c - 1; d++)
         {
             if (array->at(d).dat > array->at(d+1).dat)
             {
-							*percentage+=1;
-							cout<<*percentage<<endl;
+							/**percentage = ((c%tam)+(d-c)%((tam)-c))*100;
+							cout<<*percentage<<endl;*/
 							swapt(&array->at(d),&array->at(d+1));
             }
         }
+    }
+}
+void BubbleSortDSC( vector<Data>* array, float * percentage)
+{
+	int tam = array->size();
+	cout << "Tamaño" << tam << endl;
+    int c, d;
+		double b;
+    for (c = 0; c < (array->size() - 1); c++)
+    {
+			b = (c/tam);
+			//cout << b << "c/tam" << endl;
+			*percentage = (b)*100;
+			cout << *percentage << endl;
+        for (d = 0; d < array->size() - c - 1; d++)
+        {
+            if (array->at(d).dat < array->at(d+1).dat)
+            {
+							/**percentage = ((c%tam)+(d-c)%((tam)-c))*100;
+							cout<<*percentage<<endl;*/
+							swapt(&array->at(d),&array->at(d+1));
+            }
+        }
+    }
+}
+void SelectionSortASC(vector<Data>* array, float * percentage)
+{
+    int c, d, min, loc, temp;
+    for (c = 0; c < (array->size() - 1); c++)
+    {
+        min = array->at(c).dat;
+        loc = c;
+        for (d = c + 1; d < array->size(); d++)
+        {
+            if (min > array->at(d).dat)
+            {
+                min = array->at(d).dat;
+                loc = d;
+            }
+        }
+				swapt(&array->at(c),&array->at(loc));
+    }
+}
+void SelectionSortDSC(vector<Data>* array, float * percentage)
+{
+    int c, d, min, loc, temp;
+    for (c = 0; c < (array->size() - 1); c++)
+    {
+        min = array->at(c).dat;
+        loc = c;
+        for (d = c + 1; d < array->size(); d++)
+        {
+            if (min < array->at(d).dat)
+            {
+                min = array->at(d).dat;
+                loc = d;
+            }
+        }
+				swapt(&array->at(c),&array->at(loc));
+    }
+}
+void CocktailSortASC(vector<Data>* array, float * percentage)
+{
+    bool swapped = true;
+		int start = 0;
+		int end = (array->size() - 1);
+    while (swapped)
+    {
+        swapped = false;
+
+
+        for (int i = start; i < end; ++i)
+        {
+            if ( array->at(i).dat > array->at(i + 1).dat)
+            {
+                swapt(&array->at(i),&array->at(i+1));
+            }
+        }
+
+        if (!swapped)
+            break;
+
+        swapped = false;
+
+        --end;
+
+        for (int i = end - 1; i >= start; --i)
+        {
+            if (array->at(i).dat > array->at(i + 1).dat)
+            {
+                swapt(&array->at(i),&array->at(i+1));
+                swapped = true;
+            }
+        }
+        ++start;
+    }
+}
+void CocktailSortDSC(vector<Data>* array, float * percentage)
+{
+	bool swapped = true;
+	int start = 0;
+	int end = (array->size() - 1);
+
+    while (swapped)
+    {
+        swapped = false;
+
+        for (int i = start; i < end; ++i)
+        {
+            if (array->at(i).dat < array->at(i+1).dat)
+            {
+                  swapt(&array->at(i),&array->at(i+1));
+                swapped = true;
+            }
+        }
+
+        if (!swapped)
+            break;
+
+        swapped = false;
+
+        --end;
+
+        for (int i = end - 1; i >= start; --i)
+        {
+            if (array->at(i).dat < array->at(i+1).dat)
+            {
+                swapt(&array->at(i),&array->at(i+1));
+                swapped = true;
+            }
+        }
+        ++start;
     }
 }

@@ -50,6 +50,7 @@ void CocktailSortASC(vector<Data>* array, float * percentage);
 void CocktailSortDSC(vector<Data>* array, float * percentage);
 //ISERTION
 void InsertionSortASC(vector<Data>* array, float * percentage);
+void InsertionSortDSC(vector<Data>* array, float * percentage);
 //QUICK
 void quickSortASC(vector<Data>* array, float * percentage, Data *l, Data *h);
 void swapt(Data *dat1, Data *dat2);
@@ -162,7 +163,8 @@ void userInput(ThreadParameters parameters)
 				 cout << "1.6 CocktailSortASC" << endl;
 				 cout << "1.7 CocktailSortDSC" << endl;
 				 cout << "1.8 InsertionSortASC" << endl;
-				 cout << "1.9 QuickSortASC" << endl;
+				 cout << "1.9 InsertionSortDSC" << endl;
+				 cout << "1.10 QuickSortASC" << endl;
 
          cout<<"2. Quit"<< endl;
          cout<<"Your selection: ";
@@ -217,11 +219,11 @@ void userInput(ThreadParameters parameters)
 				else if(selectedOption=="1.8")
 				{
 
-						//InsertionSortASC(parameters.array,parameters.percentage);
+						InsertionSortASC(parameters.array,parameters.percentage);
 				}
 				else if(selectedOption=="1.9")
 				{
-						//quickSortASC(parameters.array,parameters.percentage);
+						InsertionSortDSC(parameters.array,parameters.percentage);
 				}
 
         else if(selectedOption=="2")
@@ -450,3 +452,29 @@ void CocktailSortDSC(vector<Data>* array, float * percentage)
         ++start;
     }
 }
+void InsertionSortASC(vector<Data>* array, float * percentage)
+{
+	 for (int i = 1; i < array->size(); i++)
+	 {
+		 int j = i;
+		 while ((j > 0) && (array->at(j).dat < array->at(j - 1).dat))
+		  {
+				swapt(&array->at(j),&array->at(j-1));
+				cout << array->at(j).dat << endl;
+			 j = j - 1;
+		 }
+	 }
+ }
+ void InsertionSortDSC(vector<Data>* array, float * percentage)
+ {
+ 	 for (int i = 1; i < array->size(); i++)
+ 	 {
+ 		 int j = i;
+ 		 while ((j > 0) && (array->at(j).dat > array->at(j - 1).dat))
+ 		  {
+ 				swapt(&array->at(j),&array->at(j-1));
+ 				cout << array->at(j).dat << endl;
+ 			 j = j - 1;
+ 		 }
+ 	 }
+  }

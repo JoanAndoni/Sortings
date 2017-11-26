@@ -108,6 +108,10 @@ int main()
     vector<Data> array;
     bool windowStatus=true;
 		float percentage=0;
+		float instruccion1 = 0;
+		float instruccion2 = 0;
+		string Porcentaje;
+		string instruccion;
 
     ThreadParameters parameters = {&array,&windowStatus,&percentage};
 
@@ -153,6 +157,12 @@ int main()
 		if (event.key.code == sf::Keyboard::Down )
 			view1.move(0,1);
 
+			if (event.key.code == sf::Keyboard::Right )
+		  view1.move(-1,0);
+
+			if (event.key.code == sf::Keyboard::Left )
+		  view1.move(1,0);
+
 	}
 
   window.clear(sf::Color::White);//Limpia la pantalla
@@ -162,7 +172,7 @@ int main()
 	{
 		float b = array[i].dat;
 
-		sf::RectangleShape rec = drawRectangle((WINDOW_WIDTH/2)+(i*10), 100, array[i].stat,b);
+		sf::RectangleShape rec = drawRectangle((WINDOW_WIDTH/2)+(i*20), 100, array[i].stat,b);
 		window.draw(rec);
 		texture.draw(rec);
 	}
@@ -171,6 +181,9 @@ int main()
 	stringstream ss (stringstream::in | stringstream::out);
 	ss << a;
 	string s = ss.str();
+
+
+
 
 	 //Ejemplo para agregar texto
 	sf::Text Weight(s,font,TEXT_SIZE);
@@ -295,7 +308,7 @@ void MainMenu(ThreadParameters parameters)
 				}
 			}
 			break;
-				
+
 			case 2:
 			while (optionOrdenamiento1 != 0) {
 				optionOrdenamiento2 = 1;
@@ -449,7 +462,7 @@ void MainMenu(ThreadParameters parameters)
 									VerShellSortDSC(parameters.array,parameters.percentage);
 									break;
 
-									case 0:		
+									case 0:
 									break;
 
 									default:
@@ -657,7 +670,7 @@ void MainMenu(ThreadParameters parameters)
 									ShellSortDSC(parameters.array,parameters.percentage);
 									break;
 
-									case 0:		
+									case 0:
 									break;
 
 									default:
@@ -686,7 +699,7 @@ void MainMenu(ThreadParameters parameters)
 		      				}
 			    		}
 			    		promedios[i] = sum / count;
-			  		}	
+			  		}
 					//crear grafica
 					break;
 
@@ -724,7 +737,7 @@ void MainMenu(ThreadParameters parameters)
 			default:
 				cout << "\nOpción incorrecta ingresa un valor nuevamente" << endl;
 			break;
-		}	
+		}
 	}
 }
 
@@ -733,7 +746,7 @@ void MainMenu(ThreadParameters parameters)
 ///////////////////////////////poner cuadro////////////////////
 sf::RectangleShape drawRectangle(int x,int y, int stat,float a)
 {
-	sf::RectangleShape rectangle(sf::Vector2f(10, -(a+5)));
+	sf::RectangleShape rectangle(sf::Vector2f(15, -(a+15)));
 	if(stat==0)
 		rectangle.setFillColor(sf::Color(0, 255, 0));
 	else if(stat==1)
@@ -743,6 +756,7 @@ sf::RectangleShape drawRectangle(int x,int y, int stat,float a)
 	rectangle.move(sf::Vector2f(x,y));
 	return rectangle;
 }
+
 
 int busqueda(Data *dat1)
 {
@@ -1026,9 +1040,9 @@ void VerCocktailSortASC(vector<Data>* array, float * percentage)
                   swapt(&array->at(i),&array->at(i+1));
                 swapped = true;
             }
-							percentage1 = (float)i/(float)end * 100;
+							/*percentage1 = (float)i/(float)end * 100;
 							printf("porcentaje %d\n", percentage1);
-							*percentage = percentage1;
+							*percentage = percentage1;*/
         }
 
         if (!swapped)
@@ -1045,18 +1059,18 @@ void VerCocktailSortASC(vector<Data>* array, float * percentage)
                 swapt(&array->at(i),&array->at(i+1));
                 swapped = true;
             }
-						percentage2 = (float)i/(float)start * 100;
+					/*	percentage2 = (float)i/(float)start * 100;
 						printf("porcentaje %d\n", percentage2);
-						*percentage = percentage2;
+						*percentage = percentage2;*/
         }
         ++start;
-				if(start == tam-1)
+				if(start == end)
 				{
 					*percentage = 100;
 				}
-				else{
+				/*else{
 					*percentage = percentage1 + percentage2;
-				}
+				}*/
 
 				printf("porcentaje %f\n", *percentage);
     }
@@ -1369,7 +1383,7 @@ void coutBubbleSort(){
 	cout << "}" << endl;
 	cout << "printf(""porcentaje %f\n"", *percentage);" << endl;
     cout << "for (d = 0; d < array->size() - c - 1; d++)" << endl;
-    cout << "{" << endl; 
+    cout << "{" << endl;
     cout << "	if (array->at(d).dat < array->at(d+1).dat) swap2(d,d+1); << endl; " << endl;
     cout << "}" << endl;
 }

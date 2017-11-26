@@ -27,11 +27,14 @@ struct Data
 	float dat; //numero para la comparacion
 	int stat; //colores
 };
-
+ struct datos
+ {
+	 vector<Data>* instrucciones;
+ };
 struct ThreadParameters //parametros entre los threads
 {
     vector<Data>* array;
-		vector<Data>* instrucciones;
+		vector<datos>* instrucciones;
     bool* windowStatus;
 		float * percentage;
 		float *clave;
@@ -47,7 +50,7 @@ sf::RectangleShape drawRectangle(int x,int y, int stat, float a);
 
 //BUBBLE
 //****GRAFICO****
-void VerBubbleSortASC( vector<Data>* array, float * percentage);
+void VerBubbleSortASC( vector<Data>* array, float * percentage, vector<datos>*instrucciones);
 void VerBubbleSortDSC( vector<Data>* array, float * percentage);
 //****NORMAL****
 void BubbleSortASC( vector<Data>* array, float * percentage);
@@ -109,7 +112,7 @@ int main()
 {
     //Variables//
       vector<Data> array;
-			vector<Data> instrucciones;
+			vector<datos> instrucciones;
 	    bool windowStatus=true;
 			float percentage=0;
 
@@ -183,10 +186,11 @@ int main()
 
 	for(int i=0;i<instrucciones.size();i++)
 	{
-		float b = instrucciones[i].dat;
-		//impresion en y
+				//impresion en y
+		for(int j=0;j<instrucciones[i].instrucciones->size();i++)
 		{
-			sf::RectangleShape rec2 = drawRectangle((i*20), i * 300, instrucciones[i].stat,b);
+			float b = instrucciones[i].instrucciones->at(j).dat;
+			sf::RectangleShape rec2 = drawRectangle((i*20), i * 300, instrucciones[i].instrucciones->at(j).stat,b);
 			window.draw(rec2);
 			texture.draw(rec2);
 		}
@@ -358,7 +362,7 @@ void MainMenu(ThreadParameters parameters)
 								cin >> optionOrdenamiento3;
 								switch (optionOrdenamiento3) {
 									case 1:
-									VerBubbleSortASC(parameters.array,parameters.percentage);
+									VerBubbleSortASC(parameters.array,parameters.percentage, parameters.instrucciones);
 									break;
 
 									case 2:
@@ -913,10 +917,9 @@ void swap2(int dat1, int dat2)
 }
 
 //***********BUBBLE SORT**********
-void VerBubbleSortASC( vector<Data>* array, float * percentage)
+void VerBubbleSortASC( vector<Data>* array, float * percentage, vector<datos>*instrucciones)
 {
 	int tam = array->size();
-	cout << "Tamaño" << tam << endl;
     int c, d;
 		double b;
     for (c = 0; c <= (array->size() - 1); c++)
@@ -934,6 +937,7 @@ void VerBubbleSortASC( vector<Data>* array, float * percentage)
             if (array->at(d).dat > array->at(d+1).dat)
             {
 							swapt(&array->at(d),&array->at(d+1));
+							instrucciones->instrucciones->push_back(*array);
             }
         }
     }
@@ -1158,9 +1162,9 @@ void VerCocktailSortASC(vector<Data>* array, float * percentage)
                 swapt(&array->at(i),&array->at(i+1));
                 swapped = true;
             }
-					/*	percentage2 = (float)i/(float)start * 100;
+						percentage2 = (float)i/(float)start * 50;
 						printf("porcentaje %d\n", percentage2);
-						*percentage = percentage2;*/
+						*percentage = percentage1 + percentage2;
         }
         ++start;
 				if(start == end)
@@ -1370,16 +1374,15 @@ void VerShellSortASC(vector<Data>* array, float * percentage)
 					{
 						swapt(&array->at(j),&array->at(j+c));
 					}
-				}
-				if(c == tam/2){
-					*percentage = 100;
-				}
-				else{
-					*percentage = (float)c/(float)tam * 100;
-				}
-				printf("porcentaje %f\n", *percentage);
-
 		}
+		if(c == 1){
+			*percentage = 100;
+		}
+		else{
+			*percentage = (float)c/(float)tam/2 * 100;
+		}
+		printf("porcentaje %f\n", *percentage);
+	}
 }
 void ShellSortASC(vector<Data>* array, float * percentage)
 {
@@ -1399,49 +1402,50 @@ void ShellSortASC(vector<Data>* array, float * percentage)
 }
 void VerShellSortDSC(vector<Data>* array, float * percentage)
 {
-		float tam = array->size();
-    int c, i, j, temp;
-    for (c = (array->size())/2; c >= 0; c /= 2)
+	float tam = array->size();
+	int c, i, j, temp;
+	for (c = (array->size())/2; c > 0; c /= 2)
+	{
+		for (i = c; i < array->size(); i++)
+			{
+				for (j=i-c; j>=0 && array->at(j).dat < array->at(j + c).dat; j-=c)
+				{
+					swapt(&array->at(j),&array->at(j+c));
+				}
+			}
+			if(c == tam/2){
+				*percentage = 100;
+			}
+			else{
+				*percentage = (float)c/(float)tam * 100;
+			}
+			printf("porcentaje %f\n", *percentage);
 
-        for (i = c; i < array->size(); i++)
-					{
-						for (j=i-c; j>=0 && array->at(j).dat < array->at(j + c).dat; j-=c)
-						{
-							swapt(&array->at(j),&array->at(j+c));
-
-            }
-					}
-					if(i == 1){
-						*percentage = 100;
-					}
-					else{
-						*percentage = (float)c/(float)tam * 100;
-					}
-					printf("porcentaje %f\n", *percentage);
+	}
 
 }
 void ShellSortDSC(vector<Data>* array, float * percentage)
 {
-		float tam = array->size();
-    int c, i, j, temp;
-    for (c = (array->size())/2; c >= 0; c /= 2)
-		{
-			for (i = c; i < array->size(); i++)
-					{
-						for (j=i-c; j>=0 && array->at(j).dat < array->at(j + c).dat; j-=c)
-						{
-							swap2(j,j+c);
+	float tam = array->size();
+	int c, i, j, temp;
+	for (c = (array->size())/2; c > 0; c /= 2)
+	{
+		for (i = c; i < array->size(); i++)
+			{
+				for (j=i-c; j>=0 && array->at(j).dat < array->at(j + c).dat; j-=c)
+				{
+					swap2(j,j+c);
+				}
+			}
+			if(c == tam/2){
+				*percentage = 100;
+			}
+			else{
+				*percentage = (float)c/(float)tam * 100;
+			}
+			printf("porcentaje %f\n", *percentage);
 
-            }
-					}
-					if(i == 1){
-						*percentage = 100;
-					}
-					else{
-						*percentage = (float)c/(float)tam * 100;
-					}
-					printf("porcentaje %f\n", *percentage);
-		}
+	}
 }
 
 void coutBubbleSort(){
@@ -1459,17 +1463,14 @@ void coutBubbleSort(){
 	cout << "	*percentage = (float)c/(float)tam * 100;" << endl;
 	cout << "}" << endl;
 	cout << "printf(""porcentaje %f"", *percentage);" << endl;
-<<<<<<< HEAD
   cout << "for (d = 0; d < array->size() - c - 1; d++)" << endl;
   cout << "{" << endl;
   cout << "	if (array->at(d).dat < array->at(d+1).dat) swap2(d,d+1); << endl; " << endl;
   cout << "}" << endl;
-=======
-    cout << "for (d = 0; d < array->size() - c - 1; d++)" << endl;
-    cout << "{" << endl;
-    cout << "	if (array->at(d).dat < array->at(d+1).dat) swap2(d,d+1); << endl; " << endl;
-    cout << "}" << endl;
->>>>>>> 5659778ab6dbe93a62e25aa48c3cadf87a5315c4
+  cout << "for (d = 0; d < array->size() - c - 1; d++)" << endl;
+  cout << "{" << endl;
+  cout << "	if (array->at(d).dat < array->at(d+1).dat) swap2(d,d+1); << endl; " << endl;
+  cout << "}" << endl;
 }
 
 void coutSelectionSort(){

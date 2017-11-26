@@ -1,26 +1,25 @@
 #include <iostream>
+#include <sstream>
+#include <ctime>
+#include <math.h>
+#include <iomanip>
+#include <cstdlib>
+#include <fstream>
+#include <unistd.h>
 #include <exception>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
-#include <unistd.h>
-#include <math.h>
-#include <iostream>
-#include <sstream>
-#include <iomanip>
+#include <jsoncpp/json/json.h>
+#include <jsoncpp/json/writer.h>
 
 using namespace std;
 
-
-
-//Constants
-
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
-#define TEXT_SIZE 20
-//velocidad
-#define ANIMATION_RATE 200000
-//veces qu repite la animacion
+#define TEXT_SIZE 20 //velocidad
+#define ANIMATION_RATE 200000 //veces qu repite la animacion
 #define ANIMATION_LOOP 4 //Debe ser par para que se vea bien
+
 struct Data
 {
 	float dat; //numero para la comparacion
@@ -36,7 +35,7 @@ struct ThreadParameters //parametros entre los threads
 };
 
 //Functions//
-
+void MainMenu(ThreadParameters);
 void userInput(ThreadParameters);
 sf::RectangleShape drawRectangle(int x,int y, int stat, float a);
 // --------SORTS--------
@@ -154,11 +153,76 @@ int main()
     return 0;
 }
 
+void MainMenu(ThreadParameters parameters)
+{
+  int option = 0, option2 = 0, numberRandoms;
+	Data num;;
+	srand (static_cast <unsigned> (time(0)));
+
+  	cout << "--------------PROYECTO FINAL DE ALGORTIMOS--------------" << endl << endl;
+  	cout << "1.- Crear elementos aleatorios" << endl;
+  	cout << "2.- Ingresar manualmente elementos" << endl;
+  	cout << "0.- Salir" << endl;
+  	cout << "Ingresa la opcion que desees: " << endl;
+  	cin >> option;
+  	switch (option) {
+    	case 1:
+			while (option2 != 0) {
+				cout << "1.- Ingresar el numero de elementos que desea generar: " << endl;
+				cout << "0.- Terminar" << endl;
+		  	cin >> option2;
+		  	switch (option2) {
+		    	case 1:
+					cin >> numberRandoms;
+					for (int i = 0; i < numberRandoms; i++) {
+						num.dat = ((float)rand()/(float)(RAND_MAX));
+						num.stat = 0;
+						parameters.array->push_back(num);
+					}
+					option2 = 0;
+					break;
+
+					case 0:
+					break;
+				}
+			}
+    	break;
+
+    	case 2:
+			while (option2 != 0) {
+				cout << "1.- Ingresar número" << endl;
+				cout << "0.- Terminar" << endl;
+		  	cin >> option2;
+		  	switch (option) {
+		    	case 1:
+					cout << "n: ";
+					cin>>num.dat;
+				 	num.stat=0;
+				 	parameters.array->push_back(num);
+		    	break;
+
+					case 0:
+					break;
+				}
+    	break;
+
+    	case 0:
+				exit(0);
+    	break;
+
+    	default:
+      	cout << "Opción incorrecta ingresa un valor nuevamente" << endl;
+    	break;
+  		}
+		}
+
+
+}
+
 
 ///////////////////////menu///////////////////////////
 void userInput(ThreadParameters parameters)
 {
-
     //Variables for user inputs//
      string selectedOption;
     Data num;
@@ -202,6 +266,7 @@ void userInput(ThreadParameters parameters)
 						 cout<<"Ejecutando swap"<< endl;
 						swapt(&parameters.array->at(1),&parameters.array->at(2));
 				}
+
 				else if(selectedOption=="1.2")
 				{
 
@@ -621,6 +686,201 @@ int busquedaLineal(vector<Data>* array, float clave)
   return resultado1;
 
 }
+
+void exportJSON(float array[6][100])
+{
+  ofstream file_id;
+  file_id.open("ExecTimes.json");
+
+  Json::Value event;
+  Json::Value vec1(Json::arrayValue);
+  Json::Value vec2(Json::arrayValue);
+  Json::Value vec3(Json::arrayValue);
+  Json::Value vec4(Json::arrayValue);
+  Json::Value vec5(Json::arrayValue);
+  Json::Value vec6(Json::arrayValue);
+
+  for (int i = 0; i < 6; i++){
+      switch (i) {
+        case 0:
+        for (int i2 = 0; i2 < 100; i2++) {
+          if (array[i][i2] > 0) {
+          vec1.append(Json::Value(array[i][i2]));;
+          event["Sorts"]["BubbleSort"]["Times"] = vec1;
+          }
+        }
+      break;
+
+      case 1:
+      for (int i2 = 0; i2 < 100; i2++) {
+        if (array[i][i2] > 0) {
+          vec2.append(Json::Value(array[i][i2]));;
+          event["Sorts"]["SelectionSort"]["Times"] = vec2;
+        }
+      }
+
+      break;
+
+      case 2:
+      for (int i2 = 0; i2 < 100; i2++) {
+        if (array[i][i2] > 0) {
+          vec3.append(Json::Value(array[i][i2]));;
+          event["Sorts"]["CocktailSort"]["Times"] = vec3;
+        }
+      }
+      break;
+
+      case 3:
+      for (int i2 = 0; i2 < 100; i2++) {
+        if (array[i][i2] > 0) {
+          vec4.append(Json::Value(array[i][i2]));;
+          event["Sorts"]["InsertionSort"]["Times"] = vec4;
+        }
+      }
+      break;
+
+      case 4:
+      for (int i2 = 0; i2 < 100; i2++) {
+        if (array[i][i2] > 0) {
+          vec5.append(Json::Value(array[i][i2]));;
+          event["Sorts"]["ShellSort"]["Times"] = vec5;
+        }
+      }
+      break;
+
+      case 5:
+      for (int i2 = 0; i2 < 100; i2++) {
+        if (array[i][i2] > 0) {
+          vec6.append(Json::Value(array[i][i2]));;
+          event["Sorts"]["XSort"]["Times"] = vec6;
+        }
+      }
+      break;
+    }
+  }
+  Json::StyledWriter styledWriter;
+  file_id << styledWriter.write(event);
+  file_id.close();
+
+  ofstream outfile;
+  outfile.open("ExecTimes.CSV");
+	for (int i = 0; i < 6; i++) {
+      switch (i) {
+        case 0:
+        outfile<<"BubbleSort"<<endl;
+        for (int i2 = 0; i2 < 100; i2++){
+          if(array[i][i2] > 0) {
+            outfile<<array[i][i2]<<endl;
+          }
+        }
+        break;
+        case 1:
+        outfile<<"SelectionSort"<<endl;
+        for (int i2 = 0; i2 < 100; i2++){
+          if(array[i][i2] > 0) {
+            outfile<<array[i][i2]<<endl;
+          }
+        }
+        break;
+        case 2:
+        outfile<<"CocktailSort"<<endl;
+        for (int i2 = 0; i2 < 100; i2++){
+          if(array[i][i2] > 0) {
+            outfile<<array[i][i2]<<endl;
+          }
+        }
+        break;
+        case 3:
+        outfile<<"InsertionSort"<<endl;
+        for (int i2 = 0; i2 < 100; i2++){
+          if(array[i][i2] > 0) {
+            outfile<<array[i][i2]<<endl;
+          }
+        }
+        break;
+        case 4:
+        outfile<<"ShellSort"<<endl;
+        for (int i2 = 0; i2 < 100; i2++){
+          if(array[i][i2] > 0) {
+            outfile<<array[i][i2]<<endl;
+          }
+        }
+        break;
+        case 5:
+        outfile<<"XSort"<<endl;
+        for (int i2 = 0; i2 < 100; i2++){
+          if(array[i][i2] > 0) {
+            outfile<<array[i][i2]<<endl;
+          }
+        }
+        break;
+      }
+		}
+	outfile.close();
+}
+
+
+void exportCSV(float array[6][100])
+{
+  ofstream outfile;
+  outfile.open("ExecTimes.CSV");
+	for (int i = 0; i < 6; i++) {
+      switch (i) {
+        case 0:
+        outfile<<"BubbleSort"<<endl;
+        for (int i2 = 0; i2 < 100; i2++){
+          if(array[i][i2] > 0) {
+            outfile<<array[i][i2]<<endl;
+          }
+        }
+        break;
+        case 1:
+        outfile<<"SelectionSort"<<endl;
+        for (int i2 = 0; i2 < 100; i2++){
+          if(array[i][i2] > 0) {
+            outfile<<array[i][i2]<<endl;
+          }
+        }
+        break;
+        case 2:
+        outfile<<"CocktailSort"<<endl;
+        for (int i2 = 0; i2 < 100; i2++){
+          if(array[i][i2] > 0) {
+            outfile<<array[i][i2]<<endl;
+          }
+        }
+        break;
+        case 3:
+        outfile<<"InsertionSort"<<endl;
+        for (int i2 = 0; i2 < 100; i2++){
+          if(array[i][i2] > 0) {
+            outfile<<array[i][i2]<<endl;
+          }
+        }
+        break;
+        case 4:
+        outfile<<"ShellSort"<<endl;
+        for (int i2 = 0; i2 < 100; i2++){
+          if(array[i][i2] > 0) {
+            outfile<<array[i][i2]<<endl;
+          }
+        }
+        break;
+        case 5:
+        outfile<<"XSort"<<endl;
+        for (int i2 = 0; i2 < 100; i2++){
+          if(array[i][i2] > 0) {
+            outfile<<array[i][i2]<<endl;
+          }
+        }
+        break;
+      }
+		}
+	outfile.close();
+}
+
+
+
 /*int busquedaLineal(vector<Data>* array, int clave)
 {
 	int tam = array->size();

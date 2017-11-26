@@ -32,6 +32,7 @@ struct ThreadParameters //parametros entre los threads
     vector<Data>* array;
     bool* windowStatus;
 		float * percentage;
+		float *clave;
 };
 
 //Functions//
@@ -60,7 +61,12 @@ void ShellSortDSC(vector<Data>* array, float * percentage);
 //QUICK
 int partition (vector<Data>* array, float * percentage, Data *low, Data *high);
 void QuickSortASC(vector<Data>* array, float * percentage, Data *l, Data *h);
+//FUNCION DE INTERCAMBIO DE VALORES
 void swapt(Data *dat1, Data *dat2);
+//BUSQUEDA LINEAL
+int busquedaLineal(vector<Data>* array, float clave);
+int busqueda(Data *dat1);
+int resultado(Data *dat1);
 
 
 int main()
@@ -174,6 +180,7 @@ void userInput(ThreadParameters parameters)
 				 cout << "1.10 ShellSortASC" << endl;
 				 cout << "1.11 ShellSortASC" << endl;
 				 cout << "1.12 Heap" << endl;
+				 cout << "3. Busqueda Secuencial" << endl;
 
          cout<<"2. Quit"<< endl;
          cout<<"Your selection: ";
@@ -246,6 +253,23 @@ void userInput(ThreadParameters parameters)
 				{
 						//heapSort(parameters.array,parameters.percentage);
 				}
+				else if(selectedOption=="3")
+				{
+					float clave, resultado2;
+					cout << "ingrese el valor a buscar" << endl;
+					cin >> clave;
+					resultado2 = busquedaLineal(parameters.array, clave);
+
+		    if (resultado2 == -1)
+		    {
+		        cout << " >> El número " << clave << " NO se encuentra dentro del arreglo " <<  resultado2 << endl;
+		    }
+
+		    else{
+		        cout << " >> El número " << clave << " se encuentra en la posición (" << resultado2 << ") del arreglo" << endl;
+		    }
+
+				}
 
         else if(selectedOption=="2")
             *parameters.windowStatus=false;
@@ -269,7 +293,26 @@ sf::RectangleShape drawRectangle(int x,int y, int stat,float a)
 	rectangle.move(sf::Vector2f(x,y));
 	return rectangle;
 }
-
+int busqueda(Data *dat1)
+{
+	int stat = 1;
+	for(int x=0;x<ANIMATION_LOOP;x++)
+	{
+		dat1->stat=stat;
+		usleep(ANIMATION_RATE);
+		if(stat)
+			stat=0;
+		else
+			stat=1;
+	}
+	//dat1->stat=2;
+	return 1;
+}
+int resultado(Data *dat1)
+{
+	dat1->stat=2;
+	return 1;
+}
 void swapt(Data *dat1, Data *dat2)
 {
 	int stat=1;
@@ -560,7 +603,38 @@ void ShellSortDSC(vector<Data>* array, float * percentage)
 					printf("porcentaje %f\n", *percentage);
 
 }
+int busquedaLineal(vector<Data>* array, float clave)
+{
+	int i, resultado1 = -1;
+  for ( i = 0; i< array->size() ; i++)
+	{
+		busqueda(&array->at(i));
+		if(array->at(i).dat == clave)
+		{
+			resultado1 = i;
+			resultado(&array->at(resultado1));
+			break;
+		}
 
+	}
+	cout << "resultqda" << resultado1 << endl;
+  return resultado1;
+
+}
+/*int busquedaLineal(vector<Data>* array, int clave)
+{
+	int tam = array->size();
+	int resultado1 = -1; // declaro la variable "resultado" y la inicializo en "-1" por si no se encuentra el resultado
+	for(int i = 0; i < tam; i++) //mientras "i" sea menor que el tamaño del arreglo
+	{
+		if(busqueda(&array->at(i)) == clave) //comparar si "k" (el valor que estamos buscando) es igual al elemento dentro del arreglo en la posición "i"
+		{
+			resultado1 = i;
+		}
+	}
+	resultado(&array->at(resultado1));
+	return resultado1; //la función devuelve el resultado
+}*/
 
 /* void heapSort(vector<Data>* array, float * percentage)
     {

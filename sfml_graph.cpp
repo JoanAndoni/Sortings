@@ -35,10 +35,13 @@ struct ThreadParameters //parametros entre los threads
 };
 
 //Functions//
+void exportCSV(float array[5][100]);
+void exportJSON(float array[5][100]);
 void MainMenu(ThreadParameters);
-void userInput(ThreadParameters);
 sf::RectangleShape drawRectangle(int x,int y, int stat, float a);
+
 // --------SORTS--------
+
 //BUBBLE
 //****GRAFICO****
 void VerBubbleSortASC( vector<Data>* array, float * percentage);
@@ -46,6 +49,9 @@ void VerBubbleSortDSC( vector<Data>* array, float * percentage);
 //****NORMAL****
 void BubbleSortASC( vector<Data>* array, float * percentage);
 void BubbleSortDSC( vector<Data>* array, float * percentage);
+//****COUT****
+void coutBubbleSort();
+
 //SELECTION
 //****GRAFICO****
 void VerSelectionSortASC(vector<Data>* array, float * percentage);
@@ -53,6 +59,9 @@ void VerSelectionSortDSC(vector<Data>* array, float * percentage);
 //****NORMAL****
 void SelectionSortASC(vector<Data>* array, float * percentage);
 void SelectionSortDSC(vector<Data>* array, float * percentage);
+//****COUT****
+void coutSelectionSort();
+
 //COCKTAIL
 //****GRAFICO****
 void VerCocktailSortASC(vector<Data>* array, float * percentage);
@@ -60,13 +69,19 @@ void VerCocktailSortDSC(vector<Data>* array, float * percentage);
 //****NORMAL****
 void CocktailSortASC(vector<Data>* array, float * percentage);
 void CocktailSortDSC(vector<Data>* array, float * percentage);
-//ISERTION
+//****COUT****
+void coutCocktailSort();
+
+//INSERTION
 //****GRAFICO****
 void VerInsertionSortASC(vector<Data>* array, float * percentage);
 void VerInsertionSortDSC(vector<Data>* array, float * percentage);
 //****NORMAL****
 void InsertionSortASC(vector<Data>* array, float * percentage);
 void InsertionSortDSC(vector<Data>* array, float * percentage);
+//****COUT****
+void coutInsertionSort();
+
 //SHELL
 //****GRAFICO****
 void VerShellSortASC(vector<Data>* array, float * percentage);
@@ -74,6 +89,8 @@ void VerShellSortDSC(vector<Data>* array, float * percentage);
 //****NORMAL****
 void ShellSortASC(vector<Data>* array, float * percentage);
 void ShellSortDSC(vector<Data>* array, float * percentage);
+//****COUT****
+void coutShellSort();
 
 //FUNCION DE INTERCAMBIO DE VALORES
 //****GRAFICO****
@@ -94,8 +111,8 @@ int main()
 
     ThreadParameters parameters = {&array,&windowStatus,&percentage};
 
-    // Create a thread for userInput function and runs it//
-    sf::Thread thread(&userInput,parameters);
+    // Create a thread for MainMenu function and runs it//
+    sf::Thread thread(&MainMenu,parameters);
     thread.launch();
 
     //Main thread//
@@ -172,47 +189,46 @@ int main()
 
 void MainMenu(ThreadParameters parameters)
 {
-  int option = 0, option2 = 0, numberRandoms;
+  	int optionProyect = 1, optionProyect2 = 1, optionProyect3 = 1, option = 1, option2 =1;
+	float clave, resultado2, numberRandoms, datos[5][100], promedios[5], prom = 0, sum, count = 0;
 	Data num;;
+
+  	for (int i = 0; i < 5; i++){
+    	for (int i2 = 0; i2 < 100; i2++) {
+      		datos[i][i2] = -1;
+    	}
+  	}
+
 	srand (static_cast <unsigned> (time(0)));
 
   	cout << "--------------PROYECTO FINAL DE ALGORTIMOS--------------" << endl << endl;
   	cout << "1.- Crear elementos aleatorios" << endl;
   	cout << "2.- Ingresar manualmente elementos" << endl;
   	cout << "0.- Salir" << endl;
-  	cout << "Ingresa la opcion que desees: " << endl;
-  	cin >> option;
-  	switch (option) {
+  	cout << "\nIngresa la opcion que desees: " << endl;
+  	cin >> optionProyect;
+  	switch (optionProyect) {
     	case 1:
-			while (option2 != 0) {
-				cout << "1.- Ingresar el numero de elementos que desea generar: " << endl;
-				cout << "0.- Terminar" << endl;
-		  	cin >> option2;
-		  	switch (option2) {
-		    	case 1:
+
+				cout << "\nIngresa el numero de elementos que desea generar: " << endl;
+					cout << "n: ";
 					cin >> numberRandoms;
 					for (int i = 0; i < numberRandoms; i++) {
 						num.dat = ((float)rand()/(float)(RAND_MAX));
 						num.stat = 0;
 						parameters.array->push_back(num);
 					}
-					option2 = 0;
-					break;
-
-					case 0:
-					break;
-				}
-			}
     	break;
 
     	case 2:
-			while (option2 != 0) {
-				cout << "1.- Ingresar número" << endl;
+			while (optionProyect3 != 0) {
+				cout << "\n1.- Ingresar número" << endl;
 				cout << "0.- Terminar" << endl;
-		  	cin >> option2;
-		  	switch (option) {
+				cout << "\nIngresa la opcion que desees: " << endl;
+		  	cin >> optionProyect3;
+		  	switch (optionProyect3) {
 		    	case 1:
-					cout << "n: ";
+					cout << "\nn: ";
 					cin>>num.dat;
 				 	num.stat=0;
 				 	parameters.array->push_back(num);
@@ -220,7 +236,12 @@ void MainMenu(ThreadParameters parameters)
 
 					case 0:
 					break;
+
+					default:
+		      	cout << "> Opción incorrecta ingresa un valor nuevamente" << endl;
+		    	break;
 				}
+			}
     	break;
 
     	case 0:
@@ -228,125 +249,485 @@ void MainMenu(ThreadParameters parameters)
     	break;
 
     	default:
-      	cout << "Opción incorrecta ingresa un valor nuevamente" << endl;
+      	cout << "> Opción incorrecta ingresa un valor nuevamente" << endl;
     	break;
-  		}
-		}
+  	}
 
+	int optionAlgoritmos =1, optionBusqueda1 = 1,optionBusqueda2 = 1, optionBusqueda3 = 1;
+	int optionOrdenamiento1 = 1, optionOrdenamiento2 = 1, optionOrdenamiento3 = 1;
+	int optionOrdenamiento4 = 1, optionOrdenamiento5 = 1, optionExport = 1 ;
+	bool init = true;
+	while(init){
+		optionOrdenamiento1 = 1;
+		cout << "\n----------------------ALGORTIMOS------------------------" << endl << endl;
+		cout << "1.- De busqueda" << endl;
+		cout << "2.- De ordenamiento" << endl;
+		cout << "0.- Salir" << endl;
+		cout << "\nIngresa la opcion que desees: " << endl;
+		cin >> optionAlgoritmos;
+		switch (optionAlgoritmos) {
+			case 1:
+			while (optionBusqueda1 != 0) {
+				optionBusqueda2 = 1;
+				cout << "\n-----------------------BUSQUEDA-------------------------" << endl << endl;
+				cout << "1.- Buscar un número" << endl;
+				cout << "0.- Regresar" << endl;
+				cout << "\nIngresa la opcion que desees: " << endl;
+				cin >> optionBusqueda1;
+				switch (optionBusqueda1) {
+					case 1:
+						cout << "\nIngresar el número a buscar " << endl;
+						cout << "n: ";
+						cin >> clave;
+						resultado2 = busquedaLineal(parameters.array, clave);
+					    if (resultado2 == -1) cout << " >> El número " << clave << " no se encuentra dentro del arreglo " <<  resultado2 << endl;
+					    else{
+					    cout << " >> El número " << clave << " se encuentra en la posición (" << resultado2 << ") del arreglo" << endl;
+					 	}
+					break;
 
+					case 0:
+					break;
+
+					default:
+			      		cout << "\nOpción incorrecta ingresa un valor nuevamente" << endl;
+			    	break;
+				}
+			}
+			break;
+				
+			case 2:
+			while (optionOrdenamiento1 != 0) {
+				optionOrdenamiento2 = 1;
+				cout << "\n---------------------ORDENAMIENTO-----------------------" << endl << endl;
+				cout << "1.- Visualizar algortimo de ordenamiento" << endl;
+				cout << "2.- Comparar dos algortimos de ordenamiento" << endl;
+				cout << "3.- Visualizar código de los algortimos" << endl;
+				cout << "4.- Correr un algortimo velocidad máxima" << endl;
+				cout << "5.- Gráfica con el promedio de los tiempos de ejecución" << endl;
+				cout << "6.- Exportar tiempos de ejecución" << endl;
+				cout << "0.- Regresar" << endl;
+				cout << "\nIngresa la opcion que desees: " << endl;
+				cin >> optionOrdenamiento1;
+				switch (optionOrdenamiento1) {
+					case 1:
+					while (optionOrdenamiento2 != 0){
+						optionOrdenamiento3 = 1;
+						cout << "\n---------------------INESTABLES------------------------" << endl << endl;
+						cout << "1.- Bubble Sort" << endl;
+						cout << "2.- Insertion Sort" << endl;
+						cout << "3.- Cocktail Sort" << endl;
+						cout << "----------------------ESTABLES-------------------------" << endl;
+						cout << "4.- Selection Sort" << endl;
+						cout << "5.- Shell Sort" << endl;
+						cout << "0.- Regresar" << endl;
+						cout << "\nIngresa la opcion que desees: " << endl;
+						cin >> optionOrdenamiento2;
+						switch (optionOrdenamiento2){
+							case 1:
+							while (optionOrdenamiento3 != 0){
+								cout << "\n-----------------------ORDEN---------------------------" << endl << endl;
+								cout << "1.- Ascendente" << endl;
+								cout << "2.- Descendente" << endl;
+								cout << "0.- Regresar" << endl;
+								cout << "\nIngresa la opcion que desees: " << endl;
+								cin >> optionOrdenamiento3;
+								switch (optionOrdenamiento3) {
+									case 1:
+									VerBubbleSortASC(parameters.array,parameters.percentage);
+									break;
+
+									case 2:
+									VerBubbleSortDSC(parameters.array,parameters.percentage);
+									break;
+
+									case 0:
+									break;
+
+									default:
+						      		cout << "\nOpción incorrecta ingresa un valor nuevamente" << endl;
+						    		break;
+								}
+							}
+							break;
+
+							case 2:
+							while (optionOrdenamiento3 != 0){
+								cout << "\n-----------------------ORDEN---------------------------" << endl << endl;
+								cout << "1.- Ascendente" << endl;
+								cout << "2.- Descendente" << endl;
+								cout << "0.- Regresar" << endl;
+								cout << "\nIngresa la opcion que desees: " << endl;
+								cin >> optionOrdenamiento3;
+								switch (optionOrdenamiento3) {
+									case 1:
+									VerInsertionSortASC(parameters.array,parameters.percentage);
+									break;
+
+									case 2:
+									VerInsertionSortDSC(parameters.array,parameters.percentage);
+									break;
+
+									case 0:
+									break;
+
+									default:
+							      	cout << "\nOpción incorrecta ingresa un valor nuevamente" << endl;
+							    	break;
+								}
+							}
+							break;
+
+							case 3:
+							while (optionOrdenamiento3 != 0){
+								cout << "\n-----------------------ORDEN---------------------------" << endl << endl;
+								cout << "1.- Ascendente" << endl;
+								cout << "2.- Descendente" << endl;
+								cout << "0.- Regresar" << endl;
+								cout << "\nIngresa la opcion que desees: " << endl;
+								cin >> optionOrdenamiento3;
+								switch (optionOrdenamiento3) {
+									case 1:
+									VerCocktailSortASC(parameters.array,parameters.percentage);
+									break;
+
+									case 2:
+									VerCocktailSortDSC(parameters.array,parameters.percentage);
+									break;
+
+									case 0:
+									break;
+
+									default:
+							      	cout << "\nOpción incorrecta ingresa un valor nuevamente" << endl;
+							    	break;
+								}
+							}
+							break;
+
+							case 4:
+							while (optionOrdenamiento3 != 0){
+								cout << "\n-----------------------ORDEN---------------------------" << endl << endl;
+								cout << "1.- Ascendente" << endl;
+								cout << "2.- Descendente" << endl;
+								cout << "0.- Regresar" << endl;
+								cout << "\nIngresa la opcion que desees: " << endl;
+								cin >> optionOrdenamiento3;
+								switch (optionOrdenamiento3) {
+									case 1:
+									VerSelectionSortASC(parameters.array,parameters.percentage);
+									break;
+
+									case 2:
+									VerSelectionSortDSC(parameters.array,parameters.percentage);
+									break;
+
+									case 0:
+									break;
+
+									default:
+							      	cout << "\nOpción incorrecta ingresa un valor nuevamente" << endl;
+							    	break;
+								}
+							}
+							break;
+
+							case 5:
+							while (optionOrdenamiento3 != 0){
+								cout << "\n-----------------------ORDEN---------------------------" << endl << endl;
+								cout << "1.- Ascendente" << endl;
+								cout << "2.- Descendente" << endl;
+								cout << "0.- Regresar" << endl;
+								cout << "\nIngresa la opcion que desees: " << endl;
+								cin >> optionOrdenamiento3;
+									switch (optionOrdenamiento3) {
+									case 1:
+									VerShellSortASC(parameters.array,parameters.percentage);
+									break;
+
+									case 2:
+									VerShellSortDSC(parameters.array,parameters.percentage);
+									break;
+
+									case 0:		
+									break;
+
+									default:
+							      	cout << "\nOpción incorrecta ingresa un valor nuevamente" << endl;
+							    	break;
+								}
+							}
+							break;
+
+							case 0:
+							break;
+
+							default:
+			    			cout << "\nOpción incorrecta ingresa un valor nuevamente" << endl;
+							break;
+						}
+					}
+					break;
+
+					case 2:
+					cout << "\n----------------------COMPARAR-------------------------" << endl << endl;
+					cout << "Seleccione los dos algoritmos que desea comparar" << endl;
+					break;
+
+					case 3:
+					while (optionOrdenamiento2 != 0){
+						optionOrdenamiento3 = 1;
+						cout << "\n---------------------INESTABLES------------------------" << endl << endl;
+						cout << "1.- Bubble Sort" << endl;
+						cout << "2.- Insertion Sort" << endl;
+						cout << "3.- Cocktail Sort" << endl;
+						cout << "----------------------ESTABLES-------------------------" << endl;
+						cout << "4.- Selection Sort" << endl;
+						cout << "5.- Shell Sort" << endl;
+						cout << "0.- Regresar" << endl;
+						cout << "\nIngresa la opcion que desees: " << endl;
+						cin >> optionOrdenamiento2;
+						switch (optionOrdenamiento2){
+							case 1:
+							coutBubbleSort();
+							break;
+
+							case 2:
+							coutInsertionSort();
+							break;
+
+							case 3:
+							coutCocktailSort();
+							break;
+
+							case 4:
+							coutSelectionSort();
+							break;
+
+							case 5:
+							coutShellSort();
+							break;
+
+							case 0:
+							break;
+
+							default:
+			    			cout << "\nOpción incorrecta ingresa un valor nuevamente" << endl;
+							break;
+						}
+					}
+					break;
+
+					case 4:
+					while (optionOrdenamiento2 != 0){
+						optionOrdenamiento3 = 1;
+						cout << "\n---------------------INESTABLES------------------------" << endl << endl;
+						cout << "1.- Bubble Sort" << endl;
+						cout << "2.- Insertion Sort" << endl;
+						cout << "3.- Cocktail Sort" << endl;
+						cout << "----------------------ESTABLES-------------------------" << endl;
+						cout << "4.- Selection Sort" << endl;
+						cout << "5.- Shell Sort" << endl;
+						cout << "0.- Regresar" << endl;
+						cout << "\nIngresa la opcion que desees: " << endl;
+						cin >> optionOrdenamiento2;
+						switch (optionOrdenamiento2){
+							case 1:
+							while (optionOrdenamiento3 != 0){
+								cout << "\n-----------------------ORDEN---------------------------" << endl << endl;
+								cout << "1.- Ascendente" << endl;
+								cout << "2.- Descendente" << endl;
+								cout << "0.- Regresar" << endl;
+								cout << "\nIngresa la opcion que desees: " << endl;
+								cin >> optionOrdenamiento3;
+								switch (optionOrdenamiento3) {
+									case 1:
+									BubbleSortASC(parameters.array,parameters.percentage);
+									break;
+
+									case 2:
+									BubbleSortDSC(parameters.array,parameters.percentage);
+									break;
+
+									case 0:
+									break;
+
+									default:
+						      		cout << "\nOpción incorrecta ingresa un valor nuevamente" << endl;
+						    		break;
+								}
+							}
+							break;
+
+							case 2:
+							while (optionOrdenamiento3 != 0){
+								cout << "\n-----------------------ORDEN---------------------------" << endl << endl;
+								cout << "1.- Ascendente" << endl;
+								cout << "2.- Descendente" << endl;
+								cout << "0.- Regresar" << endl;
+								cout << "\nIngresa la opcion que desees: " << endl;
+								cin >> optionOrdenamiento3;
+								switch (optionOrdenamiento3) {
+									case 1:
+									InsertionSortASC(parameters.array,parameters.percentage);
+									break;
+
+									case 2:
+									InsertionSortDSC(parameters.array,parameters.percentage);
+									break;
+
+									case 0:
+									break;
+
+									default:
+							      	cout << "\nOpción incorrecta ingresa un valor nuevamente" << endl;
+							    	break;
+								}
+							}
+							break;
+
+							case 3:
+							while (optionOrdenamiento3 != 0){
+								cout << "\n-----------------------ORDEN---------------------------" << endl << endl;
+								cout << "1.- Ascendente" << endl;
+								cout << "2.- Descendente" << endl;
+								cout << "0.- Regresar" << endl;
+								cout << "\nIngresa la opcion que desees: " << endl;
+								cin >> optionOrdenamiento3;
+								switch (optionOrdenamiento3) {
+									case 1:
+									CocktailSortASC(parameters.array,parameters.percentage);
+									break;
+
+									case 2:
+									CocktailSortDSC(parameters.array,parameters.percentage);
+									break;
+
+									case 0:
+									break;
+
+									default:
+							      	cout << "\nOpción incorrecta ingresa un valor nuevamente" << endl;
+							    	break;
+								}
+							}
+							break;
+
+							case 4:
+							while (optionOrdenamiento3 != 0){
+								cout << "\n-----------------------ORDEN---------------------------" << endl << endl;
+								cout << "1.- Ascendente" << endl;
+								cout << "2.- Descendente" << endl;
+								cout << "0.- Regresar" << endl;
+								cout << "\nIngresa la opcion que desees: " << endl;
+								cin >> optionOrdenamiento3;
+								switch (optionOrdenamiento3) {
+									case 1:
+									SelectionSortASC(parameters.array,parameters.percentage);
+									break;
+
+									case 2:
+									SelectionSortDSC(parameters.array,parameters.percentage);
+									break;
+
+									case 0:
+									break;
+
+									default:
+							      	cout << "\nOpción incorrecta ingresa un valor nuevamente" << endl;
+							    	break;
+								}
+							}
+							break;
+
+							case 5:
+							while (optionOrdenamiento3 != 0){
+								cout << "\n-----------------------ORDEN---------------------------" << endl << endl;
+								cout << "1.- Ascendente" << endl;
+								cout << "2.- Descendente" << endl;
+								cout << "0.- Regresar" << endl;
+								cout << "\nIngresa la opcion que desees: " << endl;
+								cin >> optionOrdenamiento3;
+									switch (optionOrdenamiento3) {
+									case 1:
+									ShellSortASC(parameters.array,parameters.percentage);
+									break;
+
+									case 2:
+									ShellSortDSC(parameters.array,parameters.percentage);
+									break;
+
+									case 0:		
+									break;
+
+									default:
+							      	cout << "\nOpción incorrecta ingresa un valor nuevamente" << endl;
+							    	break;
+								}
+							}
+							break;
+
+							case 0:
+							break;
+
+							default:
+			    			cout << "\nOpción incorrecta ingresa un valor nuevamente" << endl;
+							break;
+						}
+					}
+					break;
+
+					case 5:
+					for (int i = 0; i < 5; i++){
+			    		for (int i2 = 0; i2 < 100; i2++) {
+			      			if(datos[i][i2] > 0) {
+		    	    			sum = sum + datos[i][i2];
+		        				count++;
+		      				}
+			    		}
+			    		promedios[i] = sum / count;
+			  		}	
+					//crear grafica
+					break;
+
+					case 6:
+					cout << "\n---------------------FORMATO---------------------------" << endl << endl;
+					cout << "1.- JSON" << endl;
+					cout << "2.- CSV" << endl;
+					cout << "0.- Regresar" << endl;
+					cout << "\nIngresa la opcion que desees: " << endl;
+					cin >> optionExport;
+					switch (optionExport) {
+						case 1:
+							exportJSON(datos);
+						break;
+
+						case 2:
+							exportCSV(datos);
+						break;
+
+						case 0:
+						break;
+
+						default:
+							cout << "\nOpción incorrecta ingresa un valor nuevamente" << endl;
+						break;
+					}
+				}
+			}
+			break;
+
+			case 0:
+				exit(0);
+			break;
+
+			default:
+				cout << "\nOpción incorrecta ingresa un valor nuevamente" << endl;
+			break;
+		}	
+	}
 }
 
-
-///////////////////////menu///////////////////////////
-void userInput(ThreadParameters parameters)
-{
-    //Variables for user inputs//
-     string selectedOption;
-    Data num;
-		float tam;
-
-    while(*parameters.windowStatus)
-    {
-         cout<< endl<<"---------Algoritmos de Ordenamiento-------"<< endl;
-         cout<<"1. Agregar numero al arreglo"<< endl;
-				 cout<<"1.2. BubbleSort ASC"<< endl;
-				 cout <<"1.3 BubbleSort DSC" << endl;
-				 cout << "1.4 SelectionSortASC" << endl;
-				 cout << "1.5 SelectionSortDSC" << endl;
-				 cout << "1.6 CocktailSortASC" << endl;
-				 cout << "1.7 CocktailSortDSC" << endl;
-				 cout << "1.8 InsertionSortASC" << endl;
-				 cout << "1.9 InsertionSortDSC" << endl;
-				 cout << "1.10 ShellSortASC" << endl;
-				 cout << "1.11 ShellSortASC" << endl;
-				 cout << "3. Busqueda Secuencial" << endl;
-
-         cout<<"2. Quit"<< endl;
-         cout<<"Your selection: ";
-         cin>>selectedOption;
-
-        if(selectedOption=="1")
-        {
-					 cout<<"Ingresa el numero: ";
-					 cin>>num.dat;
-					num.stat=0;
-					parameters.array->push_back(num);
-					tam+=tam;
-
-        }
-
-				else if(selectedOption=="1.2")
-				{
-
-						VerBubbleSortASC(parameters.array,parameters.percentage);
-				}
-				else if(selectedOption=="1.3")
-				{
-
-						VerBubbleSortDSC(parameters.array,parameters.percentage);
-				}
-				else if(selectedOption=="1.4")
-				{
-
-						VerSelectionSortASC(parameters.array,parameters.percentage);
-				}
-				else if(selectedOption=="1.5")
-				{
-
-						VerSelectionSortDSC(parameters.array,parameters.percentage);
-				}
-				else if(selectedOption=="1.6")
-				{
-
-						VerCocktailSortASC(parameters.array,parameters.percentage);
-				}
-				else if(selectedOption=="1.7")
-				{
-
-						VerCocktailSortDSC(parameters.array,parameters.percentage);
-				}
-				else if(selectedOption=="1.8")
-				{
-
-						VerInsertionSortASC(parameters.array,parameters.percentage);
-				}
-				else if(selectedOption=="1.9")
-				{
-						VerInsertionSortDSC(parameters.array,parameters.percentage);
-				}
-				else if(selectedOption=="1.10")
-				{
-						VerShellSortASC(parameters.array,parameters.percentage);
-				}
-				else if(selectedOption=="1.11")
-				{
-						VerShellSortDSC(parameters.array,parameters.percentage);
-				}
-				else if(selectedOption=="3")
-				{
-					float clave, resultado2;
-					cout << "ingrese el valor a buscar" << endl;
-					cin >> clave;
-					resultado2 = busquedaLineal(parameters.array, clave);
-
-		    if (resultado2 == -1)
-		    {
-		        cout << " >> El número " << clave << " NO se encuentra dentro del arreglo " <<  resultado2 << endl;
-		    }
-
-		    else{
-		        cout << " >> El número " << clave << " se encuentra en la posición (" << resultado2 << ") del arreglo" << endl;
-		    }
-
-				}
-
-        else if(selectedOption=="2")
-            *parameters.windowStatus=false;
-
-        else
-             cout<<"Invalid option"<< endl;
-    }
-}
 
 
 ///////////////////////////////poner cuadro////////////////////
@@ -362,6 +743,7 @@ sf::RectangleShape drawRectangle(int x,int y, int stat,float a)
 	rectangle.move(sf::Vector2f(x,y));
 	return rectangle;
 }
+
 int busqueda(Data *dat1)
 {
 	int stat = 1;
@@ -377,11 +759,13 @@ int busqueda(Data *dat1)
 	//dat1->stat=2;
 	return 1;
 }
+
 int resultado(Data *dat1)
 {
 	dat1->stat=2;
 	return 1;
 }
+
 void swapt(Data *dat1, Data *dat2)
 {
 	int stat=1;
@@ -404,13 +788,12 @@ void swapt(Data *dat1, Data *dat2)
 	dat2->dat = num;
 
 }
+
 void swap2(int dat1, int dat2)
 {
-
 	int num = dat1;
 	dat1 = dat2;
 	dat2 = num;
-
 }
 
 //***********BUBBLE SORT**********
@@ -970,10 +1353,47 @@ void ShellSortDSC(vector<Data>* array, float * percentage)
 
 }
 
+void coutBubbleSort(){
+	cout << ">> COMPLEJIDAD CICLOMATICA : O N^2\n" << endl;
+	cout << "int tam = array->size();" << endl;
+	cout << "cout << ""Tamaño"" << tam << endl;" << endl;
+    cout << "int c, d;" << endl;
+	cout << "double b;" << endl;
+    cout << "for (c = 0; c <= (array->size() - 1); c++)" << endl;
+    cout << "{" << endl;
+	cout << "	if(c == tam-1){" << endl;
+	cout << "	*percentage = 100;" << endl;
+	cout << "}" << endl;
+	cout << "else{" << endl;
+	cout << "	*percentage = (float)c/(float)tam * 100;" << endl;
+	cout << "}" << endl;
+	cout << "printf(""porcentaje %f\n"", *percentage);" << endl;
+    cout << "for (d = 0; d < array->size() - c - 1; d++)" << endl;
+    cout << "{" << endl; 
+    cout << "	if (array->at(d).dat < array->at(d+1).dat) swap2(d,d+1); << endl; " << endl;
+    cout << "}" << endl;
+}
+
+void coutSelectionSort(){
+	cout << ">> COMPLEJIDAD CICLOMATICA : O N^2\n" << endl;
+}
+
+void coutCocktailSort(){
+	cout << ">> COMPLEJIDAD CICLOMATICA : O N^2\n" << endl;
+}
+
+void coutInsertionSort(){
+	cout << ">> COMPLEJIDAD CICLOMATICA : O N^2\n" << endl;
+}
+
+void coutShellSort(){
+	cout << ">> COMPLEJIDAD CICLOMATICA : O N^1.25\n" << endl;
+}
+
 int busquedaLineal(vector<Data>* array, float clave)
 {
 	int i, resultado1 = -1;
-  for ( i = 0; i< array->size() ; i++)
+  	for ( i = 0; i< array->size() ; i++)
 	{
 		busqueda(&array->at(i));
 		if(array->at(i).dat == clave)
@@ -985,5 +1405,195 @@ int busquedaLineal(vector<Data>* array, float clave)
 
 	}
   return resultado1;
+}
 
+void exportJSON(float array[5][100])
+{
+  ofstream file_id;
+  file_id.open("ExecTimes.json");
+
+  Json::Value event;
+  Json::Value vec1(Json::arrayValue);
+  Json::Value vec2(Json::arrayValue);
+  Json::Value vec3(Json::arrayValue);
+  Json::Value vec4(Json::arrayValue);
+  Json::Value vec5(Json::arrayValue);
+  Json::Value vec6(Json::arrayValue);
+
+  for (int i = 0; i < 5; i++){
+      switch (i) {
+        case 0:
+        for (int i2 = 0; i2 < 100; i2++) {
+          if (array[i][i2] > 0) {
+          vec1.append(Json::Value(array[i][i2]));;
+          event["Sorts"]["BubbleSort"]["Times"] = vec1;
+          }
+        }
+      break;
+
+      case 1:
+      for (int i2 = 0; i2 < 100; i2++) {
+        if (array[i][i2] > 0) {
+          vec2.append(Json::Value(array[i][i2]));;
+          event["Sorts"]["SelectionSort"]["Times"] = vec2;
+        }
+      }
+
+      break;
+
+      case 2:
+      for (int i2 = 0; i2 < 100; i2++) {
+        if (array[i][i2] > 0) {
+          vec3.append(Json::Value(array[i][i2]));;
+          event["Sorts"]["CocktailSort"]["Times"] = vec3;
+        }
+      }
+      break;
+
+      case 3:
+      for (int i2 = 0; i2 < 100; i2++) {
+        if (array[i][i2] > 0) {
+          vec4.append(Json::Value(array[i][i2]));;
+          event["Sorts"]["InsertionSort"]["Times"] = vec4;
+        }
+      }
+      break;
+
+      case 4:
+      for (int i2 = 0; i2 < 100; i2++) {
+        if (array[i][i2] > 0) {
+          vec5.append(Json::Value(array[i][i2]));;
+          event["Sorts"]["ShellSort"]["Times"] = vec5;
+        }
+      }
+      break;
+
+      case 5:
+      for (int i2 = 0; i2 < 100; i2++) {
+        if (array[i][i2] > 0) {
+          vec6.append(Json::Value(array[i][i2]));;
+          event["Sorts"]["XSort"]["Times"] = vec6;
+        }
+      }
+      break;
+    }
+  }
+  Json::StyledWriter styledWriter;
+  file_id << styledWriter.write(event);
+  file_id.close();
+
+  ofstream outfile;
+  outfile.open("ExecTimes.CSV");
+	for (int i = 0; i < 5; i++) {
+      switch (i) {
+        case 0:
+        outfile<<"BubbleSort"<<endl;
+        for (int i2 = 0; i2 < 100; i2++){
+          if(array[i][i2] > 0) {
+            outfile<<array[i][i2]<<endl;
+          }
+        }
+        break;
+        case 1:
+        outfile<<"SelectionSort"<<endl;
+        for (int i2 = 0; i2 < 100; i2++){
+          if(array[i][i2] > 0) {
+            outfile<<array[i][i2]<<endl;
+          }
+        }
+        break;
+        case 2:
+        outfile<<"CocktailSort"<<endl;
+        for (int i2 = 0; i2 < 100; i2++){
+          if(array[i][i2] > 0) {
+            outfile<<array[i][i2]<<endl;
+          }
+        }
+        break;
+        case 3:
+        outfile<<"InsertionSort"<<endl;
+        for (int i2 = 0; i2 < 100; i2++){
+          if(array[i][i2] > 0) {
+            outfile<<array[i][i2]<<endl;
+          }
+        }
+        break;
+        case 4:
+        outfile<<"ShellSort"<<endl;
+        for (int i2 = 0; i2 < 100; i2++){
+          if(array[i][i2] > 0) {
+            outfile<<array[i][i2]<<endl;
+          }
+        }
+        break;
+        case 5:
+        outfile<<"XSort"<<endl;
+        for (int i2 = 0; i2 < 100; i2++){
+          if(array[i][i2] > 0) {
+            outfile<<array[i][i2]<<endl;
+          }
+        }
+        break;
+      }
+		}
+	outfile.close();
+}
+
+void exportCSV(float array[5][100])
+{
+  ofstream outfile;
+  outfile.open("ExecTimes.CSV");
+	for (int i = 0; i < 5; i++) {
+      switch (i) {
+        case 0:
+        outfile<<"BubbleSort"<<endl;
+        for (int i2 = 0; i2 < 100; i2++){
+          if(array[i][i2] > 0) {
+            outfile<<array[i][i2]<<endl;
+          }
+        }
+        break;
+        case 1:
+        outfile<<"SelectionSort"<<endl;
+        for (int i2 = 0; i2 < 100; i2++){
+          if(array[i][i2] > 0) {
+            outfile<<array[i][i2]<<endl;
+          }
+        }
+        break;
+        case 2:
+        outfile<<"CocktailSort"<<endl;
+        for (int i2 = 0; i2 < 100; i2++){
+          if(array[i][i2] > 0) {
+            outfile<<array[i][i2]<<endl;
+          }
+        }
+        break;
+        case 3:
+        outfile<<"InsertionSort"<<endl;
+        for (int i2 = 0; i2 < 100; i2++){
+          if(array[i][i2] > 0) {
+            outfile<<array[i][i2]<<endl;
+          }
+        }
+        break;
+        case 4:
+        outfile<<"ShellSort"<<endl;
+        for (int i2 = 0; i2 < 100; i2++){
+          if(array[i][i2] > 0) {
+            outfile<<array[i][i2]<<endl;
+          }
+        }
+        break;
+        case 5:
+        outfile<<"XSort"<<endl;
+        for (int i2 = 0; i2 < 100; i2++){
+          if(array[i][i2] > 0) {
+            outfile<<array[i][i2]<<endl;
+          }
+        }
+        break;
+      }
+		}
+	outfile.close();
 }

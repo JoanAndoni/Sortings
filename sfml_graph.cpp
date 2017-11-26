@@ -16,8 +16,10 @@ using namespace std;
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
-#define TEXT_SIZE 20 //velocidad
-#define ANIMATION_RATE 200000 //veces qu repite la animacion
+#define TEXT_SIZE 20
+ //velocidad
+#define ANIMATION_RATE 200000
+//veces qu repite la animacion
 #define ANIMATION_LOOP 4 //Debe ser par para que se vea bien
 
 struct Data
@@ -29,6 +31,7 @@ struct Data
 struct ThreadParameters //parametros entre los threads
 {
     vector<Data>* array;
+		vector<Data>* instrucciones;
     bool* windowStatus;
 		float * percentage;
 		float *clave;
@@ -105,16 +108,12 @@ int resultado(Data *dat1);
 int main()
 {
     //Variables//
-    vector<Data> array;
-    bool windowStatus=true;
-		float percentage=0;
-		float instruccion1 = 0;
-		float instruccion2 = 0;
-		string Porcentaje;
-		string instruccion;
+      vector<Data> array;
+			vector<Data> instrucciones;
+	    bool windowStatus=true;
+			float percentage=0;
 
-    ThreadParameters parameters = {&array,&windowStatus,&percentage};
-
+    ThreadParameters parameters = {&array,&instrucciones, &windowStatus,&percentage};
     // Create a thread for MainMenu function and runs it//
     sf::Thread thread(&MainMenu,parameters);
     thread.launch();
@@ -182,8 +181,18 @@ int main()
 	ss << a;
 	string s = ss.str();
 
+	for(int i=0;i<instrucciones.size();i++)
+	{
+		float b = instrucciones[i].dat;
+		//impresion en y
+		{
+			sf::RectangleShape rec2 = drawRectangle((i*20), i * 300, instrucciones[i].stat,b);
+			window.draw(rec2);
+			texture.draw(rec2);
+		}
 
-
+	}
+	//vector de historial
 
 	 //Ejemplo para agregar texto
 	sf::Text Weight(s,font,TEXT_SIZE);
@@ -674,7 +683,7 @@ void MainMenu(ThreadParameters parameters)
 									case 1:
 									{
 										clock_t start = clock();
-										SelectionSortASC(parameters.array,parameters.percentage);										
+										SelectionSortASC(parameters.array,parameters.percentage);
 										clock_t stop = clock();
         								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
         								printf("Time elapsed in ms: %f", elapsed);
@@ -817,7 +826,6 @@ sf::RectangleShape drawRectangle(int x,int y, int stat,float a)
 	return rectangle;
 }
 
-
 int busqueda(Data *dat1)
 {
 	int stat = 1;
@@ -852,6 +860,7 @@ void swapt(Data *dat1, Data *dat2)
 			stat=0;
 		else
 			stat=1;
+
 	}
 
 	dat1->stat=2;
@@ -889,7 +898,7 @@ void VerBubbleSortASC( vector<Data>* array, float * percentage)
 
         for (d = 0; d < array->size() - c - 1; d++)
         {
-            if (array->at(d).dat < array->at(d+1).dat)
+            if (array->at(d).dat > array->at(d+1).dat)
             {
 							swapt(&array->at(d),&array->at(d+1));
             }
@@ -914,7 +923,7 @@ void BubbleSortASC( vector<Data>* array, float * percentage)
 
         for (d = 0; d < array->size() - c - 1; d++)
         {
-            if (array->at(d).dat < array->at(d+1).dat)
+            if (array->at(d).dat > array->at(d+1).dat)
             {
 							swap2(d,d+1);
             }
@@ -1274,7 +1283,6 @@ void InsertionSortASC(vector<Data>* array, float * percentage)
  		printf("porcentaje %f\n", *percentage);
  	}
 }
-
  void VerInsertionSortDSC(vector<Data>* array, float * percentage)
  {
 	 float tam = array->size();
@@ -1407,10 +1415,10 @@ void coutBubbleSort(){
 	cout << ">> COMPLEJIDAD CICLOMATICA : O N^2\n" << endl;
 	cout << "int tam = array->size();" << endl;
 	cout << "cout << ""Tamaño"" << tam << endl;" << endl;
-    cout << "int c, d;" << endl;
+  cout << "int c, d;" << endl;
 	cout << "double b;" << endl;
-    cout << "for (c = 0; c <= (array->size() - 1); c++)" << endl;
-    cout << "{" << endl;
+  cout << "for (c = 0; c <= (array->size() - 1); c++)" << endl;
+  cout << "{" << endl;
 	cout << "	if(c == tam-1){" << endl;
 	cout << "	*percentage = 100;" << endl;
 	cout << "}" << endl;
@@ -1418,18 +1426,18 @@ void coutBubbleSort(){
 	cout << "	*percentage = (float)c/(float)tam * 100;" << endl;
 	cout << "}" << endl;
 	cout << "printf(""porcentaje %f"", *percentage);" << endl;
-    cout << "for (d = 0; d < array->size() - c - 1; d++)" << endl;
-    cout << "{" << endl;
-    cout << "	if (array->at(d).dat < array->at(d+1).dat) swap2(d,d+1); << endl; " << endl;
-    cout << "}" << endl;
+  cout << "for (d = 0; d < array->size() - c - 1; d++)" << endl;
+  cout << "{" << endl;
+  cout << "	if (array->at(d).dat < array->at(d+1).dat) swap2(d,d+1); << endl; " << endl;
+  cout << "}" << endl;
 }
 
 void coutSelectionSort(){
 	cout << ">> COMPLEJIDAD CICLOMATICA : O N^2\n" << endl;
 	cout << "int c, d, min, loc, temp;" << endl;
 	cout << "int tam = array->size();" << endl;
-    cout << "for (c = 0; c <= (array->size() - 1); c++)" << endl;
-    cout << "{" << endl;
+  cout << "for (c = 0; c <= (array->size() - 1); c++)" << endl;
+  cout << "{" << endl;
 	cout << "	if(c == tam-1){" << endl;
 	cout << "		*percentage = 100;" << endl;
 	cout << "	}" << endl;
@@ -1437,16 +1445,16 @@ void coutSelectionSort(){
 	cout << "		*percentage = (float)c/(float)tam * 100;" << endl;
 	cout << "	}" << endl;
 	cout << "	printf(""porcentaje %f"", *percentage);" << endl;
-    cout << "min = array->at(c).dat;" << endl;
-    cout << "loc = c;" << endl;
-    cout << "for (d = c + 1; d < array->size(); d++){" << endl;
-    cout << "    if (min > array->at(d).dat){" << endl;
-    cout << "            min = array->at(d).dat;" << endl;
-    cout << "            loc = d;" << endl;
-    cout << "        }" << endl;
-    cout << "    }" << endl;
+  cout << "min = array->at(c).dat;" << endl;
+  cout << "loc = c;" << endl;
+  cout << "for (d = c + 1; d < array->size(); d++){" << endl;
+  cout << "    if (min > array->at(d).dat){" << endl;
+  cout << "            min = array->at(d).dat;" << endl;
+  cout << "            loc = d;" << endl;
+  cout << "        }" << endl;
+  cout << "    }" << endl;
 	cout << "	swap2(c,loc);" << endl;
-    cout << "}" << endl;
+  cout << "}" << endl;
 }
 
 void coutCocktailSort(){
@@ -1454,26 +1462,26 @@ void coutCocktailSort(){
 	cout << "float tam  =array->size()-1;" << endl;
 	cout << "bool swapped = true;" << endl;
 	cout << "int start = 0, end = (array->size() - 1);" << endl;
-    cout << "while (swapped){" << endl;
-    cout << "    swapped = false;" << endl;
-    cout << "    for (int i = start; i < end; ++i){" << endl;
-    cout << "        if (array->at(i).dat > array->at(i+1).dat){" << endl;
-    cout << "            swap2(i,i+1);" << endl;
-    cout << "            swapped = true;" << endl;
-    cout << "        }" << endl;
-    cout << "    }" << endl;
-    cout << "    if (!swapped)" << endl;
-    cout << "        break;" << endl;
-    cout << "    swapped = false;" << endl;
-    cout << "    --end;" << endl;
-    cout << "    for (int i = end - 1; i >= start; --i){" << endl;
-    cout << "        if (array->at(i).dat > array->at(i+1).dat){" << endl;
-    cout << "            swap2(i,i+1);" << endl;
-    cout << "            swapped = true;" << endl;
-    cout << "        }" << endl;
-    cout << "    }" << endl;
-    cout << "    ++start;" << endl;
-    cout << "}" << endl;
+  cout << "while (swapped){" << endl;
+  cout << "    swapped = false;" << endl;
+  cout << "    for (int i = start; i < end; ++i){" << endl;
+  cout << "        if (array->at(i).dat > array->at(i+1).dat){" << endl;
+  cout << "            swap2(i,i+1);" << endl;
+  cout << "            swapped = true;" << endl;
+  cout << "        }" << endl;
+  cout << "    }" << endl;
+  cout << "    if (!swapped)" << endl;
+  cout << "        break;" << endl;
+  cout << "    swapped = false;" << endl;
+  cout << "    --end;" << endl;
+  cout << "    for (int i = end - 1; i >= start; --i){" << endl;
+  cout << "        if (array->at(i).dat > array->at(i+1).dat){" << endl;
+  cout << "            swap2(i,i+1);" << endl;
+  cout << "            swapped = true;" << endl;
+  cout << "        }" << endl;
+  cout << "    }" << endl;
+  cout << "    ++start;" << endl;
+  cout << "}" << endl;
 
 }
 
@@ -1500,8 +1508,8 @@ void coutInsertionSort(){
 void coutShellSort(){
 	cout << ">> COMPLEJIDAD CICLOMATICA : O N^1.25\n" << endl;
 	cout << "float tam = array->size();" << endl;
-    cout << "int c, i, j, temp;" << endl;
-    cout << "for (c = (array->size())/2; c > 0; c /= 2){" << endl;
+  cout << "int c, i, j, temp;" << endl;
+  cout << "for (c = (array->size())/2; c > 0; c /= 2){" << endl;
 	cout << "        for (i = c; i < array->size(); i++){" << endl;
 	cout << "		for (j=i-c; j>=0 && array->at(j).dat > array->at(j + c).dat; j-=c)" << endl;
 	cout << "			swap2(j,j+c);" << endl;

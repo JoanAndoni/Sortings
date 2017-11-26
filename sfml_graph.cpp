@@ -189,8 +189,9 @@ int main()
 
 void MainMenu(ThreadParameters parameters)
 {
-  	int optionProyect = 1, optionProyect2 = 1, optionProyect3 = 1, option = 1, option2 =1;
-	float clave, resultado2, numberRandoms, datos[5][100], promedios[5], prom = 0, sum, count = 0;
+  int optionProyect = 1, optionProyect2 = 1, optionProyect3 = 1, option = 1, option2 =1, sortID, CountingData1 = 0;
+	int CountingData2 = 0, CountingData3 = 0, CountingData4 = 0, CountingData5 = 0;
+	float clave, resultado2, numberRandoms, datos[5][100], promedios[5], sum, count = 0;
 	Data num;;
 
   	for (int i = 0; i < 5; i++){
@@ -199,9 +200,10 @@ void MainMenu(ThreadParameters parameters)
     	}
   	}
 
+	for(int i = 0; i< 5; i++) promedios[i] = 0;
 	srand (static_cast <unsigned> (time(0)));
 
-  	cout << "--------------PROYECTO FINAL DE ALGORTIMOS--------------" << endl << endl;
+  	cout << "\n--------------PROYECTO FINAL DE ALGORTIMOS--------------" << endl << endl;
   	cout << "1.- Crear elementos aleatorios" << endl;
   	cout << "2.- Ingresar manualmente elementos" << endl;
   	cout << "0.- Salir" << endl;
@@ -295,7 +297,7 @@ void MainMenu(ThreadParameters parameters)
 				}
 			}
 			break;
-				
+
 			case 2:
 			while (optionOrdenamiento1 != 0) {
 				optionOrdenamiento2 = 1;
@@ -449,7 +451,7 @@ void MainMenu(ThreadParameters parameters)
 									VerShellSortDSC(parameters.array,parameters.percentage);
 									break;
 
-									case 0:		
+									case 0:
 									break;
 
 									default:
@@ -543,21 +545,28 @@ void MainMenu(ThreadParameters parameters)
 								switch (optionOrdenamiento3) {
 									case 1:
 									{
+										sortID = 0;
 										clock_t start = clock();
 										BubbleSortASC(parameters.array,parameters.percentage);
 										clock_t stop = clock();
-        								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
-        								printf("Time elapsed in ms: %f", elapsed);
+        						double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+        						printf("Time elapsed in ms: %f", elapsed);
+										datos[sortID][CountingData1] = elapsed;
+										CountingData1++;
 									}
 									break;
 
 									case 2:
 									{
+										sortID = 0;
 										clock_t start = clock();
 										BubbleSortDSC(parameters.array,parameters.percentage);
 										clock_t stop = clock();
-        								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
-        								printf("Time elapsed in ms: %f", elapsed);
+        						double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+        						printf("Time elapsed in ms: %f", elapsed);
+										datos[sortID][CountingData1] = elapsed;
+										CountingData1++;
+
 									}
 									break;
 
@@ -582,21 +591,27 @@ void MainMenu(ThreadParameters parameters)
 								switch (optionOrdenamiento3) {
 									case 1:
 									{
+										sortID = 1;
 										clock_t start = clock();
 										InsertionSortASC(parameters.array,parameters.percentage);
 										clock_t stop = clock();
-        								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
-        								printf("Time elapsed in ms: %f", elapsed);
+        						double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+        						printf("Time elapsed in ms: %f", elapsed);
+										datos[sortID][CountingData2] = elapsed;
+										CountingData2++;
 									}
 									break;
 
 									case 2:
 									{
+										sortID = 1;
 										clock_t start = clock();
 										InsertionSortDSC(parameters.array,parameters.percentage);
 										clock_t stop = clock();
-        								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
-        								printf("Time elapsed in ms: %f", elapsed);
+        						double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+        						printf("Time elapsed in ms: %f", elapsed);
+										datos[sortID][CountingData2] = elapsed;
+										CountingData2++;
 									}
 									break;
 
@@ -621,21 +636,27 @@ void MainMenu(ThreadParameters parameters)
 								switch (optionOrdenamiento3) {
 									case 1:
 									{
+										sortID = 2;
 										clock_t start = clock();
 										CocktailSortASC(parameters.array,parameters.percentage);
 										clock_t stop = clock();
         								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
         								printf("Time elapsed in ms: %f", elapsed);
+												datos[sortID][CountingData3] = elapsed;
+												CountingData3++;
 									}
 									break;
 
 									case 2:
 									{
+										sortID = 2;
 										clock_t start = clock();
 										CocktailSortDSC(parameters.array,parameters.percentage);
 										clock_t stop = clock();
         								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
         								printf("Time elapsed in ms: %f", elapsed);
+												datos[sortID][CountingData3] = elapsed;
+												CountingData3++;
 									}
 									break;
 
@@ -660,21 +681,27 @@ void MainMenu(ThreadParameters parameters)
 								switch (optionOrdenamiento3) {
 									case 1:
 									{
+										sortID = 3;
 										clock_t start = clock();
-										SelectionSortASC(parameters.array,parameters.percentage);										
+										SelectionSortASC(parameters.array,parameters.percentage);
 										clock_t stop = clock();
         								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
         								printf("Time elapsed in ms: %f", elapsed);
+												datos[sortID][CountingData4] = elapsed;
+												CountingData4++;
 									}
 									break;
 
 									case 2:
 									{
+										sortID = 3;
 										clock_t start = clock();
 										SelectionSortDSC(parameters.array,parameters.percentage);
 										clock_t stop = clock();
         								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
         								printf("Time elapsed in ms: %f", elapsed);
+												datos[sortID][CountingData4] = elapsed;
+												CountingData4++;
 									}
 									break;
 
@@ -699,25 +726,31 @@ void MainMenu(ThreadParameters parameters)
 									switch (optionOrdenamiento3) {
 									case 1:
 									{
+										sortID = 4;
 										clock_t start = clock();
 										ShellSortASC(parameters.array,parameters.percentage);
 										clock_t stop = clock();
         								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
         								printf("Time elapsed in ms: %f", elapsed);
+												datos[sortID][CountingData5] = elapsed;
+												CountingData5++;
 									}
 									break;
 
 									case 2:
 									{
+										sortID = 4;
 										clock_t start = clock();
 										ShellSortDSC(parameters.array,parameters.percentage);
 										clock_t stop = clock();
         								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
         								printf("Time elapsed in ms: %f", elapsed);
+												datos[sortID][CountingData5] = elapsed;
+												CountingData5++;
 									}
 									break;
 
-									case 0:		
+									case 0:
 									break;
 
 									default:
@@ -746,7 +779,7 @@ void MainMenu(ThreadParameters parameters)
 		      				}
 			    		}
 			    		promedios[i] = sum / count;
-			  		}	
+			  		}
 					//crear grafica
 					break;
 
@@ -784,7 +817,7 @@ void MainMenu(ThreadParameters parameters)
 			default:
 				cout << "\nOpción incorrecta ingresa un valor nuevamente" << endl;
 			break;
-		}	
+		}
 	}
 }
 
@@ -1370,8 +1403,8 @@ void ShellSortDSC(vector<Data>* array, float * percentage)
 		float tam = array->size();
     int c, i, j, temp;
     for (c = (array->size())/2; c >= 0; c /= 2)
-
-        for (i = c; i < array->size(); i++)
+		{
+			for (i = c; i < array->size(); i++)
 					{
 						for (j=i-c; j>=0 && array->at(j).dat < array->at(j + c).dat; j-=c)
 						{
@@ -1386,7 +1419,7 @@ void ShellSortDSC(vector<Data>* array, float * percentage)
 						*percentage = (float)c/(float)tam * 100;
 					}
 					printf("porcentaje %f\n", *percentage);
-
+		}
 }
 
 void coutBubbleSort(){
@@ -1405,7 +1438,7 @@ void coutBubbleSort(){
 	cout << "}" << endl;
 	cout << "printf(""porcentaje %f"", *percentage);" << endl;
     cout << "for (d = 0; d < array->size() - c - 1; d++)" << endl;
-    cout << "{" << endl; 
+    cout << "{" << endl;
     cout << "	if (array->at(d).dat < array->at(d+1).dat) swap2(d,d+1); << endl; " << endl;
     cout << "}" << endl;
 }

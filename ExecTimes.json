@@ -1,0 +1,13 @@
+{
+   "Sorts" : {
+      "BubbleSort" : {
+         "Times" : [ 0.056000001728534698 ]
+      },
+      "InsertionSort" : {
+         "Times" : [ 0.037000000476837158 ]
+      },
+      "SelectionSort" : {
+         "Times" : [ 0.030999999493360519 ]
+      }
+   }
+}

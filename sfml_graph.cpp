@@ -56,11 +56,11 @@ void InsertionSortDSC(vector<Data>* array, float * percentage);
 void ShellSortASC(vector<Data>* array, float * percentage);
 void ShellSortDSC(vector<Data>* array, float * percentage);
 //HEAP
- void heapSort(vector<Data>* array, float * percentage);
-  void filtrar(Data *inicio, Data *fin);
+void heapSort(vector<Data>* array, float * percentage);
+void filtrar(Data *inicio, Data *fin);
 //QUICK
-int partition (vector<Data>* array, float * percentage, Data *low, Data *high);
-void QuickSortASC(vector<Data>* array, float * percentage, Data *l, Data *h);
+int partition (vector<Data>* array, float l, float h);
+void QuickSortASC (vector<Data>* array,float l, float h);
 //FUNCION DE INTERCAMBIO DE VALORES
 void swapt(Data *dat1, Data *dat2);
 //BUSQUEDA LINEAL
@@ -162,13 +162,12 @@ void userInput(ThreadParameters parameters)
     //Variables for user inputs//
      string selectedOption;
     Data num;
+		float tam;
 
     while(*parameters.windowStatus)
     {
-
          cout<< endl<<"---------Algoritmos de Ordenamiento-------"<< endl;
          cout<<"1. Agregar numero al arreglo"<< endl;
-				 cout<<"1.1. Agregar numero al arreglo"<< endl;
 				 cout<<"1.2. BubbleSort ASC"<< endl;
 				 cout <<"1.3 BubbleSort DSC" << endl;
 				 cout << "1.4 SelectionSortASC" << endl;
@@ -179,7 +178,7 @@ void userInput(ThreadParameters parameters)
 				 cout << "1.9 InsertionSortDSC" << endl;
 				 cout << "1.10 ShellSortASC" << endl;
 				 cout << "1.11 ShellSortASC" << endl;
-				 cout << "1.12 Heap" << endl;
+				 cout << "1.12 QuickSortASC" << endl;
 				 cout << "3. Busqueda Secuencial" << endl;
 
          cout<<"2. Quit"<< endl;
@@ -192,16 +191,10 @@ void userInput(ThreadParameters parameters)
 					 cin>>num.dat;
 					num.stat=0;
 					parameters.array->push_back(num);
+					tam+=tam;
+
         }
 
-				else if(selectedOption=="1.1")
-				{
-						 cout<<"Ejecutando swap"<< endl;
-						// cout<<parameters.array<< endl;
-
-						 cout<<"Ejecutando swap"<< endl;
-						swapt(&parameters.array->at(1),&parameters.array->at(2));
-				}
 				else if(selectedOption=="1.2")
 				{
 
@@ -251,7 +244,7 @@ void userInput(ThreadParameters parameters)
 				}
 				else if(selectedOption=="1.12")
 				{
-						//heapSort(parameters.array,parameters.percentage);
+					QuickSortASC(parameters.array, 0, tam );
 				}
 				else if(selectedOption=="3")
 				{
@@ -621,59 +614,54 @@ int busquedaLineal(vector<Data>* array, float clave)
   return resultado1;
 
 }
-/*int busquedaLineal(vector<Data>* array, int clave)
-{
-	int tam = array->size();
-	int resultado1 = -1; // declaro la variable "resultado" y la inicializo en "-1" por si no se encuentra el resultado
-	for(int i = 0; i < tam; i++) //mientras "i" sea menor que el tamaño del arreglo
-	{
-		if(busqueda(&array->at(i)) == clave) //comparar si "k" (el valor que estamos buscando) es igual al elemento dentro del arreglo en la posición "i"
-		{
-			resultado1 = i;
-		}
-	}
-	resultado(&array->at(resultado1));
-	return resultado1; //la función devuelve el resultado
-}*/
 
-/* void heapSort(vector<Data>* array, float * percentage)
+int partition (vector<Data>* array, float l, float h)
+{
+    float x =  array->at(h).dat;
+    float i = (l - 1);
+
+    for (float j = l; j <= h- 1; j++)
     {
-			int Tam = array->size();
-        int comienzo = (Tam - 2) / 2;
-        while (comienzo >= 0)
+        if (array->at(j).dat <= x)
         {
-            filtrar(&array->at(comienzo),&array->at(Tam -1));
-            comienzo--;
-        }
-        int ultimo = Tam-1;
-        while(ultimo > 0)
-        {
-					swapt(&array->at(ultimo),&array->at(0));
-					filtrar(&array->at(0),&array->at(ultimo -1));
-          //  intercambiar(ultimo, 0);//intercambiar la raíz del heap con el último elemento
-          //  filtrar(0, ultimo - 1);//regresa el heap a que cumpla la condición del máximo padre para que sus hijos sean menores
-            ultimo--;//disminuye el tamaño del heap para que el valor máximo quede en su lugar
+            i++;
+            swapt (&array->at(i), &array->at(j));
+						cout << i << endl;
         }
     }
-
-
- void filtrar(Data *inicio, Data *fin)
+    swapt (&array->at(i +1), &array->at(h));
+    return (i + 1);
+}
+void QuickSortASC(vector<Data>* array, float l, float h)
+{
+	if (l < h)
+	{
+		/* Partitioning index */
+		int p = partition(array, l, h);
+		QuickSortASC(array, l, p - 1);
+		QuickSortASC(array, p + 1, h);
+	}
+}
+/*void QuickSortASC (vector<Data>* array, float *l, float *h, float * percentage)
+{
+    int stack[ h - l + 1 ];
+    int top = -1;
+    stack[ ++top ] = l;
+    stack[ ++top ] = h;
+    while ( top >= 0 )
     {
-        int raiz = inicio;
-        while((2*raiz + 1) <= fin) //mientras aún tenga una hoja la raíz
+        h = stack[ top-- ];
+        l = stack[ top-- ];
+        int p = partition( array,&l, &h );
+        if ( p-1 > l )
         {
-            int hoja = 2*raiz + 1;//se va a la hoja de la izquierda
-            if((hoja + 1) <= fin && array->at(hoja).dat < array->at(hoja + 1).dat)//si la hoja tiene hermano hoja y es menor a él
-            {
-                hoja++;//entonces se va a la hoja de la derecha
-            }
-            if( array->at(raiz).dat < array->at(hoja).dat)//si se sale de orden
-            {
-							swapt(&array->at(raiz),&array->at(hoja));
-                raiz = hoja;//se asigna el valor de la hoja a la raíz para continuar revisando la hoja
-            }
-            else{
-                return;
-            }
+            stack[ ++top ] = l;
+            stack[ ++top ] = p - 1;
         }
-    }*/
+        if ( p+1 < h )
+        {
+            stack[ ++top ] = p + 1;
+            stack[ ++top ] = h;
+        }
+    }
+}*/

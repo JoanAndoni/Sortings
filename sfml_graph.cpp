@@ -1437,7 +1437,7 @@ void coutShellSort(){
 	cout << "	*percentage = (float)c/(float)tam * 100;" << endl;
 	cout << "	}" << endl;
 	cout << "	printf(""porcentaje %f"", *percentage);" << endl;
-	cout << "}
+	cout << "}" << endl;
 }
 
 int busquedaLineal(vector<Data>* array, float clave)

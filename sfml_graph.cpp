@@ -542,11 +542,23 @@ void MainMenu(ThreadParameters parameters)
 								cin >> optionOrdenamiento3;
 								switch (optionOrdenamiento3) {
 									case 1:
-									BubbleSortASC(parameters.array,parameters.percentage);
+									{
+										clock_t start = clock();
+										BubbleSortASC(parameters.array,parameters.percentage);
+										clock_t stop = clock();
+        								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+        								printf("Time elapsed in ms: %f", elapsed);
+									}
 									break;
 
 									case 2:
-									BubbleSortDSC(parameters.array,parameters.percentage);
+									{
+										clock_t start = clock();
+										BubbleSortDSC(parameters.array,parameters.percentage);
+										clock_t stop = clock();
+        								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+        								printf("Time elapsed in ms: %f", elapsed);
+									}
 									break;
 
 									case 0:
@@ -569,11 +581,23 @@ void MainMenu(ThreadParameters parameters)
 								cin >> optionOrdenamiento3;
 								switch (optionOrdenamiento3) {
 									case 1:
-									InsertionSortASC(parameters.array,parameters.percentage);
+									{
+										clock_t start = clock();
+										InsertionSortASC(parameters.array,parameters.percentage);
+										clock_t stop = clock();
+        								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+        								printf("Time elapsed in ms: %f", elapsed);
+									}
 									break;
 
 									case 2:
-									InsertionSortDSC(parameters.array,parameters.percentage);
+									{
+										clock_t start = clock();
+										InsertionSortDSC(parameters.array,parameters.percentage);
+										clock_t stop = clock();
+        								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+        								printf("Time elapsed in ms: %f", elapsed);
+									}
 									break;
 
 									case 0:
@@ -596,11 +620,23 @@ void MainMenu(ThreadParameters parameters)
 								cin >> optionOrdenamiento3;
 								switch (optionOrdenamiento3) {
 									case 1:
-									CocktailSortASC(parameters.array,parameters.percentage);
+									{
+										clock_t start = clock();
+										CocktailSortASC(parameters.array,parameters.percentage);
+										clock_t stop = clock();
+        								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+        								printf("Time elapsed in ms: %f", elapsed);
+									}
 									break;
 
 									case 2:
-									CocktailSortDSC(parameters.array,parameters.percentage);
+									{
+										clock_t start = clock();
+										CocktailSortDSC(parameters.array,parameters.percentage);
+										clock_t stop = clock();
+        								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+        								printf("Time elapsed in ms: %f", elapsed);
+									}
 									break;
 
 									case 0:
@@ -623,11 +659,23 @@ void MainMenu(ThreadParameters parameters)
 								cin >> optionOrdenamiento3;
 								switch (optionOrdenamiento3) {
 									case 1:
-									SelectionSortASC(parameters.array,parameters.percentage);
+									{
+										clock_t start = clock();
+										SelectionSortASC(parameters.array,parameters.percentage);										
+										clock_t stop = clock();
+        								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+        								printf("Time elapsed in ms: %f", elapsed);
+									}
 									break;
 
 									case 2:
-									SelectionSortDSC(parameters.array,parameters.percentage);
+									{
+										clock_t start = clock();
+										SelectionSortDSC(parameters.array,parameters.percentage);
+										clock_t stop = clock();
+        								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+        								printf("Time elapsed in ms: %f", elapsed);
+									}
 									break;
 
 									case 0:
@@ -650,11 +698,23 @@ void MainMenu(ThreadParameters parameters)
 								cin >> optionOrdenamiento3;
 									switch (optionOrdenamiento3) {
 									case 1:
-									ShellSortASC(parameters.array,parameters.percentage);
+									{
+										clock_t start = clock();
+										ShellSortASC(parameters.array,parameters.percentage);
+										clock_t stop = clock();
+        								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+        								printf("Time elapsed in ms: %f", elapsed);
+									}
 									break;
 
 									case 2:
-									ShellSortDSC(parameters.array,parameters.percentage);
+									{
+										clock_t start = clock();
+										ShellSortDSC(parameters.array,parameters.percentage);
+										clock_t stop = clock();
+        								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+        								printf("Time elapsed in ms: %f", elapsed);
+									}
 									break;
 
 									case 0:		

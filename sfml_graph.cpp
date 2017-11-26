@@ -886,14 +886,14 @@ void VerShellSortASC(vector<Data>* array, float * percentage)
 					{
 						swapt(&array->at(j),&array->at(j+c));
 					}
-					if(i == tam){
-						*percentage = 100;
-					}
-					else{
-						*percentage = (float)i/(float)tam * 100;
-					}
-					printf("porcentaje %f\n", *percentage);
 				}
+				if(c == tam/2){
+					*percentage = 100;
+				}
+				else{
+					*percentage = (float)c/(float)tam * 100;
+				}
+				printf("porcentaje %f\n", *percentage);
 
 		}
 

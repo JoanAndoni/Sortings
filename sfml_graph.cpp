@@ -555,11 +555,23 @@ void MainMenu(ThreadParameters parameters)
 								cin >> optionOrdenamiento3;
 								switch (optionOrdenamiento3) {
 									case 1:
-									BubbleSortASC(parameters.array,parameters.percentage);
+									{
+										clock_t start = clock();
+										BubbleSortASC(parameters.array,parameters.percentage);
+										clock_t stop = clock();
+        								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+        								printf("Time elapsed in ms: %f", elapsed);
+									}
 									break;
 
 									case 2:
-									BubbleSortDSC(parameters.array,parameters.percentage);
+									{
+										clock_t start = clock();
+										BubbleSortDSC(parameters.array,parameters.percentage);
+										clock_t stop = clock();
+        								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+        								printf("Time elapsed in ms: %f", elapsed);
+									}
 									break;
 
 									case 0:
@@ -582,11 +594,23 @@ void MainMenu(ThreadParameters parameters)
 								cin >> optionOrdenamiento3;
 								switch (optionOrdenamiento3) {
 									case 1:
-									InsertionSortASC(parameters.array,parameters.percentage);
+									{
+										clock_t start = clock();
+										InsertionSortASC(parameters.array,parameters.percentage);
+										clock_t stop = clock();
+        								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+        								printf("Time elapsed in ms: %f", elapsed);
+									}
 									break;
 
 									case 2:
-									InsertionSortDSC(parameters.array,parameters.percentage);
+									{
+										clock_t start = clock();
+										InsertionSortDSC(parameters.array,parameters.percentage);
+										clock_t stop = clock();
+        								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+        								printf("Time elapsed in ms: %f", elapsed);
+									}
 									break;
 
 									case 0:
@@ -609,11 +633,23 @@ void MainMenu(ThreadParameters parameters)
 								cin >> optionOrdenamiento3;
 								switch (optionOrdenamiento3) {
 									case 1:
-									CocktailSortASC(parameters.array,parameters.percentage);
+									{
+										clock_t start = clock();
+										CocktailSortASC(parameters.array,parameters.percentage);
+										clock_t stop = clock();
+        								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+        								printf("Time elapsed in ms: %f", elapsed);
+									}
 									break;
 
 									case 2:
-									CocktailSortDSC(parameters.array,parameters.percentage);
+									{
+										clock_t start = clock();
+										CocktailSortDSC(parameters.array,parameters.percentage);
+										clock_t stop = clock();
+        								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+        								printf("Time elapsed in ms: %f", elapsed);
+									}
 									break;
 
 									case 0:
@@ -636,11 +672,23 @@ void MainMenu(ThreadParameters parameters)
 								cin >> optionOrdenamiento3;
 								switch (optionOrdenamiento3) {
 									case 1:
-									SelectionSortASC(parameters.array,parameters.percentage);
+									{
+										clock_t start = clock();
+										SelectionSortASC(parameters.array,parameters.percentage);										
+										clock_t stop = clock();
+        								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+        								printf("Time elapsed in ms: %f", elapsed);
+									}
 									break;
 
 									case 2:
-									SelectionSortDSC(parameters.array,parameters.percentage);
+									{
+										clock_t start = clock();
+										SelectionSortDSC(parameters.array,parameters.percentage);
+										clock_t stop = clock();
+        								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+        								printf("Time elapsed in ms: %f", elapsed);
+									}
 									break;
 
 									case 0:
@@ -663,11 +711,23 @@ void MainMenu(ThreadParameters parameters)
 								cin >> optionOrdenamiento3;
 									switch (optionOrdenamiento3) {
 									case 1:
-									ShellSortASC(parameters.array,parameters.percentage);
+									{
+										clock_t start = clock();
+										ShellSortASC(parameters.array,parameters.percentage);
+										clock_t stop = clock();
+        								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+        								printf("Time elapsed in ms: %f", elapsed);
+									}
 									break;
 
 									case 2:
-									ShellSortDSC(parameters.array,parameters.percentage);
+									{
+										clock_t start = clock();
+										ShellSortDSC(parameters.array,parameters.percentage);
+										clock_t stop = clock();
+        								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
+        								printf("Time elapsed in ms: %f", elapsed);
+									}
 									break;
 
 									case 0:
@@ -943,28 +1003,25 @@ void VerSelectionSortASC(vector<Data>* array, float * percentage)
 void SelectionSortASC(vector<Data>* array, float * percentage)
 {
     int c, d, min, loc, temp;
-		int tam = array->size();
+	int tam = array->size();
     for (c = 0; c <= (array->size() - 1); c++)
     {
-			if(c == tam-1){
-				*percentage = 100;
-			}
-			else{
-				*percentage = (float)c/(float)tam * 100;
-			}
-			printf("porcentaje %f\n", *percentage);
-
-        min = array->at(c).dat;
-        loc = c;
-        for (d = c + 1; d < array->size(); d++)
-        {
-        if (min > array->at(d).dat)
-            {
+		if(c == tam-1){
+			*percentage = 100;
+		}
+		else{
+			*percentage = (float)c/(float)tam * 100;
+		}
+		printf("porcentaje %f\n", *percentage);
+    min = array->at(c).dat;
+    loc = c;
+    for (d = c + 1; d < array->size(); d++){
+        if (min > array->at(d).dat){
                 min = array->at(d).dat;
                 loc = d;
             }
         }
-				swap2(c,loc);
+		swap2(c,loc);
     }
 }
 void VerSelectionSortDSC(vector<Data>* array, float * percentage)
@@ -1079,33 +1136,22 @@ void CocktailSortASC(vector<Data>* array, float * percentage)
 {
 	float tam  =array->size()-1;
 	bool swapped = true;
-	int start = 0;
-	int end = (array->size() - 1);
+	int start = 0, end = (array->size() - 1);
 
-    while (swapped)
-    {
+    while (swapped){
         swapped = false;
-
-        for (int i = start; i < end; ++i)
-        {
-            if (array->at(i).dat > array->at(i+1).dat)
-            {
-                  swap2(i,i+1);
+        for (int i = start; i < end; ++i){
+            if (array->at(i).dat > array->at(i+1).dat){
+                swap2(i,i+1);
                 swapped = true;
             }
         }
-
         if (!swapped)
             break;
-
         swapped = false;
-
         --end;
-
-        for (int i = end - 1; i >= start; --i)
-        {
-            if (array->at(i).dat > array->at(i+1).dat)
-            {
+        for (int i = end - 1; i >= start; --i){
+            if (array->at(i).dat > array->at(i+1).dat){
                 swap2(i,i+1);
                 swapped = true;
             }
@@ -1210,25 +1256,25 @@ void VerInsertionSortASC(vector<Data>* array, float * percentage)
 	 }
  }
 void InsertionSortASC(vector<Data>* array, float * percentage)
- {
+{
  	float tam = array->size();
- 	 for (int i = 1; i < array->size(); i++)
- 	 {
- 		 		 int j = i;
- 		 while ((j > 0) && (array->at(j).dat < array->at(j - 1).dat))
- 		  {
- 				swap2(j,j-1);
- 			 j = j - 1;
- 		 }
- 		 if(i == tam-1){
+ 	for (int i = 1; i < array->size(); i++)
+ 	{
+ 		int j = i;
+ 		while ((j > 0) && (array->at(j).dat < array->at(j - 1).dat)){
+ 			swap2(j,j-1);
+ 			j = j - 1;
+ 		}
+ 		if(i == tam-1){
  			*percentage = 100;
  		}
  		else{
  			*percentage = (float)i/(float)tam * 100;
  		}
  		printf("porcentaje %f\n", *percentage);
- 	 }
-  }
+ 	}
+}
+
  void VerInsertionSortDSC(vector<Data>* array, float * percentage)
  {
 	 float tam = array->size();
@@ -1293,32 +1339,22 @@ void VerShellSortASC(vector<Data>* array, float * percentage)
 				printf("porcentaje %f\n", *percentage);
 
 		}
-
-
-
 }
 void ShellSortASC(vector<Data>* array, float * percentage)
 {
-		float tam = array->size();
+	float tam = array->size();
     int c, i, j, temp;
-    for (c = (array->size())/2; c > 0; c /= 2)
-
-        for (i = c; i < array->size(); i++)
-					{
-						for (j=i-c; j>=0 && array->at(j).dat > array->at(j + c).dat; j-=c)
-						{
-							swap2(j,j+c);
-
-            }
-					}
-					if(i == 1){
-						*percentage = 100;
-					}
-					else{
-						*percentage = (float)c/(float)tam * 100;
-					}
-					printf("porcentaje %f\n", *percentage);
-
+    for (c = (array->size())/2; c > 0; c /= 2){
+	        for (i = c; i < array->size(); i++){
+			for (j=i-c; j>=0 && array->at(j).dat > array->at(j + c).dat; j-=c)
+				swap2(j,j+c);
+			}
+		if(i == 1) *percentage = 100;
+		else{
+		*percentage = (float)c/(float)tam * 100;
+		}
+		printf("porcentaje %f\n", *percentage);
+	}
 }
 void VerShellSortDSC(vector<Data>* array, float * percentage)
 {
@@ -1381,7 +1417,7 @@ void coutBubbleSort(){
 	cout << "else{" << endl;
 	cout << "	*percentage = (float)c/(float)tam * 100;" << endl;
 	cout << "}" << endl;
-	cout << "printf(""porcentaje %f\n"", *percentage);" << endl;
+	cout << "printf(""porcentaje %f"", *percentage);" << endl;
     cout << "for (d = 0; d < array->size() - c - 1; d++)" << endl;
     cout << "{" << endl;
     cout << "	if (array->at(d).dat < array->at(d+1).dat) swap2(d,d+1); << endl; " << endl;
@@ -1390,18 +1426,92 @@ void coutBubbleSort(){
 
 void coutSelectionSort(){
 	cout << ">> COMPLEJIDAD CICLOMATICA : O N^2\n" << endl;
+	cout << "int c, d, min, loc, temp;" << endl;
+	cout << "int tam = array->size();" << endl;
+    cout << "for (c = 0; c <= (array->size() - 1); c++)" << endl;
+    cout << "{" << endl;
+	cout << "	if(c == tam-1){" << endl;
+	cout << "		*percentage = 100;" << endl;
+	cout << "	}" << endl;
+	cout << "	else{" << endl;
+	cout << "		*percentage = (float)c/(float)tam * 100;" << endl;
+	cout << "	}" << endl;
+	cout << "	printf(""porcentaje %f"", *percentage);" << endl;
+    cout << "min = array->at(c).dat;" << endl;
+    cout << "loc = c;" << endl;
+    cout << "for (d = c + 1; d < array->size(); d++){" << endl;
+    cout << "    if (min > array->at(d).dat){" << endl;
+    cout << "            min = array->at(d).dat;" << endl;
+    cout << "            loc = d;" << endl;
+    cout << "        }" << endl;
+    cout << "    }" << endl;
+	cout << "	swap2(c,loc);" << endl;
+    cout << "}" << endl;
 }
 
 void coutCocktailSort(){
 	cout << ">> COMPLEJIDAD CICLOMATICA : O N^2\n" << endl;
+	cout << "float tam  =array->size()-1;" << endl;
+	cout << "bool swapped = true;" << endl;
+	cout << "int start = 0, end = (array->size() - 1);" << endl;
+    cout << "while (swapped){" << endl;
+    cout << "    swapped = false;" << endl;
+    cout << "    for (int i = start; i < end; ++i){" << endl;
+    cout << "        if (array->at(i).dat > array->at(i+1).dat){" << endl;
+    cout << "            swap2(i,i+1);" << endl;
+    cout << "            swapped = true;" << endl;
+    cout << "        }" << endl;
+    cout << "    }" << endl;
+    cout << "    if (!swapped)" << endl;
+    cout << "        break;" << endl;
+    cout << "    swapped = false;" << endl;
+    cout << "    --end;" << endl;
+    cout << "    for (int i = end - 1; i >= start; --i){" << endl;
+    cout << "        if (array->at(i).dat > array->at(i+1).dat){" << endl;
+    cout << "            swap2(i,i+1);" << endl;
+    cout << "            swapped = true;" << endl;
+    cout << "        }" << endl;
+    cout << "    }" << endl;
+    cout << "    ++start;" << endl;
+    cout << "}" << endl;
+
 }
 
 void coutInsertionSort(){
 	cout << ">> COMPLEJIDAD CICLOMATICA : O N^2\n" << endl;
+	cout << "float tam = array->size();" << endl;
+ 	cout << "for (int i = 1; i < array->size(); i++)" << endl;
+ 	cout << "{" << endl;
+ 	cout << "	int j = i;" << endl;
+ 	cout << "	while ((j > 0) && (array->at(j).dat < array->at(j - 1).dat)){" << endl;
+ 	cout << "		swap2(j,j-1);" << endl;
+ 	cout << "		j = j - 1;" << endl;
+ 	cout << "	}" << endl;
+ 	cout << "	if(i == tam-1){" << endl;
+ 	cout << "		*percentage = 100;" << endl;
+ 	cout << "	}" << endl;
+ 	cout << "	else{" << endl;
+ 	cout << "		*percentage = (float)i/(float)tam * 100;" << endl;
+ 	cout << "	}" << endl;
+ 	cout << "	printf(""porcentaje %f"", *percentage);" << endl;
+ 	cout << "}" << endl;
 }
 
 void coutShellSort(){
 	cout << ">> COMPLEJIDAD CICLOMATICA : O N^1.25\n" << endl;
+	cout << "float tam = array->size();" << endl;
+    cout << "int c, i, j, temp;" << endl;
+    cout << "for (c = (array->size())/2; c > 0; c /= 2){" << endl;
+	cout << "        for (i = c; i < array->size(); i++){" << endl;
+	cout << "		for (j=i-c; j>=0 && array->at(j).dat > array->at(j + c).dat; j-=c)" << endl;
+	cout << "			swap2(j,j+c);" << endl;
+	cout << "		}" << endl;
+	cout << "	if(i == 1) *percentage = 100;" << endl;
+	cout << "	else{" << endl;
+	cout << "	*percentage = (float)c/(float)tam * 100;" << endl;
+	cout << "	}" << endl;
+	cout << "	printf(""porcentaje %f"", *percentage);" << endl;
+	cout << "}" << endl;
 }
 
 int busquedaLineal(vector<Data>* array, float clave)

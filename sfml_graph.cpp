@@ -67,6 +67,8 @@ int busquedaLineal(vector<Data>* array, float clave);
 int busqueda(Data *dat1);
 int resultado(Data *dat1);
 
+void exportCSV(float array[5][100]);
+void exportJSON(float array[5][100]);
 
 int main()
 {
@@ -155,8 +157,16 @@ int main()
 
 void MainMenu(ThreadParameters parameters)
 {
-  int option = 0, option2 = 0, numberRandoms;
+  int option = 0, option2 = 0;
+	float clave, resultado2, numberRandoms, datos[5][100], promedios[5], prom = 0, sum, count = 0;
 	Data num;;
+
+  for (int i = 0; i < 5; i++){
+    for (int i2 = 0; i2 < 100; i2++) {
+      datos[i][i2] = -1;
+    }
+  }
+
 	srand (static_cast <unsigned> (time(0)));
 
   	cout << "--------------PROYECTO FINAL DE ALGORTIMOS--------------" << endl << endl;
@@ -184,6 +194,10 @@ void MainMenu(ThreadParameters parameters)
 
 					case 0:
 					break;
+
+					default:
+		      	cout << "Opción incorrecta ingresa un valor nuevamente" << endl;
+		    	break;
 				}
 			}
     	break;
@@ -193,7 +207,7 @@ void MainMenu(ThreadParameters parameters)
 				cout << "1.- Ingresar número" << endl;
 				cout << "0.- Terminar" << endl;
 		  	cin >> option2;
-		  	switch (option) {
+		  	switch (option2) {
 		    	case 1:
 					cout << "n: ";
 					cin>>num.dat;
@@ -203,6 +217,10 @@ void MainMenu(ThreadParameters parameters)
 
 					case 0:
 					break;
+
+					default:
+		      	cout << "Opción incorrecta ingresa un valor nuevamente" << endl;
+		    	break;
 				}
     	break;
 
@@ -216,7 +234,296 @@ void MainMenu(ThreadParameters parameters)
   		}
 		}
 
+		int option3 = 1, option4 = 1, option5 = 1;
+		option = 1;
 
+		while(*parameters.windowStatus)
+    {
+			option2 = 1;
+			option3 = 1;
+			cout << "----------------------ALGORTIMOS------------------------" << endl << endl;
+			cout << "1.- De busqueda" << endl;
+			cout << "2.- De ordenamiento" << endl;
+			cout << "0.- Salir" << endl;
+			cout << "Ingresa la opcion que desees: " << endl;
+			cin >> option;
+			switch (option) {
+				case 1:
+				while (option2 != 0) {
+					cout << "-----------------------BUSQUEDA-------------------------" << endl << endl;
+					cout << "1.- Buscar un número" << endl;
+					cout << "0.- Regresar" << endl;
+					cin >> option2;
+					switch (option2) {
+						case 1:
+						while (option3 != 0) {
+							cout << "---------------------BUSCAR NÚMERO----------------------" << endl << endl;
+							cout << "1.- Ingresar el número a buscar: " << endl;
+							cout << "0.- Regresar a algortimos" << endl;
+							cin >> option3;
+							switch (option3) {
+								case 1:
+								cin >> clave;
+								resultado2 = busquedaLineal(parameters.array, clave);
+					    	if (resultado2 == -1) cout << " >> El número " << clave << " no se encuentra dentro del arreglo " <<  resultado2 << endl;
+					    	else{
+					      	cout << " >> El número " << clave << " se encuentra en la posición (" << resultado2 << ") del arreglo" << endl;
+					 			}
+								option3 = 0;
+								option2 = 0;
+								break;
+
+								case 0:
+								option2 = 0;
+								break;
+
+								default:
+					      	cout << "Opción incorrecta ingresa un valor nuevamente" << endl;
+					    	break;
+							}
+						}
+						break;
+
+						case 0:
+						break;
+
+						default:
+			      	cout << "Opción incorrecta ingresa un valor nuevamente" << endl;
+			    	break;
+					}
+				}
+				break;
+
+				case 2:
+				while (option2 != 0) {
+					option3 = 1;
+					cout << "---------------------ORDENAMIENTO-----------------------" << endl << endl;
+					cout << "1.- Visualizar algortimo de ordenamiento" << endl;
+					cout << "2.- Comparar dos algortimos de ordenamiento" << endl;
+					cout << "3.- Visualizar código de los algortimos" << endl;
+					cout << "4.- Correr un algortimo velocidad máxima" << endl;
+					cout << "5.- Gráfica con el promedio de los tiempos de ejecución" << endl;
+					cout << "6.- Exportar tiempos de ejecución" << endl;
+					cout << "0.- Regresar" << endl;
+					cin >> option2;
+					switch (option2) {
+						case 1:
+						while (option3 != 0){
+							option5 = 1;
+							cout << "---------------------INESTABLES------------------------" << endl << endl;
+							cout << "1.- Bubble Sort" << endl;
+							cout << "2.- Insertion Sort" << endl;
+							cout << "3.- Cocktail Sort" << endl;
+							cout << "----------------------ESTABLES-------------------------" << endl << endl;
+							cout << "4.- Selection Sort" << endl;
+							cout << "5.- Shell Sort" << endl;
+							cout << "0.- Regresar" << endl;
+							cin >> option4;
+							switch (option4) {
+								case 1:
+								while (option5 != 0){
+									cout << "-----------------------ORDEN---------------------------" << endl << endl;
+									cout << "1.- Ascendente" << endl;
+									cout << "2.- Descendente" << endl;
+									cout << "0.- Regresar" << endl;
+									cin >> option5;
+									switch (option5) {
+										case 1:
+										BubbleSortASC(parameters.array,parameters.percentage);
+										break;
+
+										case 2:
+										BubbleSortDSC(parameters.array,parameters.percentage);
+										break;
+
+										case 0:
+										break;
+
+										default:
+							      	cout << "Opción incorrecta ingresa un valor nuevamente" << endl;
+							    	break;
+									}
+								}
+								break;
+
+								case 2:
+								while (option5 != 0){
+									cout << "-----------------------ORDEN---------------------------" << endl << endl;
+									cout << "1.- Ascendente" << endl;
+									cout << "2.- Descendente" << endl;
+									cout << "0.- Regresar" << endl;
+									cin >> option5;
+									switch (option5) {
+										case 1:
+										InsertionSortASC(parameters.array,parameters.percentage);
+										break;
+
+										case 2:
+										InsertionSortDSC(parameters.array,parameters.percentage);
+										break;
+
+										case 0:
+										break;
+
+										default:
+							      	cout << "Opción incorrecta ingresa un valor nuevamente" << endl;
+							    	break;
+									}
+								}
+								break;
+
+								case 3:
+								while (option5 != 0){
+									cout << "-----------------------ORDEN---------------------------" << endl << endl;
+									cout << "1.- Ascendente" << endl;
+									cout << "2.- Descendente" << endl;
+									cout << "0.- Regresar" << endl;
+									cin >> option5;
+									switch (option5) {
+										case 1:
+										CocktailSortASC(parameters.array,parameters.percentage);
+										break;
+
+										case 2:
+										CocktailSortDSC(parameters.array,parameters.percentage);
+										break;
+
+										case 0:
+										break;
+
+										default:
+							      	cout << "Opción incorrecta ingresa un valor nuevamente" << endl;
+							    	break;
+									}
+								}
+								break;
+
+								case 4:
+								while (option5 != 0){
+									cout << "-----------------------ORDEN---------------------------" << endl << endl;
+									cout << "1.- Ascendente" << endl;
+									cout << "2.- Descendente" << endl;
+									cout << "0.- Regresar" << endl;
+									cin >> option5;
+									switch (option5) {
+										case 1:
+										SelectionSortASC(parameters.array,parameters.percentage);
+										break;
+
+										case 2:
+										SelectionSortDSC(parameters.array,parameters.percentage);
+										break;
+
+										case 0:
+										break;
+
+										default:
+							      	cout << "Opción incorrecta ingresa un valor nuevamente" << endl;
+							    	break;
+									}
+								}
+								break;
+
+								case 5:
+								while (option5 != 0){
+									cout << "-----------------------ORDEN---------------------------" << endl << endl;
+									cout << "1.- Ascendente" << endl;
+									cout << "2.- Descendente" << endl;
+									cout << "0.- Regresar" << endl;
+									cin >> option5;
+									switch (option5) {
+										case 1:
+										ShellSortASC(parameters.array,parameters.percentage);
+										break;
+
+										case 2:
+										ShellSortDSC(parameters.array,parameters.percentage);
+										break;
+
+										case 0:
+										break;
+
+										default:
+							      	cout << "Opción incorrecta ingresa un valor nuevamente" << endl;
+							    	break;
+									}
+								}
+								break;
+
+						case 0:
+						break;
+
+						default:
+			      	cout << "Opción incorrecta ingresa un valor nuevamente" << endl;
+			    	break;
+					}
+				break;
+
+				case 0:
+				break;
+
+				default:
+					cout << "Opción incorrecta ingresa un valor nuevamente" << endl;
+				break;
+				}
+
+				case 2:
+				cout << "---------------------COMPARAR--------------------------" << endl << endl;
+				cout << "Seleccione los dos algoritmos que desea comparar" << endl;
+				break;
+
+				case 3:
+				cout << "---------------------COMPARAR--------------------------" << endl << endl;
+				cout << "Seleccione los dos algoritmos que desea comparar" << endl;
+				break;
+
+				case 4:
+				cout << "---------------------COMPARAR--------------------------" << endl << endl;
+				cout << "Seleccione los dos algoritmos que desea comparar" << endl;
+				break;
+
+				case 5:
+				for (int i = 0; i < 5; i++){
+			    for (int i2 = 0; i2 < 100; i2++) {
+			      if(datos[i][i2] > 0) {
+			        sum = sum + datos[i][i2];
+			        count++;
+			      }
+			    }
+			    promedios[i] = sum / count;
+			  }
+					//crear grafica
+				break;
+
+				case 6:
+				cout << "---------------------FORMATO---------------------------" << endl << endl;
+				cout << "1.- JSON" << endl;
+				cout << "2.- CSV" << endl;
+				cout << "0.- Regresar" << endl;
+				cin >> option3;
+				switch (option3) {
+					case 1:
+					exportJSON(datos);
+					break;
+
+					case 2:
+					exportCSV(datos);
+					break;
+
+					case 0:
+					break;
+
+					default:
+						cout << "Opción incorrecta ingresa un valor nuevamente" << endl;
+					break;
+				}
+				break;
+
+
+			}
+		}
+	}
+}
 }
 
 
@@ -257,15 +564,6 @@ void userInput(ThreadParameters parameters)
 					num.stat=0;
 					parameters.array->push_back(num);
         }
-
-				else if(selectedOption=="1.1")
-				{
-						 cout<<"Ejecutando swap"<< endl;
-						// cout<<parameters.array<< endl;
-
-						 cout<<"Ejecutando swap"<< endl;
-						swapt(&parameters.array->at(1),&parameters.array->at(2));
-				}
 
 				else if(selectedOption=="1.2")
 				{

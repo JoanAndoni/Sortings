@@ -222,12 +222,12 @@ int main()
 	insertion << "->Insertion Sort: " << a3 << "%" << endl;
 	string insertionS = insertion.str();
 
-	float a4 = percentageSelection;
+	float a4 = percentageBubble;
 	stringstream cocktail (stringstream::in | stringstream::out);
 	cocktail << "->Cocktail Sort: " << a4 << "%" << endl;
 	string cocktailS = cocktail.str();
 
-	float a5 = percentageBubble;
+	float a5 = percentageSelection;
 	stringstream shell (stringstream::in | stringstream::out);
 	shell << "->Shell Sort: " << a5 << "%" << endl;
 	string shellS = shell.str();
@@ -1308,9 +1308,10 @@ void VerCocktailSortASC(vector<Data>* array, float * percentageCocktail, float *
                   swapt(&array->at(i),&array->at(i+1));
                 swapped = true;
             }
-							/*percentage1 = (float)i/(float)end * 100;
-							printf("porcentaje %d\n", percentage1);
-							*percentage = percentage1;*/
+						if(i == end-1)
+						{
+							*percentageCocktail = 50;
+						}
         }
 
         if (!swapped)
@@ -1329,18 +1330,16 @@ void VerCocktailSortASC(vector<Data>* array, float * percentageCocktail, float *
                 swapt(&array->at(i),&array->at(i+1));
                 swapped = true;
             }
-						percentage2 = (float)i/(float)start * 50;
-						printf("porcentaje %d\n", percentage2);
-						*percentageCocktail = percentage1 + percentage2;
+						if(i == start)
+						{
+							*percentageCocktail = 90;
+						}
         }
         ++start;
 				if(start == end)
 				{
 					*percentageCocktail = 100;
 				}
-				/*else{
-					*percentage = percentage1 + percentage2;
-				}*/
 
 				printf("porcentaje %f\n", *percentageCocktail);
     }
@@ -1358,6 +1357,10 @@ void CocktailSortASC(vector<Data>* array, float * percentageCocktail)
                 swap2(i,i+1);
                 swapped = true;
             }
+						if(i == end-1)
+						{
+							*percentageCocktail = 50;
+						}
         }
         if (!swapped)
             break;
@@ -1368,8 +1371,18 @@ void CocktailSortASC(vector<Data>* array, float * percentageCocktail)
                 swap2(i,i+1);
                 swapped = true;
             }
+						if(i == start)
+						{
+							*percentageCocktail = 90;
+						}
         }
         ++start;
+				if(start == end)
+				{
+					*percentageCocktail = 100;
+				}
+
+				printf("porcentaje %f\n", *percentageCocktail);
     }
 }
 void VerCocktailSortDSC(vector<Data>* array, float * percentageCocktail, float * comp1, float * comp2)
@@ -1391,6 +1404,10 @@ void VerCocktailSortDSC(vector<Data>* array, float * percentageCocktail, float *
                   swapt(&array->at(i),&array->at(i+1));
                 swapped = true;
             }
+						if(i == end-1)
+						{
+							*percentageCocktail = 50;
+						}
         }
 
         if (!swapped)
@@ -1409,8 +1426,18 @@ void VerCocktailSortDSC(vector<Data>* array, float * percentageCocktail, float *
                 swapt(&array->at(i),&array->at(i+1));
                 swapped = true;
             }
+						if(i == start)
+						{
+							*percentageCocktail = 90;
+						}
         }
         ++start;
+				if(start == end)
+				{
+					*percentageCocktail = 100;
+				}
+
+				printf("porcentaje %f\n", *percentageCocktail);
     }
 }
 void CocktailSortDSC(vector<Data>* array, float * percentageCocktail)
@@ -1430,6 +1457,10 @@ void CocktailSortDSC(vector<Data>* array, float * percentageCocktail)
                   swap2(i,i+1);
                 swapped = true;
             }
+						if(i == end-1)
+						{
+							*percentageCocktail = 50;
+						}
         }
 
         if (!swapped)
@@ -1446,8 +1477,18 @@ void CocktailSortDSC(vector<Data>* array, float * percentageCocktail)
                 swap2(i,i+1);
                 swapped = true;
             }
+						if(i == start)
+						{
+							*percentageCocktail = 90;
+						}
         }
         ++start;
+				if(start == end)
+				{
+					*percentageCocktail = 100;
+				}
+
+				printf("porcentaje %f\n", *percentageCocktail);
     }
 }
 
@@ -1554,9 +1595,8 @@ void VerShellSortASC(vector<Data>* array, float * percentageShell, float * comp1
 		}
 		if(c == 1){
 			*percentageShell = 100;
-		}
-		else{
-			*percentageShell = (float)c/(float)tam/2 * 100;
+		}else{
+			*percentageShell += 20;
 		}
 		printf("porcentaje %f\n", *percentageShell);
 	}
@@ -1570,11 +1610,12 @@ void ShellSortASC(vector<Data>* array, float * percentageShell)
 			for (j=i-c; j>=0 && array->at(j).dat > array->at(j + c).dat; j-=c)
 				swap2(j,j+c);
 			}
-		if(i == 1) *percentageShell = 100;
-		else{
-		*percentageShell = (float)c/(float)tam * 100;
-		}
-		printf("porcentaje %f\n", *percentageShell);
+			if(c == 1){
+				*percentageShell = 100;
+			}else{
+				*percentageShell += 20;
+			}
+			printf("porcentaje %f\n", *percentageShell);
 	}
 }
 void VerShellSortDSC(vector<Data>* array, float * percentageShell, float * comp1, float * comp2)
@@ -1592,11 +1633,10 @@ void VerShellSortDSC(vector<Data>* array, float * percentageShell, float * comp1
 					swapt(&array->at(j),&array->at(j+c));
 				}
 			}
-			if(c == tam/2){
+			if(c == 1){
 				*percentageShell = 100;
-			}
-			else{
-				*percentageShell = (float)c/(float)tam * 100;
+			}else{
+				*percentageShell += 20;
 			}
 			printf("porcentaje %f\n", *percentageShell);
 
@@ -1616,11 +1656,10 @@ void ShellSortDSC(vector<Data>* array, float * percentageShell)
 					swap2(j,j+c);
 				}
 			}
-			if(c == tam/2){
+			if(c == 1){
 				*percentageShell = 100;
-			}
-			else{
-				*percentageShell = (float)c/(float)tam * 100;
+			}else{
+				*percentageShell += 20;
 			}
 			printf("porcentaje %f\n", *percentageShell);
 

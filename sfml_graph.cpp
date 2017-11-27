@@ -589,53 +589,105 @@ void MainMenu(ThreadParameters parameters)
 					cin >> optionOrdenamiento2;
 					switch (optionOrdenamiento2){
 						case 1:
-						BubbleSortASC(parameters.array,parameters.percentageBubble);
-						InsertionSortASC(parameters.array,parameters.percentageInsertion);
+							#pragma omp parallel sections private(vector<Data>*array)
+    					{
+			        #pragma omp section
+			        BubbleSortASC(parameters.array,parameters.percentageBubble);
+			        #pragma omp section
+			        InsertionSortASC(parameters.array,parameters.percentageInsertion);
+    					}
+
 						break;
 
 						case 2:
+						#pragma omp parallel sections private(vector<Data>*array)
+						{
+						#pragma omp section
 						BubbleSortASC(parameters.array,parameters.percentageBubble);
+						#pragma omp section
 						SelectionSortASC(parameters.array,parameters.percentageSelection);
+						}
+
 						break;
 
 						case 3:
+						#pragma omp parallel sections private(vector<Data>*array)
+						{
+						#pragma omp section
 						BubbleSortASC(parameters.array,parameters.percentageBubble);
+						#pragma omp section
 						CocktailSortASC(parameters.array,parameters.percentageCocktail);
+						}
 						break;
 
 						case 4:
+						#pragma omp parallel sections private(vector<Data>*array)
+						{
+						#pragma omp section
 						BubbleSortASC(parameters.array,parameters.percentageBubble);
+						#pragma omp section
 						ShellSortASC(parameters.array,parameters.percentageShell);
+						}
 						break;
 
 						case 5:
+						#pragma omp parallel sections private(vector<Data>*array)
+						{
+						#pragma omp section
 						InsertionSortASC(parameters.array,parameters.percentageInsertion);
+						#pragma omp section
 						SelectionSortASC(parameters.array,parameters.percentageSelection);
+						}
 						break;
 
 						case 6:
+						#pragma omp parallel sections private(vector<Data>*array)
+						{
+						#pragma omp section
 						InsertionSortASC(parameters.array,parameters.percentageInsertion);
+						#pragma omp section
 						CocktailSortASC(parameters.array,parameters.percentageCocktail);
+						}
 						break;
 
 						case 7:
+						#pragma omp parallel sections private(vector<Data>*array)
+						{
+						#pragma omp section
 						InsertionSortASC(parameters.array,parameters.percentageInsertion);
+						#pragma omp section
 						ShellSortASC(parameters.array,parameters.percentageShell);
+						}
 						break;
 
 						case 8:
+						#pragma omp parallel sections private(vector<Data>*array)
+						{
+						#pragma omp section
 						SelectionSortASC(parameters.array,parameters.percentageSelection);
+						#pragma omp section
 						CocktailSortASC(parameters.array,parameters.percentageCocktail);
+						}
 						break;
 
 						case 9:
+						#pragma omp parallel sections private(vector<Data>*array)
+						{
+						#pragma omp section
 						SelectionSortASC(parameters.array,parameters.percentageSelection);
+						#pragma omp section
 						ShellSortASC(parameters.array,parameters.percentageShell);
+						}
 						break;
 
 						case 10:
+						#pragma omp parallel sections private(vector<Data>*array)
+						{
+						#pragma omp section
 						CocktailSortASC(parameters.array,parameters.percentageCocktail);
+						#pragma omp section
 						ShellSortASC(parameters.array,parameters.percentageShell);
+						}
 						break;
 
 						case 0:
@@ -1586,7 +1638,7 @@ void VerShellSortASC(vector<Data>* array, float * percentageShell, float * comp1
 		if(c == 1){
 			*percentageShell = 100;
 		}else{
-			*percentageShell += 20;
+			*percentageShell += 10;
 		}
 		printf("porcentaje %f\n", *percentageShell);
 	}
@@ -1603,7 +1655,7 @@ void ShellSortASC(vector<Data>* array, float * percentageShell)
 			if(c == 1){
 				*percentageShell = 100;
 			}else{
-				*percentageShell += 20;
+				*percentageShell += 10;
 			}
 			printf("porcentaje %f\n", *percentageShell);
 	}
@@ -1626,7 +1678,7 @@ void VerShellSortDSC(vector<Data>* array, float * percentageShell, float * comp1
 			if(c == 1){
 				*percentageShell = 100;
 			}else{
-				*percentageShell += 20;
+				*percentageShell += 10;
 			}
 			printf("porcentaje %f\n", *percentageShell);
 
@@ -1649,7 +1701,7 @@ void ShellSortDSC(vector<Data>* array, float * percentageShell)
 			if(c == 1){
 				*percentageShell = 100;
 			}else{
-				*percentageShell += 20;
+				*percentageShell += 10;
 			}
 			printf("porcentaje %f\n", *percentageShell);
 

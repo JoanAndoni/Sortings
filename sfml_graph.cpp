@@ -290,6 +290,7 @@ void MainMenu(ThreadParameters parameters)
   int optionProyect = 1, optionProyect2 = 1, optionProyect3 = 1, option = 1, option2 =1, sortID, CountingData1 = 0;
 	int CountingData2 = 0, CountingData3 = 0, CountingData4 = 0, CountingData5 = 0;
 	float clave, resultado2, numberRandoms, datos[5][100], promedios[5], sum, count = 0;
+	vector<float> Disorder;
 	Data num;;
 
   	for (int i = 0; i < 5; i++){
@@ -316,6 +317,7 @@ void MainMenu(ThreadParameters parameters)
 					for (int i = 0; i < numberRandoms; i++) {
 						num.dat = rand() % 70;
 						num.stat = 0;
+						Disorder.push_back(num.dat);
 						parameters.array->push_back(num);
 					}
     	break;
@@ -331,6 +333,7 @@ void MainMenu(ThreadParameters parameters)
 					cout << "\nn: ";
 					cin>>num.dat;
 				 	num.stat=0;
+					Disorder.push_back(num.dat);
 				 	parameters.array->push_back(num);
 		    	break;
 
@@ -399,6 +402,9 @@ void MainMenu(ThreadParameters parameters)
 			case 2:
 			while (optionOrdenamiento1 != 0) {
 				optionOrdenamiento2 = 1;
+				for (int i = 0; i < (Disorder.size()-1); i++) {
+					parameters.array->at(i).dat = Disorder.at(i);
+				}
 				cout << "\n---------------------ORDENAMIENTO-----------------------" << endl << endl;
 				cout << "1.- Visualizar algortimo de ordenamiento" << endl;
 				cout << "2.- Comparar dos algortimos de ordenamiento" << endl;
@@ -412,6 +418,9 @@ void MainMenu(ThreadParameters parameters)
 					case 1:
 					while (optionOrdenamiento2 != 0){
 						optionOrdenamiento3 = 1;
+						for (int i = 0; i < (Disorder.size()-1); i++) {
+							parameters.array->at(i).dat = Disorder.at(i);
+						}
 						cout << "\n---------------------INESTABLES------------------------" << endl << endl;
 						cout << "1.- Bubble Sort" << endl;
 						cout << "2.- Insertion Sort" << endl;
@@ -571,6 +580,9 @@ void MainMenu(ThreadParameters parameters)
 					case 2:
 					while (optionOrdenamiento2 != 0){
 						optionOrdenamiento3 = 1;
+						for (int i = 0; i < (Disorder.size()-1); i++) {
+							parameters.array->at(i).dat = Disorder.at(i);
+						}
 					cout << "\n----------------------COMPARAR-------------------------" << endl << endl;
 					cout << "Seleccione los dos algoritmos que desea comparar" << endl;
 					cout << "1.- Bubble Sort con Insertion Sort" << endl;
@@ -701,6 +713,9 @@ void MainMenu(ThreadParameters parameters)
 					case 3:
 					while (optionOrdenamiento2 != 0){
 						optionOrdenamiento3 = 1;
+						for (int i = 0; i < (Disorder.size()-1); i++) {
+							parameters.array->at(i).dat = Disorder.at(i);
+						}
 						cout << "\n---------------------INESTABLES------------------------" << endl << endl;
 						cout << "1.- Bubble Sort" << endl;
 						cout << "2.- Insertion Sort" << endl;
@@ -745,6 +760,9 @@ void MainMenu(ThreadParameters parameters)
 					case 4:
 					while (optionOrdenamiento2 != 0){
 						optionOrdenamiento3 = 1;
+						for (int i = 0; i < (Disorder.size()-1); i++) {
+							parameters.array->at(i).dat = Disorder.at(i);
+						}
 						cout << "\n---------------------INESTABLES------------------------" << endl << endl;
 						cout << "1.- Bubble Sort" << endl;
 						cout << "2.- Insertion Sort" << endl;

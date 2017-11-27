@@ -130,14 +130,6 @@ int main()
 			float  percentageShell=0;
 			float comp1 = 0;
 			float comp2 = 0;
-			/*Data w;
-			w.dat=2;
-			w.stat=1;
-			array.push_back(w);
-			datos x;
-			x.instrucciones=&array;
-			instrucciones.push_back(array); cout << "push_back(dat)" << endl;*/
-
 
     ThreadParameters parameters = {&array,&instrucciones, &windowStatus,&percentage, &percentageShell, &percentageCocktail, &percentageInsertion, &percentageBubble, &percentageSelection, &comp1, &comp2};
     // Create a thread for MainMenu function and runs it//
@@ -196,7 +188,6 @@ int main()
 	for(int i=0;i<array.size();i++)
 	{
 		float b = array[i].dat;
-
 		sf::RectangleShape rec = drawRectangle((WINDOW_WIDTH/2)+(i*20), 100, array[i].stat,b);
 		window.draw(rec);
 		texture.draw(rec);
@@ -291,7 +282,6 @@ int main()
 	window.setView(view1);
         window.display();
     }
-
     return 0;
 }
 
@@ -324,7 +314,7 @@ void MainMenu(ThreadParameters parameters)
 					cout << "n: ";
 					cin >> numberRandoms;
 					for (int i = 0; i < numberRandoms; i++) {
-						num.dat = ((float)rand()/(float)(RAND_MAX));
+						num.dat = rand() % 70;
 						num.stat = 0;
 						parameters.array->push_back(num);
 					}
@@ -445,7 +435,6 @@ void MainMenu(ThreadParameters parameters)
 								switch (optionOrdenamiento3) {
 									case 1:
 									VerBubbleSortASC(parameters.array,parameters.percentageBubble, parameters.comp1, parameters.comp2);
-
 									break;
 
 									case 2:
@@ -596,11 +585,12 @@ void MainMenu(ThreadParameters parameters)
 					cout << "9.- Selection Sort con Shell Sort" << endl;
 					cout << "10.- Cocktail Sort con Shell Sort" << endl;
 					cout << "0.- Regresar" << endl;
+					cout << "\nIngresa la opcion que desees: " << endl;
+					cin >> optionOrdenamiento2;
 					switch (optionOrdenamiento2){
 						case 1:
 						BubbleSortASC(parameters.array,parameters.percentageBubble);
 						InsertionSortASC(parameters.array,parameters.percentageInsertion);
-
 						break;
 
 						case 2:

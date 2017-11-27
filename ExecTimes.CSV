@@ -1,14 +1,5 @@
 BubbleSort
-<<<<<<< HEAD
 SelectionSort
 CocktailSort
 InsertionSort
-=======
-0.056
-SelectionSort
-0.031
-CocktailSort
-InsertionSort
-0.037
->>>>>>> 5659778ab6dbe93a62e25aa48c3cadf87a5315c4
 ShellSort

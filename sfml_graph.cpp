@@ -11,6 +11,7 @@
 #include <SFML/Graphics.hpp>
 #include <jsoncpp/json/json.h>
 #include <jsoncpp/json/writer.h>
+#include <omp.h>
 
 using namespace std;
 
@@ -206,12 +207,12 @@ int main()
 	instruccionesASC << "Comparacion que se esta realizando :  \n " << comp1 << " < " << comp2 << endl;
 	string instASC = instruccionesASC.str();
 
-	float a1 = percentageBubble;
+	float a1 = percentageShell;//percentageBubble;
 	stringstream bubble (stringstream::in | stringstream::out);
 	bubble << "->Bubble Sort: " << a1 << "%" << endl;
 	string bubbleS = bubble.str();
 
-	float a2 = percentageSelection;
+	float a2 = percentageCocktail;
 	stringstream selection (stringstream::in | stringstream::out);
 	selection << "->Selection Sort: " << a2 << "%" << endl;
 	string selectionS = selection.str();
@@ -221,12 +222,12 @@ int main()
 	insertion << "->Insertion Sort: " << a3 << "%" << endl;
 	string insertionS = insertion.str();
 
-	float a4 = percentageCocktail;
+	float a4 = percentageSelection;
 	stringstream cocktail (stringstream::in | stringstream::out);
 	cocktail << "->Cocktail Sort: " << a4 << "%" << endl;
 	string cocktailS = cocktail.str();
 
-	float a5 = percentageShell;
+	float a5 = percentageBubble;
 	stringstream shell (stringstream::in | stringstream::out);
 	shell << "->Shell Sort: " << a5 << "%" << endl;
 	string shellS = shell.str();
@@ -580,10 +581,82 @@ void MainMenu(ThreadParameters parameters)
 					break;
 
 					case 2:
+					while (optionOrdenamiento2 != 0){
+						optionOrdenamiento3 = 1;
 					cout << "\n----------------------COMPARAR-------------------------" << endl << endl;
 					cout << "Seleccione los dos algoritmos que desea comparar" << endl;
-					break;
+					cout << "1.- Bubble Sort con Insertion Sort" << endl;
+					cout << "2.- Bubble Sort con Selection Sort" << endl;
+					cout << "3.- Bubble Sort con Cocktail Sort" << endl;
+					cout << "4.- Bubble Sort con Shell Sort" << endl;
+					cout << "5.- Insertion Sort con Selection Sort" << endl;
+					cout << "6.- Insertion Sort con Cocktail Sort" << endl;
+					cout << "7.- Insertion Sort con Shell Sort" << endl;
+					cout << "8.- Selection Sort con Cocktail Sort" << endl;
+					cout << "9.- Selection Sort con Shell Sort" << endl;
+					cout << "10.- Cocktail Sort con Shell Sort" << endl;
+					cout << "0.- Regresar" << endl;
+					switch (optionOrdenamiento2){
+						case 1:
+						BubbleSortASC(parameters.array,parameters.percentageBubble);
+						InsertionSortASC(parameters.array,parameters.percentageInsertion);
 
+						break;
+
+						case 2:
+						BubbleSortASC(parameters.array,parameters.percentageBubble);
+						SelectionSortASC(parameters.array,parameters.percentageSelection);
+						break;
+
+						case 3:
+						BubbleSortASC(parameters.array,parameters.percentageBubble);
+						CocktailSortASC(parameters.array,parameters.percentageCocktail);
+						break;
+
+						case 4:
+						BubbleSortASC(parameters.array,parameters.percentageBubble);
+						ShellSortASC(parameters.array,parameters.percentageShell);
+						break;
+
+						case 5:
+						InsertionSortASC(parameters.array,parameters.percentageInsertion);
+						SelectionSortASC(parameters.array,parameters.percentageSelection);
+						break;
+
+						case 6:
+						InsertionSortASC(parameters.array,parameters.percentageInsertion);
+						CocktailSortASC(parameters.array,parameters.percentageCocktail);
+						break;
+
+						case 7:
+						InsertionSortASC(parameters.array,parameters.percentageInsertion);
+						ShellSortASC(parameters.array,parameters.percentageShell);
+						break;
+
+						case 8:
+						SelectionSortASC(parameters.array,parameters.percentageSelection);
+						CocktailSortASC(parameters.array,parameters.percentageCocktail);
+						break;
+
+						case 9:
+						SelectionSortASC(parameters.array,parameters.percentageSelection);
+						ShellSortASC(parameters.array,parameters.percentageShell);
+						break;
+
+						case 10:
+						CocktailSortASC(parameters.array,parameters.percentageCocktail);
+						ShellSortASC(parameters.array,parameters.percentageShell);
+						break;
+
+						case 0:
+						break;
+
+						default:
+							cout << "\nOpción incorrecta ingresa un valor nuevamente" << endl;
+						break;
+					}
+				}
+				break;
 					case 3:
 					while (optionOrdenamiento2 != 0){
 						optionOrdenamiento3 = 1;
@@ -1555,7 +1628,8 @@ void ShellSortDSC(vector<Data>* array, float * percentageShell)
 }
 
 void coutBubbleSort(){
-	cout << ">> COMPLEJIDAD CICLOMATICA : O N^2\n" << endl;
+	cout << ">> COMPLEJIDAD CICLOMATICA : O(N^2)\n" << endl;
+	cout << ">> COMPLEJIDAD ESPACIAL : O(1)\n" << endl;
 	cout << "int tam = array->size();" << endl;
 	cout << "cout << ""Tamaño"" << tam << endl;" << endl;
   cout << "int c, d;" << endl;
@@ -1580,7 +1654,8 @@ void coutBubbleSort(){
 }
 
 void coutSelectionSort(){
-	cout << ">> COMPLEJIDAD CICLOMATICA : O N^2\n" << endl;
+	cout << ">> COMPLEJIDAD CICLOMATICA : O(N^2)\n" << endl;
+	cout << ">> COMPLEJIDAD ESPACIAL : O(1)\n" << endl;
 	cout << "int c, d, min, loc, temp;" << endl;
 	cout << "int tam = array->size();" << endl;
   cout << "for (c = 0; c <= (array->size() - 1); c++)" << endl;
@@ -1605,7 +1680,8 @@ void coutSelectionSort(){
 }
 
 void coutCocktailSort(){
-	cout << ">> COMPLEJIDAD CICLOMATICA : O N^2\n" << endl;
+	cout << ">> COMPLEJIDAD CICLOMATICA : O(N^2)\n" << endl;
+	cout << ">> COMPLEJIDAD ESPACIAL : O(1)\n" << endl;
 	cout << "float tam  =array->size()-1;" << endl;
 	cout << "bool swapped = true;" << endl;
 	cout << "int start = 0, end = (array->size() - 1);" << endl;
@@ -1633,7 +1709,8 @@ void coutCocktailSort(){
 }
 
 void coutInsertionSort(){
-	cout << ">> COMPLEJIDAD CICLOMATICA : O N^2\n" << endl;
+	cout << ">> COMPLEJIDAD CICLOMATICA : O(N^2)\n" << endl;
+	cout << ">> COMPLEJIDAD ESPACIAL : O(1)\n" << endl;
 	cout << "float tam = array->size();" << endl;
  	cout << "for (int i = 1; i < array->size(); i++)" << endl;
  	cout << "{" << endl;
@@ -1653,7 +1730,8 @@ void coutInsertionSort(){
 }
 
 void coutShellSort(){
-	cout << ">> COMPLEJIDAD CICLOMATICA : O N^1.25\n" << endl;
+	cout << ">> COMPLEJIDAD CICLOMATICA : O(N^1.25)\n" << endl;
+	cout << ">> COMPLEJIDAD ESPACIAL : O(1)\n" << endl;
 	cout << "float tam = array->size();" << endl;
   cout << "int c, i, j, temp;" << endl;
   cout << "for (c = (array->size())/2; c > 0; c /= 2){" << endl;

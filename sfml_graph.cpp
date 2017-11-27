@@ -404,8 +404,7 @@ void MainMenu(ThreadParameters parameters)
 				cout << "2.- Comparar dos algortimos de ordenamiento" << endl;
 				cout << "3.- Visualizar código de los algortimos" << endl;
 				cout << "4.- Correr un algortimo velocidad máxima" << endl;
-				cout << "5.- Gráfica con el promedio de los tiempos de ejecución" << endl;
-				cout << "6.- Exportar tiempos de ejecución" << endl;
+				cout << "5.- Exportar tiempos de ejecución" << endl;
 				cout << "0.- Regresar" << endl;
 				cout << "\nIngresa la opcion que desees: " << endl;
 				cin >> optionOrdenamiento1;
@@ -993,7 +992,7 @@ void MainMenu(ThreadParameters parameters)
 					}
 					break;
 
-					case 5:
+					case 6:
 					for (int i = 0; i < 5; i++){
 			    		for (int i2 = 0; i2 < 100; i2++) {
 			      			if(datos[i][i2] > 0) {
@@ -1006,7 +1005,7 @@ void MainMenu(ThreadParameters parameters)
 					//crear grafica
 					break;
 
-					case 6:
+					case 5:
 					cout << "\n---------------------FORMATO---------------------------" << endl << endl;
 					cout << "1.- JSON" << endl;
 					cout << "2.- CSV" << endl;

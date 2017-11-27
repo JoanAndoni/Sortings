@@ -1380,13 +1380,11 @@ void VerShellSortDSC(vector<Data>* array, float * percentage)
 		float tam = array->size();
     int c, i, j, temp;
     for (c = (array->size())/2; c >= 0; c /= 2)
-
         for (i = c; i < array->size(); i++)
 					{
 						for (j=i-c; j>=0 && array->at(j).dat < array->at(j + c).dat; j-=c)
 						{
 							swapt(&array->at(j),&array->at(j+c));
-
             }
 					}
 					if(i == 1){
@@ -1405,20 +1403,12 @@ void ShellSortDSC(vector<Data>* array, float * percentage)
     for (c = (array->size())/2; c >= 0; c /= 2)
 		{
 			for (i = c; i < array->size(); i++)
-					{
-						for (j=i-c; j>=0 && array->at(j).dat < array->at(j + c).dat; j-=c)
-						{
-							swap2(j,j+c);
-
-            }
-					}
-					if(i == 1){
-						*percentage = 100;
-					}
-					else{
-						*percentage = (float)c/(float)tam * 100;
-					}
-					printf("porcentaje %f\n", *percentage);
+			{
+				for (j=i-c; j>=0 && array->at(j).dat < array->at(j + c).dat; j-=c)
+				{
+				swap2(j,j+c);
+        }
+			}
 		}
 }
 

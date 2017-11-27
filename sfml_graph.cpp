@@ -36,7 +36,14 @@ struct ThreadParameters //parametros entre los threads
     vector<Data>* array;
 		vector<datos>* instrucciones;
     bool* windowStatus;
-		float * percentage;
+		float *percentage;
+		float * percentageBubble;
+		float * percentageSelection;
+		float * percentageInsertion;
+		float * percentageCocktail;
+		float * percentageShell;
+		float * comp1;
+		float * comp2;
 		float *clave;
 };
 
@@ -50,8 +57,8 @@ sf::RectangleShape drawRectangle(int x,int y, int stat, float a);
 
 //BUBBLE
 //****GRAFICO****
-void VerBubbleSortASC( vector<Data>* array, float * percentage, vector<datos>*instrucciones);
-void VerBubbleSortDSC( vector<Data>* array, float * percentage);
+void VerBubbleSortASC( vector<Data>* array, float * percentageBubble, float * comp1, float * comp2);
+void VerBubbleSortDSC( vector<Data>* array, float * percentageBubble, float * comp1, float * comp2);
 //****NORMAL****
 void BubbleSortASC( vector<Data>* array, float * percentage);
 void BubbleSortDSC( vector<Data>* array, float * percentage);
@@ -60,8 +67,8 @@ void coutBubbleSort();
 
 //SELECTION
 //****GRAFICO****
-void VerSelectionSortASC(vector<Data>* array, float * percentage);
-void VerSelectionSortDSC(vector<Data>* array, float * percentage);
+void VerSelectionSortASC(vector<Data>* array, float * percentageSelection, float * comp1, float * comp2);
+void VerSelectionSortDSC(vector<Data>* array, float * percentageSelection, float * comp1, float * comp2);
 //****NORMAL****
 void SelectionSortASC(vector<Data>* array, float * percentage);
 void SelectionSortDSC(vector<Data>* array, float * percentage);
@@ -70,8 +77,8 @@ void coutSelectionSort();
 
 //COCKTAIL
 //****GRAFICO****
-void VerCocktailSortASC(vector<Data>* array, float * percentage);
-void VerCocktailSortDSC(vector<Data>* array, float * percentage);
+void VerCocktailSortASC(vector<Data>* array, float * percentageCocktail, float * comp1, float * comp2);
+void VerCocktailSortDSC(vector<Data>* array, float * percentageCocktail, float * comp1, float * comp2);
 //****NORMAL****
 void CocktailSortASC(vector<Data>* array, float * percentage);
 void CocktailSortDSC(vector<Data>* array, float * percentage);
@@ -80,8 +87,8 @@ void coutCocktailSort();
 
 //INSERTION
 //****GRAFICO****
-void VerInsertionSortASC(vector<Data>* array, float * percentage);
-void VerInsertionSortDSC(vector<Data>* array, float * percentage);
+void VerInsertionSortASC(vector<Data>* array, float * percentageInsertion, float * comp1, float * comp2);
+void VerInsertionSortDSC(vector<Data>* array, float * percentageInsertion,float * comp1, float * comp2);
 //****NORMAL****
 void InsertionSortASC(vector<Data>* array, float * percentage);
 void InsertionSortDSC(vector<Data>* array, float * percentage);
@@ -90,8 +97,8 @@ void coutInsertionSort();
 
 //SHELL
 //****GRAFICO****
-void VerShellSortASC(vector<Data>* array, float * percentage);
-void VerShellSortDSC(vector<Data>* array, float * percentage);
+void VerShellSortASC(vector<Data>* array, float * percentageShell, float * comp1, float * comp2);
+void VerShellSortDSC(vector<Data>* array, float * percentageShell, float * comp1, float * comp2);
 //****NORMAL****
 void ShellSortASC(vector<Data>* array, float * percentage);
 void ShellSortDSC(vector<Data>* array, float * percentage);
@@ -114,9 +121,24 @@ int main()
       vector<Data> array;
 			vector<datos> instrucciones;
 	    bool windowStatus=true;
-			float percentage=0;
+			float percentage =0;
+			float  percentageBubble =0;
+			float  percentageSelection=0;
+			float  percentageInsertion=0;
+			float  percentageCocktail=0;
+			float  percentageShell=0;
+			float comp1 = 0;
+			float comp2 = 0;
+			/*Data w;
+			w.dat=2;
+			w.stat=1;
+			array.push_back(w);
+			datos x;
+			x.instrucciones=&array;
+			instrucciones.push_back(array); cout << "push_back(dat)" << endl;*/
 
-    ThreadParameters parameters = {&array,&instrucciones, &windowStatus,&percentage};
+
+    ThreadParameters parameters = {&array,&instrucciones, &windowStatus,&percentage, &percentageShell, &percentageCocktail, &percentageInsertion, &percentageBubble, &percentageSelection, &comp1, &comp2};
     // Create a thread for MainMenu function and runs it//
     sf::Thread thread(&MainMenu,parameters);
     thread.launch();
@@ -178,11 +200,40 @@ int main()
 		window.draw(rec);
 		texture.draw(rec);
 	}
+	float inst = comp1;
+	float inst2 = comp2;
+	stringstream instruccionesASC (stringstream::in | stringstream::out);
+	instruccionesASC << "Comparacion que se esta realizando :  \n " << comp1 << " < " << comp2 << endl;
+	string instASC = instruccionesASC.str();
 
-	float a = percentage;
-	stringstream ss (stringstream::in | stringstream::out);
-	ss << a;
-	string s = ss.str();
+	float a1 = percentageBubble;
+	stringstream bubble (stringstream::in | stringstream::out);
+	bubble << "->Bubble Sort: " << a1 << "%" << endl;
+	string bubbleS = bubble.str();
+
+	float a2 = percentageSelection;
+	stringstream selection (stringstream::in | stringstream::out);
+	selection << "->Selection Sort: " << a2 << "%" << endl;
+	string selectionS = selection.str();
+
+	float a3 = percentageInsertion;
+	stringstream insertion (stringstream::in | stringstream::out);
+	insertion << "->Insertion Sort: " << a3 << "%" << endl;
+	string insertionS = insertion.str();
+
+	float a4 = percentageCocktail;
+	stringstream cocktail (stringstream::in | stringstream::out);
+	cocktail << "->Cocktail Sort: " << a4 << "%" << endl;
+	string cocktailS = cocktail.str();
+
+	float a5 = percentageShell;
+	stringstream shell (stringstream::in | stringstream::out);
+	shell << "->Shell Sort: " << a5 << "%" << endl;
+	string shellS = shell.str();
+
+	stringstream por (stringstream::in | stringstream::out);
+	por << "PORCENTAJES DE AVANCE: " << endl;
+	string porcentajeS = por.str();
 
 	for(int i=0;i<instrucciones.size();i++)
 	{
@@ -199,11 +250,41 @@ int main()
 	//vector de historial
 
 	 //Ejemplo para agregar texto
-	sf::Text Weight(s,font,TEXT_SIZE);
-	Weight.setColor(sf::Color::Black);
-	Weight.setPosition(20, 35);
-	window.draw(Weight);
+	 sf::Text ComparacionASC(instASC,font,TEXT_SIZE);
+	ComparacionASC.setColor(sf::Color::Black);
+	ComparacionASC.setPosition(20, 200);
+	window.draw(ComparacionASC);
 
+
+	 sf::Text Weight(porcentajeS,font,TEXT_SIZE);
+	 Weight.setColor(sf::Color::Black);
+	 Weight.setPosition(20, 10);
+	 window.draw(Weight);
+
+	sf::Text Weight1(bubbleS,font,TEXT_SIZE);
+	Weight1.setColor(sf::Color::Black);
+	Weight1.setPosition(20, 35);
+	window.draw(Weight1);
+
+	sf::Text Weight2(selectionS,font,TEXT_SIZE);
+	Weight2.setColor(sf::Color::Black);
+	Weight2.setPosition(20, 60);
+	window.draw(Weight2);
+
+	sf::Text Weight3(insertionS,font,TEXT_SIZE);
+	Weight3.setColor(sf::Color::Black);
+	Weight3.setPosition(20, 85);
+	window.draw(Weight3);
+
+	sf::Text Weight4(cocktailS,font,TEXT_SIZE);
+	Weight4.setColor(sf::Color::Black);
+	Weight4.setPosition(20, 110);
+	window.draw(Weight4);
+
+	sf::Text Weight5(shellS,font,TEXT_SIZE);
+	Weight5.setColor(sf::Color::Black);
+	Weight5.setPosition(20, 135);
+	window.draw(Weight5);
 
 	////////pantalla dinamica///////////
 	window.setView(view1);
@@ -362,11 +443,12 @@ void MainMenu(ThreadParameters parameters)
 								cin >> optionOrdenamiento3;
 								switch (optionOrdenamiento3) {
 									case 1:
-									VerBubbleSortASC(parameters.array,parameters.percentage, parameters.instrucciones);
+									VerBubbleSortASC(parameters.array,parameters.percentageBubble, parameters.comp1, parameters.comp2);
+
 									break;
 
 									case 2:
-									VerBubbleSortDSC(parameters.array,parameters.percentage);
+									VerBubbleSortDSC(parameters.array,parameters.percentageBubble, parameters.comp1, parameters.comp2 );
 									break;
 
 									case 0:
@@ -389,11 +471,11 @@ void MainMenu(ThreadParameters parameters)
 								cin >> optionOrdenamiento3;
 								switch (optionOrdenamiento3) {
 									case 1:
-									VerInsertionSortASC(parameters.array,parameters.percentage);
+									VerInsertionSortASC(parameters.array,parameters.percentageInsertion, parameters.comp1, parameters.comp2);
 									break;
 
 									case 2:
-									VerInsertionSortDSC(parameters.array,parameters.percentage);
+									VerInsertionSortDSC(parameters.array,parameters.percentageInsertion, parameters.comp1, parameters.comp2);
 									break;
 
 									case 0:
@@ -416,11 +498,11 @@ void MainMenu(ThreadParameters parameters)
 								cin >> optionOrdenamiento3;
 								switch (optionOrdenamiento3) {
 									case 1:
-									VerCocktailSortASC(parameters.array,parameters.percentage);
+									VerCocktailSortASC(parameters.array,parameters.percentageCocktail, parameters.comp1, parameters.comp2);
 									break;
 
 									case 2:
-									VerCocktailSortDSC(parameters.array,parameters.percentage);
+									VerCocktailSortDSC(parameters.array,parameters.percentageCocktail, parameters.comp1, parameters.comp2);
 									break;
 
 									case 0:
@@ -443,11 +525,11 @@ void MainMenu(ThreadParameters parameters)
 								cin >> optionOrdenamiento3;
 								switch (optionOrdenamiento3) {
 									case 1:
-									VerSelectionSortASC(parameters.array,parameters.percentage);
+									VerSelectionSortASC(parameters.array,parameters.percentageSelection, parameters.comp1, parameters.comp2);
 									break;
 
 									case 2:
-									VerSelectionSortDSC(parameters.array,parameters.percentage);
+									VerSelectionSortDSC(parameters.array,parameters.percentageSelection, parameters.comp1, parameters.comp2);
 									break;
 
 									case 0:
@@ -470,11 +552,11 @@ void MainMenu(ThreadParameters parameters)
 								cin >> optionOrdenamiento3;
 									switch (optionOrdenamiento3) {
 									case 1:
-									VerShellSortASC(parameters.array,parameters.percentage);
+									VerShellSortASC(parameters.array,parameters.percentageShell, parameters.comp1, parameters.comp2);
 									break;
 
 									case 2:
-									VerShellSortDSC(parameters.array,parameters.percentage);
+									VerShellSortDSC(parameters.array,parameters.percentageShell,parameters.comp1, parameters.comp2);
 									break;
 
 									case 0:
@@ -573,7 +655,7 @@ void MainMenu(ThreadParameters parameters)
 									{
 										sortID = 0;
 										clock_t start = clock();
-										BubbleSortASC(parameters.array,parameters.percentage);
+										BubbleSortASC(parameters.array,parameters.percentageBubble);
 										clock_t stop = clock();
         						double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
         						printf("Time elapsed in ms: %f", elapsed);
@@ -586,7 +668,7 @@ void MainMenu(ThreadParameters parameters)
 									{
 										sortID = 0;
 										clock_t start = clock();
-										BubbleSortDSC(parameters.array,parameters.percentage);
+										BubbleSortDSC(parameters.array,parameters.percentageBubble);
 										clock_t stop = clock();
         						double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
         						printf("Time elapsed in ms: %f", elapsed);
@@ -619,7 +701,7 @@ void MainMenu(ThreadParameters parameters)
 									{
 										sortID = 1;
 										clock_t start = clock();
-										InsertionSortASC(parameters.array,parameters.percentage);
+										InsertionSortASC(parameters.array,parameters.percentageInsertion);
 										clock_t stop = clock();
         						double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
         						printf("Time elapsed in ms: %f", elapsed);
@@ -632,7 +714,7 @@ void MainMenu(ThreadParameters parameters)
 									{
 										sortID = 1;
 										clock_t start = clock();
-										InsertionSortDSC(parameters.array,parameters.percentage);
+										InsertionSortDSC(parameters.array,parameters.percentageInsertion);
 										clock_t stop = clock();
         						double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
         						printf("Time elapsed in ms: %f", elapsed);
@@ -664,7 +746,7 @@ void MainMenu(ThreadParameters parameters)
 									{
 										sortID = 2;
 										clock_t start = clock();
-										CocktailSortASC(parameters.array,parameters.percentage);
+										CocktailSortASC(parameters.array,parameters.percentageCocktail);
 										clock_t stop = clock();
         								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
         								printf("Time elapsed in ms: %f", elapsed);
@@ -677,7 +759,7 @@ void MainMenu(ThreadParameters parameters)
 									{
 										sortID = 2;
 										clock_t start = clock();
-										CocktailSortDSC(parameters.array,parameters.percentage);
+										CocktailSortDSC(parameters.array,parameters.percentageCocktail);
 										clock_t stop = clock();
         								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
         								printf("Time elapsed in ms: %f", elapsed);
@@ -709,7 +791,7 @@ void MainMenu(ThreadParameters parameters)
 									{
 										sortID = 3;
 										clock_t start = clock();
-										SelectionSortASC(parameters.array,parameters.percentage);
+										SelectionSortASC(parameters.array,parameters.percentageSelection);
 										clock_t stop = clock();
         								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
         								printf("Time elapsed in ms: %f", elapsed);
@@ -722,7 +804,7 @@ void MainMenu(ThreadParameters parameters)
 									{
 										sortID = 3;
 										clock_t start = clock();
-										SelectionSortDSC(parameters.array,parameters.percentage);
+										SelectionSortDSC(parameters.array,parameters.percentageSelection);
 										clock_t stop = clock();
         								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
         								printf("Time elapsed in ms: %f", elapsed);
@@ -754,7 +836,7 @@ void MainMenu(ThreadParameters parameters)
 									{
 										sortID = 4;
 										clock_t start = clock();
-										ShellSortASC(parameters.array,parameters.percentage);
+										ShellSortASC(parameters.array,parameters.percentageShell);
 										clock_t stop = clock();
         								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
         								printf("Time elapsed in ms: %f", elapsed);
@@ -767,7 +849,7 @@ void MainMenu(ThreadParameters parameters)
 									{
 										sortID = 4;
 										clock_t start = clock();
-										ShellSortDSC(parameters.array,parameters.percentage);
+										ShellSortDSC(parameters.array,parameters.percentageShell);
 										clock_t stop = clock();
         								double elapsed = (double)(stop - start) * 1000.0 / CLOCKS_PER_SEC;
         								printf("Time elapsed in ms: %f", elapsed);
@@ -917,7 +999,7 @@ void swap2(int dat1, int dat2)
 }
 
 //***********BUBBLE SORT**********
-void VerBubbleSortASC( vector<Data>* array, float * percentage, vector<datos>*instrucciones)
+void VerBubbleSortASC( vector<Data>* array, float * percentageBubble, float * comp1, float * comp2)
 {
 	int tam = array->size();
     int c, d;
@@ -925,24 +1007,25 @@ void VerBubbleSortASC( vector<Data>* array, float * percentage, vector<datos>*in
     for (c = 0; c <= (array->size() - 1); c++)
     {
 			if(c == tam-1){
-				*percentage = 100;
+				*percentageBubble = 100;
 			}
 			else{
-				*percentage = (float)c/(float)tam * 100;
+				*percentageBubble = (float)c/(float)tam * 100;
 			}
-			printf("porcentaje %f\n", *percentage);
+			printf("porcentaje %f\n", *percentageBubble);
 
         for (d = 0; d < array->size() - c - 1; d++)
         {
             if (array->at(d).dat > array->at(d+1).dat)
             {
+							*comp1 = array->at(d).dat;
+							*comp2 = array->at(d + 1).dat;
 							swapt(&array->at(d),&array->at(d+1));
-							instrucciones->instrucciones->push_back(*array);
             }
         }
     }
 }
-void BubbleSortASC( vector<Data>* array, float * percentage)
+void BubbleSortASC( vector<Data>* array, float * percentageBubble)
 {
 	int tam = array->size();
 	cout << "Tamaño" << tam << endl;
@@ -951,23 +1034,24 @@ void BubbleSortASC( vector<Data>* array, float * percentage)
     for (c = 0; c <= (array->size() - 1); c++)
     {
 			if(c == tam-1){
-				*percentage = 100;
+				*percentageBubble = 100;
 			}
 			else{
-				*percentage = (float)c/(float)tam * 100;
+				*percentageBubble = (float)c/(float)tam * 100;
 			}
-			printf("porcentaje %f\n", *percentage);
+			printf("porcentaje %f\n", *percentageBubble);
 
         for (d = 0; d < array->size() - c - 1; d++)
         {
             if (array->at(d).dat > array->at(d+1).dat)
             {
+
 							swap2(d,d+1);
             }
         }
     }
 }
-void VerBubbleSortDSC( vector<Data>* array, float * percentage)
+void VerBubbleSortDSC( vector<Data>* array, float * percentageBubble,  float * comp1, float * comp2)
 {
 	int tam = array->size();
 	cout << "Tamaño" << tam << endl;
@@ -976,23 +1060,25 @@ void VerBubbleSortDSC( vector<Data>* array, float * percentage)
     for (c = 0; c <= (array->size() - 1); c++)
     {
 			if(c == tam-1){
-				*percentage = 100;
+				*percentageBubble = 100;
 			}
 			else{
-				*percentage = (float)c/(float)tam * 100;
+				*percentageBubble = (float)c/(float)tam * 100;
 			}
-			printf("porcentaje %f\n", *percentage);
+			printf("porcentaje %f\n", *percentageBubble);
 
         for (d = 0; d < array->size() - c - 1; d++)
         {
             if (array->at(d).dat < array->at(d+1).dat)
             {
+							*comp2 = array->at(d).dat;
+							*comp1 = array->at(d + 1).dat;
 							swapt(&array->at(d),&array->at(d+1));
             }
         }
     }
 }
-void BubbleSortDSC( vector<Data>* array, float * percentage)
+void BubbleSortDSC( vector<Data>* array, float * percentageBubble)
 {
 	int tam = array->size();
 	cout << "Tamaño" << tam << endl;
@@ -1001,12 +1087,12 @@ void BubbleSortDSC( vector<Data>* array, float * percentage)
     for (c = 0; c <= (array->size() - 1); c++)
     {
 			if(c == tam-1){
-				*percentage = 100;
+				*percentageBubble = 100;
 			}
 			else{
-				*percentage = (float)c/(float)tam * 100;
+				*percentageBubble = (float)c/(float)tam * 100;
 			}
-			printf("porcentaje %f\n", *percentage);
+			printf("porcentaje %f\n", *percentageBubble);
 
         for (d = 0; d < array->size() - c - 1; d++)
         {
@@ -1019,19 +1105,19 @@ void BubbleSortDSC( vector<Data>* array, float * percentage)
 }
 
 //***********SELECTION SORT*********
-void VerSelectionSortASC(vector<Data>* array, float * percentage)
+void VerSelectionSortASC(vector<Data>* array, float * percentageSelection, float * comp1, float * comp2)
 {
     int c, d, min, loc, temp;
 		int tam = array->size();
     for (c = 0; c <= (array->size() - 1); c++)
     {
 			if(c == tam-1){
-				*percentage = 100;
+				*percentageSelection = 100;
 			}
 			else{
-				*percentage = (float)c/(float)tam * 100;
+				*percentageSelection = (float)c/(float)tam * 100;
 			}
-			printf("porcentaje %f\n", *percentage);
+			printf("porcentaje %f\n", *percentageSelection);
 
         min = array->at(c).dat;
         loc = c;
@@ -1043,22 +1129,24 @@ void VerSelectionSortASC(vector<Data>* array, float * percentage)
                 loc = d;
             }
         }
+				*comp1 = array->at(c).dat;
+				*comp2 = array->at(loc).dat;
 				swapt(&array->at(c),&array->at(loc));
     }
 }
-void SelectionSortASC(vector<Data>* array, float * percentage)
+void SelectionSortASC(vector<Data>* array, float * percentageSelection)
 {
     int c, d, min, loc, temp;
 	int tam = array->size();
     for (c = 0; c <= (array->size() - 1); c++)
     {
 		if(c == tam-1){
-			*percentage = 100;
+			*percentageSelection = 100;
 		}
 		else{
-			*percentage = (float)c/(float)tam * 100;
+			*percentageSelection = (float)c/(float)tam * 100;
 		}
-		printf("porcentaje %f\n", *percentage);
+		printf("porcentaje %f\n", *percentageSelection);
     min = array->at(c).dat;
     loc = c;
     for (d = c + 1; d < array->size(); d++){
@@ -1070,19 +1158,19 @@ void SelectionSortASC(vector<Data>* array, float * percentage)
 		swap2(c,loc);
     }
 }
-void VerSelectionSortDSC(vector<Data>* array, float * percentage)
+void VerSelectionSortDSC(vector<Data>* array, float * percentageSelection, float * comp1, float * comp2)
 {
     int c, d, min, loc, temp;
 			int tam = array->size();
     for (c = 0; c <= (array->size() - 1); c++)
     {
 			if(c == tam-1){
-				*percentage = 100;
+				*percentageSelection = 100;
 			}
 			else{
-				*percentage = (float)c/(float)tam * 100;
+				*percentageSelection = (float)c/(float)tam * 100;
 			}
-			printf("porcentaje %f\n", *percentage);
+			printf("porcentaje %f\n", *percentageSelection);
         min = array->at(c).dat;
         loc = c;
         for (d = c + 1; d < array->size(); d++)
@@ -1093,22 +1181,24 @@ void VerSelectionSortDSC(vector<Data>* array, float * percentage)
                 loc = d;
             }
         }
+				*comp2 = array->at(c).dat;
+				*comp1 = array->at(loc).dat;
 				swapt(&array->at(c),&array->at(loc));
     }
 }
-void SelectionSortDSC(vector<Data>* array, float * percentage)
+void SelectionSortDSC(vector<Data>* array, float * percentageSelection)
 {
     int c, d, min, loc, temp;
 			int tam = array->size();
     for (c = 0; c <= (array->size() - 1); c++)
     {
 			if(c == tam-1){
-				*percentage = 100;
+				*percentageSelection = 100;
 			}
 			else{
-				*percentage = (float)c/(float)tam * 100;
+				*percentageSelection = (float)c/(float)tam * 100;
 			}
-			printf("porcentaje %f\n", *percentage);
+			printf("porcentaje %f\n", *percentageSelection);
         min = array->at(c).dat;
         loc = c;
         for (d = c + 1; d < array->size(); d++)
@@ -1124,7 +1214,7 @@ void SelectionSortDSC(vector<Data>* array, float * percentage)
 }
 
 //***********COCKTAIL SORT**********
-void VerCocktailSortASC(vector<Data>* array, float * percentage)
+void VerCocktailSortASC(vector<Data>* array, float * percentageCocktail, float * comp1, float * comp2)
 {
 	int percentage1, percentage2;
 	float tam  =array->size()-1;
@@ -1140,6 +1230,8 @@ void VerCocktailSortASC(vector<Data>* array, float * percentage)
         {
             if (array->at(i).dat > array->at(i+1).dat)
             {
+							*comp2 = array->at(i+1).dat;
+							*comp1 = array->at(i).dat;
                   swapt(&array->at(i),&array->at(i+1));
                 swapped = true;
             }
@@ -1159,26 +1251,28 @@ void VerCocktailSortASC(vector<Data>* array, float * percentage)
         {
             if (array->at(i).dat > array->at(i+1).dat)
             {
+							*comp2 = array->at(i+1).dat;
+							*comp1 = array->at(i).dat;
                 swapt(&array->at(i),&array->at(i+1));
                 swapped = true;
             }
 						percentage2 = (float)i/(float)start * 50;
 						printf("porcentaje %d\n", percentage2);
-						*percentage = percentage1 + percentage2;
+						*percentageCocktail = percentage1 + percentage2;
         }
         ++start;
 				if(start == end)
 				{
-					*percentage = 100;
+					*percentageCocktail = 100;
 				}
 				/*else{
 					*percentage = percentage1 + percentage2;
 				}*/
 
-				printf("porcentaje %f\n", *percentage);
+				printf("porcentaje %f\n", *percentageCocktail);
     }
 }
-void CocktailSortASC(vector<Data>* array, float * percentage)
+void CocktailSortASC(vector<Data>* array, float * percentageCocktail)
 {
 	float tam  =array->size()-1;
 	bool swapped = true;
@@ -1205,7 +1299,7 @@ void CocktailSortASC(vector<Data>* array, float * percentage)
         ++start;
     }
 }
-void VerCocktailSortDSC(vector<Data>* array, float * percentage)
+void VerCocktailSortDSC(vector<Data>* array, float * percentageCocktail, float * comp1, float * comp2)
 {
 	bool swapped = true;
 	int start = 0;
@@ -1219,6 +1313,8 @@ void VerCocktailSortDSC(vector<Data>* array, float * percentage)
         {
             if (array->at(i).dat < array->at(i+1).dat)
             {
+							*comp1 = array->at(i+1).dat;
+							*comp2 = array->at(i).dat;
                   swapt(&array->at(i),&array->at(i+1));
                 swapped = true;
             }
@@ -1235,6 +1331,8 @@ void VerCocktailSortDSC(vector<Data>* array, float * percentage)
         {
             if (array->at(i).dat < array->at(i+1).dat)
             {
+							*comp1 = array->at(i+1).dat;
+							*comp2 = array->at(i).dat;
                 swapt(&array->at(i),&array->at(i+1));
                 swapped = true;
             }
@@ -1242,7 +1340,7 @@ void VerCocktailSortDSC(vector<Data>* array, float * percentage)
         ++start;
     }
 }
-void CocktailSortDSC(vector<Data>* array, float * percentage)
+void CocktailSortDSC(vector<Data>* array, float * percentageCocktail)
 {
 	bool swapped = true;
 	int start = 0;
@@ -1281,7 +1379,7 @@ void CocktailSortDSC(vector<Data>* array, float * percentage)
 }
 
 //*********INSERTION SORT**********
-void VerInsertionSortASC(vector<Data>* array, float * percentage)
+void VerInsertionSortASC(vector<Data>* array, float * percentageInsertion, float * comp1, float * comp2)
 {
 	float tam = array->size();
 	 for (int i = 1; i < array->size(); i++)
@@ -1289,19 +1387,21 @@ void VerInsertionSortASC(vector<Data>* array, float * percentage)
 		 		 int j = i;
 		 while ((j > 0) && (array->at(j).dat < array->at(j - 1).dat))
 		  {
+				*comp2 = array->at(j-1).dat;
+				*comp1 = array->at(j).dat;
 				swapt(&array->at(j),&array->at(j-1));
 			 j = j - 1;
 		 }
 		 if(i == tam-1){
-			*percentage = 100;
+			*percentageInsertion = 100;
 		}
 		else{
-			*percentage = (float)i/(float)tam * 100;
+			*percentageInsertion = (float)i/(float)tam * 100;
 		}
-		printf("porcentaje %f\n", *percentage);
+		printf("porcentaje %f\n", *percentageInsertion);
 	 }
  }
-void InsertionSortASC(vector<Data>* array, float * percentage)
+void InsertionSortASC(vector<Data>* array, float * percentageInsertion)
 {
  	float tam = array->size();
  	for (int i = 1; i < array->size(); i++)
@@ -1312,15 +1412,15 @@ void InsertionSortASC(vector<Data>* array, float * percentage)
  			j = j - 1;
  		}
  		if(i == tam-1){
- 			*percentage = 100;
+ 			*percentageInsertion = 100;
  		}
  		else{
- 			*percentage = (float)i/(float)tam * 100;
+ 			*percentageInsertion = (float)i/(float)tam * 100;
  		}
- 		printf("porcentaje %f\n", *percentage);
+ 		printf("porcentaje %f\n", *percentageInsertion);
  	}
 }
- void VerInsertionSortDSC(vector<Data>* array, float * percentage)
+ void VerInsertionSortDSC(vector<Data>* array, float * percentageInsertion, float * comp1, float * comp2)
  {
 	 float tam = array->size();
  	 for (int i = 1; i < array->size(); i++)
@@ -1328,19 +1428,21 @@ void InsertionSortASC(vector<Data>* array, float * percentage)
  		 		 int j = i;
  		 while ((j > 0) && (array->at(j).dat > array->at(j - 1).dat))
  		  {
+				*comp1 = array->at(j-1).dat;
+				*comp2 = array->at(j).dat;
  				swapt(&array->at(j),&array->at(j-1));
  			 j = j - 1;
  		 }
  		 if(i == tam-1){
- 			*percentage = 100;
+ 			*percentageInsertion = 100;
  		}
  		else{
- 			*percentage = (float)i/(float)tam * 100;
+ 			*percentageInsertion = (float)i/(float)tam * 100;
  		}
- 		printf("porcentaje %f\n", *percentage);
+ 		printf("porcentaje %f\n", *percentageInsertion);
  	 }
  }
-void InsertionSortDSC(vector<Data>* array, float * percentage)
+void InsertionSortDSC(vector<Data>* array, float * percentageInsertion)
   {
  	 float tam = array->size();
   	 for (int i = 1; i < array->size(); i++)
@@ -1352,17 +1454,17 @@ void InsertionSortDSC(vector<Data>* array, float * percentage)
   			 j = j - 1;
   		 }
   		 if(i == tam-1){
-  			*percentage = 100;
+  			*percentageInsertion = 100;
   		}
   		else{
-  			*percentage = (float)i/(float)tam * 100;
+  			*percentageInsertion = (float)i/(float)tam * 100;
   		}
-  		printf("porcentaje %f\n", *percentage);
+  		printf("porcentaje %f\n", *percentageInsertion);
   	 }
    }
 
 //*********SHELL SORT*************
-void VerShellSortASC(vector<Data>* array, float * percentage)
+void VerShellSortASC(vector<Data>* array, float * percentageShell, float * comp1, float * comp2)
 {
 		float tam = array->size();
     int c, i, j, temp;
@@ -1372,19 +1474,21 @@ void VerShellSortASC(vector<Data>* array, float * percentage)
 				{
 					for (j=i-c; j>=0 && array->at(j).dat > array->at(j + c).dat; j-=c)
 					{
+						*comp2 = array->at(j +c).dat;
+						*comp1 = array->at(j).dat;
 						swapt(&array->at(j),&array->at(j+c));
 					}
 		}
 		if(c == 1){
-			*percentage = 100;
+			*percentageShell = 100;
 		}
 		else{
-			*percentage = (float)c/(float)tam/2 * 100;
+			*percentageShell = (float)c/(float)tam/2 * 100;
 		}
-		printf("porcentaje %f\n", *percentage);
+		printf("porcentaje %f\n", *percentageShell);
 	}
 }
-void ShellSortASC(vector<Data>* array, float * percentage)
+void ShellSortASC(vector<Data>* array, float * percentageShell)
 {
 	float tam = array->size();
     int c, i, j, temp;
@@ -1393,14 +1497,14 @@ void ShellSortASC(vector<Data>* array, float * percentage)
 			for (j=i-c; j>=0 && array->at(j).dat > array->at(j + c).dat; j-=c)
 				swap2(j,j+c);
 			}
-		if(i == 1) *percentage = 100;
+		if(i == 1) *percentageShell = 100;
 		else{
-		*percentage = (float)c/(float)tam * 100;
+		*percentageShell = (float)c/(float)tam * 100;
 		}
-		printf("porcentaje %f\n", *percentage);
+		printf("porcentaje %f\n", *percentageShell);
 	}
 }
-void VerShellSortDSC(vector<Data>* array, float * percentage)
+void VerShellSortDSC(vector<Data>* array, float * percentageShell, float * comp1, float * comp2)
 {
 	float tam = array->size();
 	int c, i, j, temp;
@@ -1410,21 +1514,23 @@ void VerShellSortDSC(vector<Data>* array, float * percentage)
 			{
 				for (j=i-c; j>=0 && array->at(j).dat < array->at(j + c).dat; j-=c)
 				{
+					*comp1 = array->at(j +c).dat;
+					*comp2 = array->at(j).dat;
 					swapt(&array->at(j),&array->at(j+c));
 				}
 			}
 			if(c == tam/2){
-				*percentage = 100;
+				*percentageShell = 100;
 			}
 			else{
-				*percentage = (float)c/(float)tam * 100;
+				*percentageShell = (float)c/(float)tam * 100;
 			}
-			printf("porcentaje %f\n", *percentage);
+			printf("porcentaje %f\n", *percentageShell);
 
 	}
 
 }
-void ShellSortDSC(vector<Data>* array, float * percentage)
+void ShellSortDSC(vector<Data>* array, float * percentageShell)
 {
 	float tam = array->size();
 	int c, i, j, temp;
@@ -1438,12 +1544,12 @@ void ShellSortDSC(vector<Data>* array, float * percentage)
 				}
 			}
 			if(c == tam/2){
-				*percentage = 100;
+				*percentageShell = 100;
 			}
 			else{
-				*percentage = (float)c/(float)tam * 100;
+				*percentageShell = (float)c/(float)tam * 100;
 			}
-			printf("porcentaje %f\n", *percentage);
+			printf("porcentaje %f\n", *percentageShell);
 
 	}
 }

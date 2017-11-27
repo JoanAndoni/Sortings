@@ -589,18 +589,18 @@ void MainMenu(ThreadParameters parameters)
 					cin >> optionOrdenamiento2;
 					switch (optionOrdenamiento2){
 						case 1:
-							#pragma omp parallel sections private(vector<Data>*array)
-    					{
-			        #pragma omp section
-			        BubbleSortASC(parameters.array,parameters.percentageBubble);
-			        #pragma omp section
-			        InsertionSortASC(parameters.array,parameters.percentageInsertion);
-    					}
+			        #pragma omp parallel sections
+							{
+								#pragma omp section
+								 BubbleSortASC(parameters.array,parameters.percentageBubble);
+								 #pragma omp section
+								 InsertionSortASC(parameters.array,parameters.percentageInsertion);
+							}
 
 						break;
 
 						case 2:
-						#pragma omp parallel sections private(vector<Data>*array)
+						#pragma omp parallel sections
 						{
 						#pragma omp section
 						BubbleSortASC(parameters.array,parameters.percentageBubble);
@@ -611,7 +611,7 @@ void MainMenu(ThreadParameters parameters)
 						break;
 
 						case 3:
-						#pragma omp parallel sections private(vector<Data>*array)
+						#pragma omp parallel sections
 						{
 						#pragma omp section
 						BubbleSortASC(parameters.array,parameters.percentageBubble);
@@ -621,7 +621,7 @@ void MainMenu(ThreadParameters parameters)
 						break;
 
 						case 4:
-						#pragma omp parallel sections private(vector<Data>*array)
+						#pragma omp parallel sections
 						{
 						#pragma omp section
 						BubbleSortASC(parameters.array,parameters.percentageBubble);
@@ -631,7 +631,7 @@ void MainMenu(ThreadParameters parameters)
 						break;
 
 						case 5:
-						#pragma omp parallel sections private(vector<Data>*array)
+						#pragma omp parallel sections
 						{
 						#pragma omp section
 						InsertionSortASC(parameters.array,parameters.percentageInsertion);
@@ -641,7 +641,7 @@ void MainMenu(ThreadParameters parameters)
 						break;
 
 						case 6:
-						#pragma omp parallel sections private(vector<Data>*array)
+						#pragma omp parallel sections
 						{
 						#pragma omp section
 						InsertionSortASC(parameters.array,parameters.percentageInsertion);
@@ -651,7 +651,7 @@ void MainMenu(ThreadParameters parameters)
 						break;
 
 						case 7:
-						#pragma omp parallel sections private(vector<Data>*array)
+						#pragma omp parallel sections
 						{
 						#pragma omp section
 						InsertionSortASC(parameters.array,parameters.percentageInsertion);
@@ -661,7 +661,7 @@ void MainMenu(ThreadParameters parameters)
 						break;
 
 						case 8:
-						#pragma omp parallel sections private(vector<Data>*array)
+						#pragma omp parallel sections
 						{
 						#pragma omp section
 						SelectionSortASC(parameters.array,parameters.percentageSelection);
@@ -671,7 +671,7 @@ void MainMenu(ThreadParameters parameters)
 						break;
 
 						case 9:
-						#pragma omp parallel sections private(vector<Data>*array)
+						#pragma omp parallel sections
 						{
 						#pragma omp section
 						SelectionSortASC(parameters.array,parameters.percentageSelection);
@@ -681,7 +681,7 @@ void MainMenu(ThreadParameters parameters)
 						break;
 
 						case 10:
-						#pragma omp parallel sections private(vector<Data>*array)
+						#pragma omp parallel sections
 						{
 						#pragma omp section
 						CocktailSortASC(parameters.array,parameters.percentageCocktail);
